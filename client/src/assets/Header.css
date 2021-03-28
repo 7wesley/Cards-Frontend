@@ -1,0 +1,17 @@
+#brand {
+    max-width : 410px; 
+    height: auto;
+}
+
+@media (max-width: 576px) {
+    #brand {
+        width: 220px !important;
+        height: auto !important;
+        padding: 5px !important;
+    }
+}
+
+.navbar {
+    background-color: #4185F2;
+}
+

@@ -1,0 +1,36 @@
+.blueBlock {
+    height: 30vh;
+    width: 100%;
+    background-color: aqua;
+}
+
+.greenBlock {
+    height: 30vh;
+    width: 100%;
+    background-color: #01FF70;
+}
+
+.vertical {
+  margin: auto;
+  width: 50%;
+  border: 3px solid green;
+  padding: 10px;
+}
+
+.darkBlock {
+  height: 30vh;
+  width: 100%;
+  background-color: #3da4ab;
+}
+
+.blackBlock {
+  height: 20vh;
+  width: 150%;
+  background-color: gray;
+}
+
+.redBlock {
+  height: 30vh;
+  width: 100%;
+  background-color: #DC143C;
+}
