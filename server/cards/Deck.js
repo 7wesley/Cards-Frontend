@@ -1,5 +1,5 @@
-import { Card } from './Card'
-export class Deck {
+var Card = require('./Card');
+module.exports = class Deck {
     
     constructor() {
         const suits = ['H', 'S', 'C', 'D'];

@@ -18,3 +18,7 @@ export const disconnectSocket = () => {
     console.log('User disconnecting');
     if (socket) socket.disconnect();
 }
+
+export const getSocket = () => {
+    return socket;
+}

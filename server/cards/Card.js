@@ -1,6 +1,4 @@
-import React, {useState} from 'react';
-
-export class Card {
+module.exports = class Card {
 
     constructor(suit, rank) {
         this.suit = suit;

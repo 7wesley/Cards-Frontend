@@ -1,5 +1,6 @@
 
-var { addPlayer, removePlayer, checkSize } = require('./firebaseFunctions');
+var { addPlayer, removePlayer, checkSize, checkFull, queryUsers } = require('./firebaseFunctions');
+var Board = require('./cards/Board');
 var express = require('express');
 var app = express();
 var server = app.listen(5000);
@@ -18,6 +19,16 @@ io.on('connection', socket => {
         socket.uid = uid;
         socket.room = room;
         await addPlayer(room, uid);
+        if (await checkFull(room)) {
+            console.log("Room full!");
+            let playerList = await queryUsers(room);
+            let board = new Board("Blackjack", playerList);
+            board.startGame();
+            let playerCards = board.getPlayers();
+            console.log(playerCards)
+            io.to(room).emit('begin-game', playerCards);
+        }
+        
     });
 
     socket.on('disconnecting', () => {

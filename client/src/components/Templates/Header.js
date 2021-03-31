@@ -35,9 +35,6 @@ const Header = () => {
                 <Navbar.Toggle aria-controls='basic-navbar-nav' onClick={() => setOpen(!open)}/>
                 <Navbar.Collapse in = {open} className = "justify-content-stretch">
                     <ul className="navbar-nav ml-auto">
-                    <li className="nav-item" onClick={() => handleLink('stats')}>
-                        <Link className="nav-link">Stats</Link>
-                        </li>
                         <li className="nav-item" onClick={() => handleLink('games')}>
                             <Link className="nav-link">Games</Link> 
                         </li>
@@ -49,13 +46,12 @@ const Header = () => {
                         </li>
                         <li className="nav-item">
                             <NavDropdown onMouseEnter={() => setDropOpen(true)} onMouseLeave={() => setDropOpen(false)} onClick = {() => setDropOpen(!dropOpen)} show = {dropOpen} title="Account" id="basic-nav-dropdown">
+                            <NavDropdown.Item onClick = {handleClick}> {currentUser ? 'Log out' : 'Sign in'}</NavDropdown.Item>
                                 <NavDropdown.Item onClick={() => handleLink('account')}>Manage Account</NavDropdown.Item>
-                                <NavDropdown.Item onClick = {handleClick}> {currentUser ? 'Log out' : 'Sign in'}</NavDropdown.Item>
+                                <NavDropdown.Item onClick={() => handleLink('stats')}>Your stats</NavDropdown.Item>
                             </NavDropdown>    
                         </li>
-                        <li className="nav-item" onClick = {() => handleLink('layout')}>
-                        <Link className="nav-link">Layout</Link>
-                        </li>
+                    
                     </ul>
                 </Navbar.Collapse>
             </div>

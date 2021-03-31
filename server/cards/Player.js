@@ -1,4 +1,4 @@
-export class Player {
+module.exports = class Player {
     constructor(name) {
         this.playerName = name;  
         this.cards = [];

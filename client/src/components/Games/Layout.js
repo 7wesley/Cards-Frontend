@@ -1,3 +1,4 @@
+/*
 import React, { useState, useEffect } from 'react';
 import { Deck } from './Deck';
 import { Board } from './Board';
@@ -73,3 +74,4 @@ const Layout = () => {
 }
 
 export default Layout;
+*/
