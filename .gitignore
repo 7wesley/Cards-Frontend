@@ -1,20 +1,29 @@
 # See https://help.github.com/articles/ignoring-files/ for more about ignoring files.
 
 # dependencies
+node_modules
+package-lock.json 
 /client/node_modules
+/client/package-lock.json
 /client/.pnp
 /client/.pnp.js
 /server/node_modules
+/server/package-lock.json
 
 # testing
 /coverage
+/client/src/App.test.js
+/client/src/setupTests.js
 
 # production
 /client/build
 /client/.firebase
 /client/.firebaserc
+/client/firebase.json
+/client/public/robots.txt
 
 # misc
+/client/src/contexts/SocketProvider.js
 /client/.DS_Store
 /client/.env.local
 /client/.env.development.local
@@ -22,7 +31,8 @@
 /client/.env.production.local
 /server/.env
 /server/saved.txt
-
 /client/npm-debug.log*
 /client/yarn-debug.log*
 /client/yarn-error.log*
+
+

@@ -1,11 +1,24 @@
 module.exports = class Blackjack {
-    deal(deck, players) {
-        //Deal 1 card to each player 2 times
-        for (var i = 0; i < 2; i++) {
-            for (const [key, value] of Object.entries(players)) {
-                value.cards.push(deck.pop());
-            }
-              
-        }
+    constructor(deck, players) {
+        this.deck = deck;
+        this.players = players;
+        this.playerIndex = 0;
+        this.dealTurns = 2;
     }
+
+    dealCard() {
+        var card = this.deck.pop();
+        var player = this.players[this.playerIndex];
+        this.playerIndex++;
+        if (this.playerIndex == this.players.length) {
+            this.playerIndex = 0;
+        }
+        return {player, card}
+    }
+
+    get turns() {
+        return this.players.length * this.dealTurns;
+    }
+
+
 }

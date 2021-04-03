@@ -8,14 +8,8 @@ import useSocketListener from '../../hooks/useSocketListener';
 
 const GameRoom = ({match, room, setRoom, id}) => {
 
-    const { cards, otherCards } = useSocketListener(id);
-    const { players, full, maxPlayers } = useRoomListener(match.params.roomId, id, setRoom)
-    
-    useEffect(() => {
-        if (cards)
-            console.log(cards);
-    }, [cards])
-
+    const { playerHands, countdown } = useSocketListener(id);
+    const { players, maxPlayers } = useRoomListener(match.params.roomId, id, setRoom)
 
     //make separate component
     const handleChat = () => {
@@ -32,6 +26,41 @@ const GameRoom = ({match, room, setRoom, id}) => {
         */
     }
 
+    const renderPlayer = (player) => {
+        return (
+        <div className = "col-4">
+            <div className = "row justify-content-center align-items-center">            
+                <p >{player.name}</p>
+                <div className = "d-flex justify-content-center align-items-center">   
+                    { player.cards && Object.values(player.cards).map(card =>      
+                        <motion.img style = {{ width: 100 }} src = {card.image}
+                            whileHover={{
+                                scale: 1.1,
+                        }} />  
+                    )}
+            
+                </div>
+            </div>
+        </div>
+        )
+    }
+
+    const renderRows = () => {
+        let rows = [];
+        let columns = [];
+        for (let i = 0; i < 9; i++) {
+            if (Object.values(playerHands)[i])
+                columns.push(<div>{renderPlayer(Object.values(playerHands)[i])}</div>);
+            else
+                columns.push(<div className = "col-4 row"></div>)
+            if((i + 1) % 3 === 0) {
+                rows.push(<div className ="row flex-grow-1">{columns}</div>);
+                columns = [];
+            }
+        }
+        return rows;
+    }
+
     return (
         <>
         <Prompt
@@ -39,59 +68,13 @@ const GameRoom = ({match, room, setRoom, id}) => {
             message='This will exit you from the game. Are you sure?'
         />
         { room === match.params.roomId ? (
-            cards == null ? <Waiting players = {players} maxPlayers = {maxPlayers}/> : (
-            <div class = "container-fluid">
-                <div class="d-flex flex-column vh-100 text-center">
-                    <div class="row flex-grow-1">
-                        <div class = "col-3">flex </div>
-                        <div class = "col-6">
-                        <div className = "h-100">
-                                <div className = "row h-100 justify-content-center align-items-center">                 
-                                <p> All other player cards</p>   
-                                { otherCards && Object.values(otherCards).map(player => 
-                                    player.cards.map(card =>        
-                                        <motion.img style = {{ width: 150 }} src = {card.image}
-                                            whileHover={{
-                                                scale: 1.1,
-                                        }} />  
-                                    ))
-                                }
-                                </div>
-                            </div>   
-                        </div>
-                        <div class = "col-3">flex </div>
+            !Object.keys(playerHands).length ? <Waiting players = {players} maxPlayers = {maxPlayers} countdown = {countdown}/> : (
+                <div class = "container mt-4">
+                    <div class="d-flex flex-column vh-100 text-center">
+                        { renderRows() }
                     </div>
-                    <div class="row flex-grow-1">
-                        <div class = "col-3">flex</div>
-                        <div class = "col-6">
-                            <div className = "h-100">
-                                <div className="row h-100 justify-content-center align-items-center">
-                                    <img style = {{ width: 150 }} className = "" src = "Images/Cards/back.png" />
-                                </div>
-                            </div>
-                        </div>
-                        <div class = "col-3">flex </div>
-                    </div>
-                    <div class="row flex-grow-1">
-                        <div class = "col-3">flex </div>
-                        <div class = "col-6">
-                            <div className = "h-100">
-                                <div className = "row h-100 justify-content-center align-items-center">
-                                    { cards && cards.map(card =>        
-                                        <motion.img style = {{ width: 150 }} src = {card.image}
-                                            whileHover={{
-                                                scale: 1.1,
-                                        }} />  
-                                    )}
-                                </div>
-                            </div>     
-                        </div>
-                        <div class = "col-3">flex</div>
-                    </div>
-
-                </div>
-            </div>
-        )
+                </div>  
+            )
         ) : <p>Not found</p>
         }   
         </>

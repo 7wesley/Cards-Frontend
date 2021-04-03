@@ -4,14 +4,12 @@ import { db } from '../firebase';
 
 const useRoomListener = (roomID, uid, setRoom) => {
     const [players, setPlayers] = useState([]);
-    const [full, setFull] = useState([]);
     const [maxPlayers, setMaxPlayers] = useState(0);
 
     useEffect(() => {
         const unsubscribe = db.collection('rooms').doc(roomID)
         .onSnapshot(snap => {
             setPlayers(snap.data().players);
-            setFull(snap.data().full);
             setMaxPlayers(snap.data().maxPlayers);
         })
         return () => {
@@ -21,7 +19,7 @@ const useRoomListener = (roomID, uid, setRoom) => {
         }
     }, [roomID])
 
-    return { players, full, maxPlayers };
+    return { players, maxPlayers};
 }
 
 export default useRoomListener;

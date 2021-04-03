@@ -46,6 +46,7 @@ const Routing = () => {
                 )}/>
                 <Route path = "/login" component = {Login} />
                 <Route path = "/signup" component = {Signup} />
+                <Route path = "/layout" component = {Layout} />
       
             </Switch>
         </Router>

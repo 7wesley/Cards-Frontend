@@ -18,8 +18,7 @@ const dbStorage = firebase.storage();
 const db = firebase.firestore();
 const timestamp = firebase.firestore.FieldValue.serverTimestamp;
 const increment = firebase.firestore.FieldValue.increment;
-const decrement = firebase.firestore.FieldValue.decrement;
 const del = firebase.firestore.FieldValue.delete;
 
-export { auth, dbStorage, db, timestamp, increment, decrement, del };
+export { auth, dbStorage, db, timestamp, increment, del };
 export default app;
