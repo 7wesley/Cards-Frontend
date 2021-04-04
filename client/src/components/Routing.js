@@ -24,8 +24,14 @@ const Routing = () => {
 
     return (
         <Router>
-            <Header />
+            
+            <Route exact path = "" 
+                render ={() => (
+                <Header name = {result}/>)}
+            />
+
             <Switch>
+
                 <Route exact path = "/" component = {Welcome} />
                 <Route exact path = "/games" 
                     render ={() => (
