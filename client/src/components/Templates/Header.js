@@ -1,17 +1,13 @@
 import React, {useState} from 'react';
 import { Link, useHistory } from 'react-router-dom';
 import { Navbar, NavDropdown } from 'react-bootstrap';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { faCrown } from '@fortawesome/free-solid-svg-icons'
 import { useAuth } from '../../contexts/AuthContext';
-import styles from '../../assets/Header.css';
 
 const Header = ({ name }) => { 
 
     const [open, setOpen] = useState(false);
     const [dropOpen, setDropOpen] = useState(false);
     const { currentUser, logout } = useAuth();
-    const { currentUser2 } = useAuth();
     const history  = useHistory();
 
     const handleClick = async () => {
@@ -20,7 +16,7 @@ const Header = ({ name }) => {
         //possibly POST logout success
         setDropOpen(false);
         history.push('login');
-    }
+    } 
 
     const handleLink = (link) => {
         if (open == true)
@@ -32,7 +28,7 @@ const Header = ({ name }) => {
         <Navbar bg = 'dark' variant = 'dark' expand = 'lg'>
             <div className = "container">
                 <Link onClick = {() => handleLink('')}className="navbar-brand">
-                    <FontAwesomeIcon icon = {faCrown} size = {'lg'}/>
+                    Home
                 </Link>
 
                 <Navbar.Toggle  onClick={() => setOpen(!open)}/>
@@ -72,7 +68,8 @@ const Header = ({ name }) => {
 
                         {/*The button that is display at top of the menu*/}
                         <button class="btn btn-secondary"
-                        id="dropdownMenuButton dropdown-menu-right" data-toggle="dropdown">
+                            data-toggle="collapse" 
+                            data-target="#navbarDropdown">
 
                             {/*The name of the player that is displayed at 
                             the top right of their screen*/}
@@ -81,8 +78,7 @@ const Header = ({ name }) => {
                         </button>
                         
                         {/*The content that is displayed when the dropdown button is clicked*/}
-                        <div class="dropdown-menu dropdown-menu dropdown-menu-right" 
-                            aria-labelledby="dropdownMenuButton">
+                        <div id="navbarDropdown" class="dropdown-menu dropdown-menu-right">
 
                             {/*Creates a link to the user's stats page*/}
                             <li className="nav-item">
@@ -94,9 +90,15 @@ const Header = ({ name }) => {
                                 <Link className="nav-link" to="/account">Account</Link>
                             </li>
 
-                            {/*For the user to sign out*/}
+                            {/*Finds if the user is signed in or not and displays a "Sign-in" or
+                                "logout" link depending if the user is signed-in or not*/}
                             <li className="nav-item">
-                                <div className="nav-link" onClick = {handleClick}> {currentUser ? 'Log out' : 'Sign in'} </div>       
+                                <div className="nav-link" onClick = {handleClick}> {currentUser ? 
+                                
+                                    <Link className="nav-item" to="/login">Login</Link> : 
+                                    <Link className="nav-item" to="/signup">Sign-in</Link>} 
+                                
+                                </div>       
                             </li>
 
                         </div>
