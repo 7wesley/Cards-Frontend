@@ -1,10 +1,14 @@
 
-var { addPlayer, removePlayer, deleteRoom, checkFull, queryUsers } = require('./firebaseFunctions');
+var { addPlayer, removePlayer, deleteRoom, checkFull, queryUsers, queryGame } = require('./firebaseFunctions');
+var { blackjack } = require('./gameLogic');
 var Board = require('./cards/Board');
 var express = require('express');
 var app = express();
 var server = app.listen(5000);
 const io = require('socket.io')(server)
+
+
+let timerEnd = false;
 
 io.on('connection', socket => {
 
@@ -35,14 +39,28 @@ io.on('connection', socket => {
         //want to assign socket a room variable so we can check
         //the room size once they leave. This is useful for room deletion.
         socket.room = room;    
+        socket.uid = uid;
+        socket.game = await queryGame(room);
+        socket.hand = [];
         if (await checkFull(room)) {
             //countdown before game starts
             countdown(room);
         }
     });
 
-    socket.on('play-card', () => {
-
+    /**
+     * 
+     */
+    socket.on('player-move', (choice) => {
+        console.log(socket.hand);
+        switch (socket.game) {
+            case "Blackjack":
+                if (choice == "draw") {
+                    let card = io.sockets.adapter.rooms.get(socket.room).board.dealCard();
+                    io.to(socket.room).emit('update-hands', {id: socket.uid, card});
+                }
+        }
+        timerEnd = true;
     })
 
     /**
@@ -52,15 +70,22 @@ io.on('connection', socket => {
      */
     const start = async (room) => {
         let playerList = await queryUsers(room);
-        let board = new Board("Blackjack", playerList);
+        let board = new Board(socket.game, playerList);
+
+        io.sockets.adapter.rooms.get(room).board = board;
+
         let iterations = board.getTurns();
+        let boardCard;
         var dealCards = setInterval(() => {
+            boardCard = board.initialDeal();
+            if (boardCard.id === socket.uid) 
+                socket.hand.push(boardCard.card)
+            io.to(room).emit('update-hands', boardCard);
             iterations--;
             if (iterations == 0) {
                 clearInterval(dealCards);
-            } 
-            io.to(room).emit('update-hands', board.dealCard());
-            
+                turns(room);
+            }   
         }, 1000)
     }
 
@@ -80,7 +105,49 @@ io.on('connection', socket => {
             }
             seconds--;
         }, 1000)
+    }
+
+    const turns = async (room) => {
+        let users;
+        try {
+            while (true) {
+                users = io.sockets.adapter.rooms.get(room);
+                for (const user of users) {
+                    console.log(user);
+                    io.to(room).emit('curr-turn', io.sockets.sockets.get(user).uid)
+                    io.to(user).emit('your-turn', getPrompt());
+                    await turnTimer(room);
+                }
+            }
+        } catch {
+            console.log("All users have disconnected");
+        }
+    }
+
+    const turnTimer = (room) => {  
+        return new Promise((resolve) => {
+            let seconds = 30;
+            const timer = setInterval(() => {
+                console.log(seconds);
+                io.to(room).emit('timer', seconds);
+                if (timerEnd || seconds == 0) {
+                    console.log('Ended');
+                    timerEnd = false;
+                    resolve();
+                    clearInterval(timer);
+                }
+                seconds--;
+            }, 1000)
+        });
         
+    }
+
+    const getPrompt = () => {
+        let stats;
+        switch (socket.game) {
+            case "Blackjack":
+                return "Draw again for 21?";
+        }
     }
 
     socket.on('disconnecting', () => {

@@ -6,14 +6,18 @@ module.exports = class Blackjack {
         this.dealTurns = 2;
     }
 
-    dealCard() {
+    initialDeal() {
         var card = this.deck.pop();
         var player = this.players[this.playerIndex];
         this.playerIndex++;
         if (this.playerIndex == this.players.length) {
             this.playerIndex = 0;
         }
-        return {player, card}
+        return {id: player.id, card}
+    }
+
+    dealCard() {
+        return this.deck.pop();
     }
 
     get turns() {

@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useRef } from 'react';
+import React, { useState, useEffect, useCallback } from 'react';
 import styles from '../../assets/Space.module.css'
 import HostModal from '../Templates/HostModal.js'
 import { Modal, Form } from 'react-bootstrap';
@@ -16,9 +16,9 @@ const Games = ({ room, setRoom, id }) => {
     const { games } = useGames(filter);
     const { currentUser } = useAuth();
 
-    const closeModal = () => {
+    const closeModal = useCallback(() => {
         setModalOpen(false);
-    }
+    }, [setModalOpen]);
 
     const handleJoin = (gameId) => {
         setRoom(gameId)
@@ -38,7 +38,7 @@ const Games = ({ room, setRoom, id }) => {
     return (
         <div className={"container position-relative " + styles.headerSpace}>
             <div>
-            <Form onChange = {(e) => setFilter(e.target.value)} className = "position-absolute d-none d-md-block" style = {{ right: 0 }}>
+            <Form onChange = {(e) => setFilter(e.target.value)} className = "position-absolute d-none d-lg-block" style = {{ right: 0 }}>
                 <Form.Control className = "mt-2" type = "text" placeholder = "Find room or user ID 🔍" />
             </Form>
          

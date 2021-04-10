@@ -29,6 +29,11 @@ module.exports = {
     queryUsers: async (roomId) => {
         var roomDoc = await db.collection('rooms').doc(roomId).get();
         return roomDoc.data().players;
+    },
+
+    queryGame: async (roomId) => {
+        var roomDoc = await db.collection('rooms').doc(roomId).get();
+        return roomDoc.data().game;
     }
 
 }

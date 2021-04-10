@@ -36,6 +36,10 @@ module.exports = class Board {
         return null;
     }
 
+    initialDeal() {
+        return this.game.initialDeal();
+    }
+    
     dealCard() {
         return this.game.dealCard();
     }
