@@ -3,13 +3,13 @@ import { disconnectSocket } from '../components/Socket';
 import { db } from '../firebase';
 
 const useRoomListener = (roomID, uid, setRoom) => {
-    const [players, setPlayers] = useState([]);
+    const [playersList, setPlayersList] = useState([]);
     const [maxPlayers, setMaxPlayers] = useState(0);
 
     useEffect(() => {
         const unsubscribe = db.collection('rooms').doc(roomID)
         .onSnapshot(snap => {
-            setPlayers(snap.data().players);
+            setPlayersList(snap.data().players);
             setMaxPlayers(snap.data().maxPlayers);
         })
         return () => {
@@ -19,7 +19,7 @@ const useRoomListener = (roomID, uid, setRoom) => {
         }
     }, [roomID])
 
-    return { players, maxPlayers};
+    return { playersList, maxPlayers};
 }
 
 export default useRoomListener;

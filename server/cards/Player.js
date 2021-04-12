@@ -3,10 +3,12 @@ module.exports = class Player {
         this.id = id;  
         this.cards = [];
         this.status = "Playing"
+        this.total = 0;
     }
     
-    set allCards(card) {
+    setCards(card) {
         this.cards.push(card);
+        this.total += card.value;
     }
 
     get allCards() {

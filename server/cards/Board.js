@@ -15,32 +15,50 @@ module.exports = class Board {
         this.startGame();
     }
 
+    setTurn(turn) {
+        this.game.setTurn(turn);
+    }
+
+    getTurn() {
+        return this.game.turn;
+    }
+    
+    isTurn(uid) {
+        return this.game.getTurn() === uid;
+    }
+
+    nextTurn() {
+        return this.game.nextTurn(this.players);
+    }
+
     startGame() {
         if (this.game === 'Blackjack') {
-            this.game = new Blackjack(this.deck.cards, this.players);
+            this.game = new Blackjack(this.deck);
         }
         return false;  
     }
 
-    getAllPlayers() {
+    removePlayer(uid) {
+        this.players = this.players.filter(player => player.id !== uid);
+    }
+
+    getPlayers() {
         return this.players;
     }
 
-    getPlayerCards(socket_id) {
-        return this.players[socket_id].allCards;
+    getPlayer(uid) {
+        return this.players.find(player => player.id === uid);
     }
 
     getTurns() {
-        if (this.game)
-            return this.game.turns;
-        return null;
+        return this.game.getTurns(this.players.length);
     }
 
     initialDeal() {
-        return this.game.initialDeal();
+        return this.game.initialDeal(this.players);
     }
-    
-    dealCard() {
-        return this.game.dealCard();
+
+    dealCard(uid) {
+        return this.game.dealCard(this.players, uid);
     }
 }

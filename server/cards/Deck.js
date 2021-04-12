@@ -23,7 +23,7 @@ module.exports = class Deck {
           [cards[m], cards[i]] = [cards[i], cards[m]];
         }
         return this;
-      }
+    }
 
     deal() {
         return this.cards.pop();

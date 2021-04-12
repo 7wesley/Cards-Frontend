@@ -9,15 +9,17 @@ import { Button } from 'react-bootstrap';
 
 const GameRoom = ({match, room, setRoom, id}) => {
 
-    const { playerHands, countdown, prompt, turn, timer} = useSocketListener(id);
-    const { players, maxPlayers } = useRoomListener(match.params.roomId, id, setRoom)
+    const { players, countdown, prompt, turn, timer, message} = useSocketListener(id);
+    const { playersList, maxPlayers } = useRoomListener(match.params.roomId, id, setRoom)
     const [selected, setSelected] = useState(false);
-    const [loading, setLoading] = useState(false);
+    const [loading, setLoading] = useState(true);
     const [currCard, setCurrCard] = useState(null);
 
     useEffect(() => {
-        setLoading(false);
+        if (turn === id)
+            setLoading(false);
     }, [turn]);
+    
     //make separate component
     const handleChat = () => {
         /*
@@ -34,7 +36,8 @@ const GameRoom = ({match, room, setRoom, id}) => {
     }
 
     const handlePlay = (choice) => {
-        setLoading(true);
+        //if (players.length > 1)
+        //    setLoading(true);
         getSocket().emit("player-move", choice);
     }
 
@@ -47,8 +50,8 @@ const GameRoom = ({match, room, setRoom, id}) => {
         return (
         <div className = "col-4">
             <div className = "row justify-content-center align-items-center">            
-                <p>{player.name}</p>
-                <div className = "d-flex justify-content-center align-items-center">   
+                <p>{player.id}</p>
+                <motion.div className = "d-flex justify-content-center align-items-center" layout>   
                     { player.cards && Object.values(player.cards).map(card =>      
                         <motion.img style = {{ width: 100 }} src = {card.image} 
                             onClick = {() => handleCardChoice(card)}
@@ -56,7 +59,8 @@ const GameRoom = ({match, room, setRoom, id}) => {
                                 scale: 1.1,
                         }} />  
                     )}            
-                </div>
+                </motion.div>
+                <p className = "text-center">{player.total}</p>
                 { selected && 
                     <>
                         <p className = "mb-0">Are you sure you want to play this card?</p>
@@ -75,14 +79,14 @@ const GameRoom = ({match, room, setRoom, id}) => {
         let rows = [];
         let columns = [];
         for (let i = 0; i < 8; i++) {
-            if (Object.values(playerHands)[i])
-                columns.push(<div>{renderPlayer(Object.values(playerHands)[i])}</div>);
-            else if (i == Object.values(playerHands).length) 
+            if (players[i])
+                columns.push(<div>{renderPlayer(players[i])}</div>);
+            else if (i == players.length) 
                 columns.push(<div className = "col-4">
-                    { turn && 
+                    { (!message && turn) && 
                         <p>It is currently <span className="text-primary">{id == turn ? "YOUR" : `${turn}'s`}</span> turn</p>
                     }
-                    { turn && (id == turn ? (
+                    { (!message && turn) && (id == turn ? (
                         <>
                             <p>{prompt}</p>
                             <Button disabled = {loading} className = "mr-2" onClick = {() => handlePlay("draw")}>Confirm</Button>
@@ -90,6 +94,7 @@ const GameRoom = ({match, room, setRoom, id}) => {
                         </>
                         ) : <p>Waiting for them to make their move...</p>
                     )}
+                    {<p className = "h2">{message}</p>}
                 </div>)
             else
                 columns.push(<div className = "col-4 row"></div>)
@@ -108,7 +113,7 @@ const GameRoom = ({match, room, setRoom, id}) => {
             message='This will exit you from the game. Are you sure?'
         />
         { room === match.params.roomId ? (
-            !Object.keys(playerHands).length ? <Waiting players = {players} maxPlayers = {maxPlayers} countdown = {countdown}/> : (
+            !players.length ? <Waiting players = {playersList} maxPlayers = {maxPlayers} countdown = {countdown}/> : (
                 <div className = "container position-relative mt-4">
                     <div className="d-flex flex-column vh-100 text-center">
                         <div className = "mt-5 position-absolute" style = {{ right: 0 }}>

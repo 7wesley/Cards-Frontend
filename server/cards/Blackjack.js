@@ -1,27 +1,56 @@
 module.exports = class Blackjack {
-    constructor(deck, players) {
+    constructor(deck) {
         this.deck = deck;
-        this.players = players;
         this.playerIndex = 0;
         this.dealTurns = 2;
+        this.turnIndex = 0;
     }
 
-    initialDeal() {
-        var card = this.deck.pop();
-        var player = this.players[this.playerIndex];
+    initialDeal(players) {
+        var card = this.deck.deal();
+        var player = players[this.playerIndex];
+        player.setCards(card);
         this.playerIndex++;
-        if (this.playerIndex == this.players.length) {
+        if (this.playerIndex == players.length) {
             this.playerIndex = 0;
         }
         return {id: player.id, card}
     }
 
-    dealCard() {
-        return this.deck.pop();
+    nextTurn(players) {
+        if (players && this.turnIndex < players.length) {
+            this.turn = players[this.turnIndex].id;
+            this.turnIndex++;
+            if (this.turnIndex == players.length) {
+                this.turnIndex = 0;
+            }
+        }
+        else if (players) {
+            this.turn = players[0].id;
+            this.turnIndex = 0;
+        }
+        return this.turn;
     }
 
-    get turns() {
-        return this.players.length * this.dealTurns;
+    dealCard(players, uid) {
+        const card = this.deck.deal();
+        let player = players.find(player => player.id === uid)
+        player.setCards(card);
+        if (player.total > 21)
+            this.nextTurn();
+        return {id: uid, card};
+    }
+
+    setTurn(turn) {
+        this.turn = turn;
+    }
+    
+    getTurn() {
+        return this.turn;
+    }
+
+    getTurns(playerSize) {
+        return playerSize * this.dealTurns;
     }
 
 
