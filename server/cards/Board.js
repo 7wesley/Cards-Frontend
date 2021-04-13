@@ -1,7 +1,6 @@
 var Deck = require('./Deck');
 var Player = require('./Player');
 var Blackjack = require('./Blackjack');
-var { queryUsers } = require("../firebaseFunctions");
 
 module.exports = class Board {
 
@@ -15,27 +14,28 @@ module.exports = class Board {
         this.startGame();
     }
 
-    setTurn(turn) {
-        this.game.setTurn(turn);
-    }
-
-    getTurn() {
-        return this.game.turn;
-    }
-    
-    isTurn(uid) {
-        return this.game.getTurn() === uid;
-    }
-
-    nextTurn() {
-        return this.game.nextTurn(this.players);
-    }
-
     startGame() {
         if (this.game === 'Blackjack') {
             this.game = new Blackjack(this.deck);
         }
         return false;  
+    }
+
+    makeMove(choice) {
+        //let player = this.players.find(player => player.id === uid);
+        this.game.makeMove(choice);
+    }
+
+    initialDeal() {
+        return this.game.initialDeal(this.players);
+    }
+
+    isTurn(uid) {
+        return this.game.getTurn().getId() === uid;
+    }
+
+    nextTurn() {
+        return this.game.nextTurn(this.players);
     }
 
     removePlayer(uid) {
@@ -46,6 +46,16 @@ module.exports = class Board {
         return this.players;
     }
 
+    isPlaying(uid) {
+        let player = this.players.find(player => player.id === uid);
+        return player && player.getStatus() === "playing";
+    }
+
+    inProgress() {
+        let playing = this.players.filter(player => player.getStatus() === "playing")
+        return playing.length !== 0;
+    }
+
     getPlayer(uid) {
         return this.players.find(player => player.id === uid);
     }
@@ -54,11 +64,7 @@ module.exports = class Board {
         return this.game.getTurns(this.players.length);
     }
 
-    initialDeal() {
-        return this.game.initialDeal(this.players);
-    }
-
-    dealCard(uid) {
-        return this.game.dealCard(this.players, uid);
+    getWinners() {
+        return this.game.findWinners(this.players);
     }
 }

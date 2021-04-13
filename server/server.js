@@ -8,8 +8,6 @@ const io = require('socket.io')(server)
 var GameLogic = require('./GameLogic');
 
 let logic = new GameLogic(io);
-let timerEnd = false;
-let gameChoice;
 
 io.on('connection', socket => {
 
@@ -21,15 +19,15 @@ io.on('connection', socket => {
         if (!io.sockets.adapter.rooms.get(socket.room)) 
             await deleteRoom(socket.room);
         else {
-            //We don't need to remove the player if the room is deleted
+            //You don't need to remove the player if the room is deleted
             let board = io.sockets.adapter.rooms.get(socket.room).board;
             await removePlayer(socket.room, socket.uid);
             board.removePlayer(socket.uid);
             //Refresh hands after player leaves
             io.to(socket.room).emit('update-hands', board.getPlayers());
             //Only go to the next turn if current turn user == disconnected user
-            if (board.getTurn() == socket.uid)
-                timerEnd = true;
+            if (board.isTurn(socket.uid))
+                io.sockets.adapter.rooms.get(socket.room).timerEnd = true;
         }
         console.log(`Disconnected: ${socket.id}`)
     });     
@@ -54,18 +52,19 @@ io.on('connection', socket => {
         }
     });
 
-
     /**
      * Takes the choice from a player's move and sets it to the 
      * gameChoice variable and then ends the player's turn.
      */
     socket.on('player-move', (choice) => {
-        gameChoice = choice;
-        timerEnd = true;
+        let board = io.sockets.adapter.rooms.get(socket.room).board;
+        //board.makeMove(socket.uid, choice);
+        board.makeMove(choice);
+        io.sockets.adapter.rooms.get(socket.room).timerEnd = true;
         //Not optimal ----> await gameHandler(choice)
         //the issue with handling game logic here is that the
         //timer continues to countdown while the logic is 
-        //executing. We want to stop the timer and essentially 
+        //executing. You want to stop the timer and essentially 
         //wait for all logic to finish before going to the next player
     })
 
@@ -78,6 +77,7 @@ io.on('connection', socket => {
         let playerList = await queryUsers(room);
         let board = new Board(socket.game, playerList);
         io.sockets.adapter.rooms.get(room).board = board;
+        io.sockets.adapter.rooms.get(room).timerEnd = false;
         let iterations = board.getTurns();
 
         var dealCards = setInterval(() => {
@@ -112,37 +112,41 @@ io.on('connection', socket => {
     const turns = async (room) => {
         let board = io.sockets.adapter.rooms.get(room).board;
         let match = {};
-        let playerId;
+        let player;
 
         //Avoids having to make the socket id displayed client side
         for (const client of io.sockets.adapter.rooms.get(room)) 
             match[io.sockets.sockets.get(client).uid] = client;
 
-        while (board.getPlayers().length) {
+        while (board.inProgress()) {
             try {
-                playerId = board.nextTurn();    
-                console.log(playerId);        
+                player = board.nextTurn();    
+                //console.log(player.id);        
                 //while the player is still in the game and its their turn
-                while (board.getPlayer(playerId) && board.isTurn(playerId)) {
-                    io.to(room).emit('curr-turn', playerId);
-                    io.to(match[playerId]).emit('your-turn', getPrompt());
-                    await turnTimer(room);
-                    await gameHandler(match[playerId]);
+                while (board.isPlaying(player.id) && board.isTurn(player.id)) {
+                    io.to(room).emit('curr-turn', player.id);
+                    io.to(match[player.id]).emit('your-turn', getPrompt());
+                    await turnTimer(room, board);
+                    io.to(socket.room).emit('update-hands', board.getPlayers());
+                    await gameHandler(match[player.id], board);
                 }
-            } catch {
-                console.log("Player disconnected during their turn");
+            } catch (e) {
+                console.log(e);
             }
         }
+        
+        io.to(socket.room).emit('winners', board.getWinners())
     }
 
-    const turnTimer = (room) => {  
+    const turnTimer = (room, board) => {  
         return new Promise((resolve) => {
             let seconds = 40;
             const timer = setInterval(() => {
                 seconds % 2 == 0 && io.to(room).emit('timer', seconds / 2);
-                if (timerEnd || seconds == 0) {
+                if (seconds == 0 || io.sockets.adapter.rooms.get(room).timerEnd) {
                     io.to(room).emit('timer', 20)
-                    timerEnd = false;
+                    io.sockets.adapter.rooms.get(room).timerEnd = false;
+                    seconds == 0 && board.makeMove('pass');
                     resolve();
                     clearInterval(timer);
                 }
@@ -152,15 +156,12 @@ io.on('connection', socket => {
         
     }
 
-    const gameHandler = async (id) => {
-        //what if host leaves?
-        //possible pass in user instead of using curr socket
-        let board = io.sockets.adapter.rooms.get(socket.room).board;
-        switch (socket.game) {
+    const gameHandler = async (id, board) => {
+        const currSocket = io.sockets.sockets.get(id); 
+        switch (currSocket.game) {
             case "Blackjack":
-                await logic.blackjack(board, id, gameChoice);
+                await logic.blackjack(currSocket, board);
         }
-        gameChoice = "pass";
     }
 
     const getPrompt = () => {

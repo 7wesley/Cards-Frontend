@@ -9,6 +9,7 @@ const useSocketListener = (id) => {
     const [timer, setTimer] = useState(null);
     const [turn, setTurn] = useState();
     const [message, setMessage] = useState("");
+    const [winners, setWinners] = useState();
     
     useEffect(() => {
         if (socket == null) return;
@@ -18,13 +19,14 @@ const useSocketListener = (id) => {
         socket.on('your-turn', (msg) => setPrompt(msg));
         socket.on('timer', (secs) => setTimer(secs));
         socket.on('alert', (msg) => setMessage(msg));
+        socket.on('winners', (winList) => setWinners(winList));
         return () => {
             socket.off('countdown');
             socket.off('update-hand');
         }
     }, [])
 
-    return {players, countdown, prompt, turn, timer, message};
+    return {players, countdown, prompt, turn, timer, message, winners};
 }
 
 export default useSocketListener;

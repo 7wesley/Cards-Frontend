@@ -1,8 +1,8 @@
-import styles from '../../assets/Waiting.module.css'
+import styles from '../../assets/Transitions.module.css'
 import { motion } from 'framer-motion';
-const Waiting = ({ players, maxPlayers, countdown }) => {
+const Waiting = ({ id, players, maxPlayers, countdown }) => {
     return (
-        <div className = {styles.bg}>
+        <div className = {styles.bgWaiting}>
             <div className="d-flex flex-column min-vh-100 justify-content-center align-items-center" >
                 <div className="text-center text-light">
                     { countdown ? (
@@ -22,8 +22,8 @@ const Waiting = ({ players, maxPlayers, countdown }) => {
                             <p className = "h3 mb-4">({Object.keys(players).length} out of {maxPlayers})</p>
                             <p className = "h4">Players in room:</p> 
                             <motion.div layout>
-                                { Object.keys(players).map(key => (
-                                    <p className = "mb-0"> { key }</p>
+                                { Object.keys(players).map(player => (
+                                    <p className = "mb-0"> { player } {id === player && "(You)"}</p>
                                 ))}
                             </motion.div>
                         </>

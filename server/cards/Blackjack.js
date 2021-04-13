@@ -19,30 +19,35 @@ module.exports = class Blackjack {
 
     nextTurn(players) {
         if (players && this.turnIndex < players.length) {
-            this.turn = players[this.turnIndex].id;
+            this.turn = players[this.turnIndex];
             this.turnIndex++;
             if (this.turnIndex == players.length) {
                 this.turnIndex = 0;
             }
         }
         else if (players) {
-            this.turn = players[0].id;
+            this.turn = players[0];
             this.turnIndex = 0;
         }
         return this.turn;
     }
 
-    dealCard(players, uid) {
+    dealCard() {
         const card = this.deck.deal();
-        let player = players.find(player => player.id === uid)
-        player.setCards(card);
-        if (player.total > 21)
-            this.nextTurn();
-        return {id: uid, card};
+        this.turn.setCards(card);
+        if (this.turn.getTotal() > 21)
+            this.turn.setStatus("busted");
     }
 
-    setTurn(turn) {
-        this.turn = turn;
+    makeMove(choice) {
+        //if (this.turn === player) {
+        if (choice === "draw")
+            this.dealCard();
+        else 
+            this.turn.setStatus("standing");
+        //}
+        //else 
+        //    console.log("Request doesnt match current turn");
     }
     
     getTurn() {
@@ -53,5 +58,9 @@ module.exports = class Blackjack {
         return playerSize * this.dealTurns;
     }
 
+    findWinners(players) {
+        let highest = Math.max(...players.map(player => player.getTotal()), 0);
+        return players.filter(player => player.getTotal() === highest)
+    }
 
 }
