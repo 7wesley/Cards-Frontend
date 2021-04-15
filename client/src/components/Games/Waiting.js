@@ -1,6 +1,6 @@
 import styles from '../../assets/Transitions.module.css'
 import { motion } from 'framer-motion';
-const Waiting = ({ id, players, maxPlayers, countdown }) => {
+const Waiting = ({ id, playersList, maxPlayers, countdown }) => {
     return (
         <div className = {styles.bgWaiting}>
             <div className="d-flex flex-column min-vh-100 justify-content-center align-items-center" >
@@ -19,10 +19,10 @@ const Waiting = ({ id, players, maxPlayers, countdown }) => {
                     : ( 
                         <>
                             <p className = "h3">Waiting for players... </p>
-                            <p className = "h3 mb-4">({Object.keys(players).length} out of {maxPlayers})</p>
+                            <p className = "h3 mb-4">({Object.keys(playersList).length} out of {maxPlayers})</p>
                             <p className = "h4">Players in room:</p> 
                             <motion.div layout>
-                                { Object.keys(players).map(player => (
+                                { Object.keys(playersList).map(player => (
                                     <p className = "mb-0"> { player } {id === player && "(You)"}</p>
                                 ))}
                             </motion.div>

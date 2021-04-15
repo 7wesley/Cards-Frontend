@@ -1,25 +1,33 @@
 import React, {useState, useEffect} from 'react';
-import { disconnectSocket } from '../components/Socket';
 import { db } from '../firebase';
 
-const useRoomListener = (roomID, uid, setRoom) => {
-    const [playersList, setPlayersList] = useState([]);
+const useRoomListener = (room) => {
+    const [playersList, setPlayersList] = useState({});
     const [maxPlayers, setMaxPlayers] = useState(0);
+    const [status, setStatus] = useState();
 
     useEffect(() => {
-        const unsubscribe = db.collection('rooms').doc(roomID)
-        .onSnapshot(snap => {
-            setPlayersList(snap.data().players);
-            setMaxPlayers(snap.data().maxPlayers);
-        })
-        return () => {
-            disconnectSocket();
-            setRoom(null);
-            unsubscribe();
+        const listener = async () => {
+            let doc = await db.collection('rooms').doc(room).get();
+            if (doc.exists) {
+                const unsubscribe = db.collection('rooms').doc(room)
+                .onSnapshot(snap => {
+                    if (snap.data()) {
+                        setPlayersList(snap.data().players);
+                        setMaxPlayers(snap.data().maxPlayers);
+                        setStatus(snap.data().status);
+                    }
+                    else 
+                        setPlayersList(null);
+                })
+                return () => unsubscribe();
+            }
+            setPlayersList(null);
         }
-    }, [roomID])
+        listener();
+    }, [room])
 
-    return { playersList, maxPlayers};
+    return { playersList, maxPlayers, status};
 }
 
 export default useRoomListener;

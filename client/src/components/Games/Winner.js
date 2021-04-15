@@ -1,12 +1,20 @@
 import styles from '../../assets/Transitions.module.css'
+import React, {useState, useEffect} from 'react';
 import { Link } from 'react-router-dom';
-import { updateWins, getWins, getUID } from '../Socket';
-import { increment, db } from '../../firebase';
-
-
-const Waiting = ({ id, winners }) => {
+import { Button } from 'react-bootstrap';
+import { getSocket } from '../Socket';
+const Winner = ({ id, winners, timer }) => {
     
+    const socket = getSocket();
+    const [loading, setLoading] = useState(false);
 
+    useEffect(() => {
+        timer == 0 && setLoading(true);
+    }, [timer]);
+
+    const handlePlayAgain = () => {
+        socket.emit('play-again');
+    }
 
 const updateStats = async (userID) => {
     updateWins(userID);
@@ -49,7 +57,7 @@ const getUserID = async () => {
     }
 
     return (
-        <div className = {styles.bgWinner}>
+        <div className = {styles.bgInProgress}>
             <div className="d-flex flex-column min-vh-100 justify-content-center align-items-center" >
                 <div className="text-center text-light">
                     { winners.length ? winners.map(winner =>
@@ -64,7 +72,7 @@ const getUserID = async () => {
                     ) : <p className = "h3">Nobody wins!</p>}  
                     <div className = "row mt-4 mx-auto"> 
                         <Link to = "/games" className = "btn btn-primary mr-2">Main Menu</Link>
-                        <Link to = '/' className = "btn btn-primary ml-2">Play Again</Link>
+                        <Button disabled = {loading} onClick = {handlePlayAgain} className = "bml-2">Play Again {timer}</Button>
                     </div>
                 </div>
             </div>
@@ -72,4 +80,4 @@ const getUserID = async () => {
     )
 }
 
-export default Waiting;
+export default Winner;

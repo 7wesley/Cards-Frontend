@@ -2,12 +2,13 @@ import React, {useState} from 'react';
 
 import { db, timestamp } from '../../firebase';
 import { Modal, Button, Form } from 'react-bootstrap';
+import { useHistory } from 'react-router-dom';
 
 
-const HostModal = ({closeModal, setRoom, id}) => {
+const HostModal = ({closeModal, id}) => {
 
     const [game, setGame] = useState('');
-    //const [id, setId] = useSessionStorage('id');
+    const history = useHistory();
 
     const handleSubmit = async (e) => {
         e.preventDefault()
@@ -15,14 +16,14 @@ const HostModal = ({closeModal, setRoom, id}) => {
         await roomRef.set({
             game,
             players: {},
-            size: 0,
             maxPlayers: e.target[3].value,
             gameId: roomRef.id,
             host: id,
-            createdAt: timestamp()
+            status: 'waiting',
+            createdAt: timestamp(),
         })
-        setRoom(roomRef.id)
         closeModal();
+        history.push(`/games/${roomRef.id}`);
     }
 
     const handleChange = () => {

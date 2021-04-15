@@ -12,33 +12,24 @@ import Login from './Account/Login';
 import Signup from './Account/Signup';
 import Account from './Account/Account';
 import Layout from './Games/Layout';
-import useQuerySessionAndDB from '../hooks/useQuerySessionAndDB'
-import { useAuth } from "../contexts/AuthContext";
+import useStorage from '../hooks/useStorage'
 
 const Routing = () => {
 
-    const { currentUser } = useAuth();
-    const { result, setValue} = useQuerySessionAndDB('username', 'Guest-' + Math.round((Math.random() * 100000)), currentUser);
+    const { result, setValue } = useStorage('username', Math.round(Math.random() * 100000));
     //const { stats } = useQuerySessionAndDB('stats', {}, currentUser);
-    const [room, setRoom] = useState(null);
 
     return (
-        <Router>
-            
-            <Route exact path = "" 
-                render ={() => (
-                <Header name = {result}/>)}
-            />
-
+        <Router>      
+            <Header name = {result}/>
             <Switch>
-
                 <Route exact path = "/" component = {Welcome} />
                 <Route exact path = "/games" 
                     render ={() => (
-                    <Games id = {result} room = {room} setRoom = {setRoom}/>)}
+                    <Games id = {result} />)}
                 />
                 <Route exact path = "/games/:roomId" render ={(props) => (
-                    <GameRoom {...props} room = {room} setRoom = {setRoom} id = {result}
+                    <GameRoom {...props} id = {result}
                     />
                 )}/>
                 <Route path = "/about" component = {About} />
@@ -53,7 +44,6 @@ const Routing = () => {
                 <Route path = "/login" component = {Login} />
                 <Route path = "/signup" component = {Signup} />
                 <Route path = "/layout" component = {Layout} />
-      
             </Switch>
         </Router>
     )
