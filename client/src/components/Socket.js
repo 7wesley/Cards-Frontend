@@ -3,13 +3,12 @@ import io from 'socket.io-client';
 let socket;
 
 //Connects the the player to the room with the specific id via socket
-export const connectSocket = (roomId, id) => {
+export const connectSocket = (room, id) => {
     socket = io(
         'http://localhost:5000', {
         transports: ['websocket', 'polling', 'flashsocket'],
     })
-    console.log(`User connection to room ${roomId}`);
-    if (socket && roomId) socket.emit('join', roomId, id);
+    if (socket && room) socket.emit('join', room, id);
 }
 
 //Disconnects the user from the room by terminating the connection 

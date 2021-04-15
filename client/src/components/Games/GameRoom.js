@@ -3,19 +3,28 @@ import { motion } from 'framer-motion';
 import { Prompt } from 'react-router';
 import Waiting from './Waiting';
 import Winner from './Winner';
+import InProgress from './InProgress';
+import NotFound from './NotFound';
 import useRoomListener from '../../hooks/useRoomListener';
 import useSocketListener from '../../hooks/useSocketListener';
-import { getSocket } from '../Socket';
+import { getSocket, connectSocket } from '../Socket';
 import { Button } from 'react-bootstrap';
 
-const GameRoom = ({match, room, setRoom, id}) => {
+const GameRoom = ({match, id}) => {
 
-    const { players, countdown, prompt, turn, timer, message, winners } = useSocketListener(id);
-    const { playersList, maxPlayers } = useRoomListener(match.params.roomId, id, setRoom)
-    const [selected, setSelected] = useState(false);
     const [loading, setLoading] = useState(true);
-    const [currCard, setCurrCard] = useState(null);
+    const [connected, setConnected] = useState(false)
+    const { playersList, maxPlayers, status } = useRoomListener(match.params.roomId);
+    const { players, countdown, prompt, turn, timer, message, winners } = useSocketListener(connected);
 
+    useEffect(() => {
+        //if the room is open and they aren't already connected:
+        if (status === "waiting" && !connected) {
+            connectSocket(match.params.roomId, id);
+            setConnected(true);
+        }
+    }, [status])
+    
     useEffect(() => {
         if (turn === id)
             setLoading(false);
@@ -37,14 +46,7 @@ const GameRoom = ({match, room, setRoom, id}) => {
     }
 
     const handlePlay = (choice) => {
-        //if (players.length > 1)
-        //    setLoading(true);
         getSocket().emit("player-move", choice);
-    }
-
-    const handleCardChoice = (card) => {
-        setSelected(true);
-        setCurrCard(card);
     }
 
     const renderPlayer = (player) => {
@@ -54,8 +56,7 @@ const GameRoom = ({match, room, setRoom, id}) => {
             <div className = "row">  
                 <motion.div className = "mx-auto" layout>
                     { player.cards && Object.values(player.cards).map(card =>      
-                            <motion.img className="img-fluid" style = {{ width: 100 }} src = {card.image} 
-                            onClick = {() => handleCardChoice(card)}
+                            <motion.img className="img-fluid" style = {{ width: 100 }} src = {card.image}
                             whileHover={{
                                 scale: 1.1,
                         }} />  
@@ -63,18 +64,6 @@ const GameRoom = ({match, room, setRoom, id}) => {
                 </motion.div>          
             </div>
             <p className = "text-center">{player.total} {player.status === "standing" && `(${player.status})`}</p>
-            { selected && 
-                <>
-                    {/*
-                    <p className = "mb-0">Are you sure you want to play this card?</p>
-                    <div className = "row">
-                        <Button className = "mr-2" onClick = {handlePlay}>Confirm</Button>
-                        <Button onClick = {() => setSelected(false)} variant="danger">Cancel</Button>
-                    </div>
-                    */}
-                </>
-            }
-        
     </div>
         )
     }
@@ -120,10 +109,12 @@ const GameRoom = ({match, room, setRoom, id}) => {
     return (
         <>
         <Prompt
-            when={ true }
+            when={ connected && !winners }
             message='This will exit you from the game. Are you sure?'
         />
-        { room === match.params.roomId ? (
+
+        { playersList ? (
+            status === "in-progress" && !connected ? <InProgress playersList = {playersList} /> :
             !winners && players.length ? (
                 <div className = "container position-relative mt-4">
                     <div className="d-flex flex-column vh-100 text-center">
@@ -134,9 +125,9 @@ const GameRoom = ({match, room, setRoom, id}) => {
                     </div>
                 </div>  
             ) : winners ? 
-                <Winner id = {id} winners = {winners} /> 
-                : <Waiting id = {id} players = {playersList} maxPlayers = {maxPlayers} countdown = {countdown}/>
-        ) : <p>Not found</p>
+                <Winner id = {id} winners = {winners} timer = {timer}/> 
+                : <Waiting id = {id} playersList = {playersList} maxPlayers = {maxPlayers} countdown = {countdown}/>
+        ) : <NotFound />
         }   
         </>
     )

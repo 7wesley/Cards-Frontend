@@ -5,7 +5,6 @@ const useQueryDocs = (collection, doc, updated) => {
     
     const [docs, setDocs] = useState(null);
 
-    //Alternatively could use listener
     useEffect(() => {
         const data = async () => {
             if (doc) {

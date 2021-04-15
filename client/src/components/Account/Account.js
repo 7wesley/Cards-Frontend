@@ -4,7 +4,7 @@ import { Link, useHistory } from 'react-router-dom';
 import styles from '../../assets/Information.module.css';
 import { useAuth } from '../../contexts/AuthContext'
 import useQueryDocs from '../../hooks/useQueryDocs';
-import useSessionStorage from '../../hooks/useQuerySessionAndDB';
+import useSessionStorage from '../../hooks/useStorage';
 
 const Account = ({ id, setValue }) => {
 
