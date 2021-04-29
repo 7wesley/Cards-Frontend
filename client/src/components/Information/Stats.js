@@ -59,7 +59,7 @@ const Stats = ({ id, stats }) => {
     //Update the user's stats
     updateStats(id)
 
-    const blank = {'Wins' : 0, 'Losses' : 0, 'Played' : 0}
+    const blank = {'Wins' : wins, 'Losses' : losses, 'Played' : played}
     stats = blank;
     const { currentUser } = useAuth();
 
@@ -110,20 +110,14 @@ const Stats = ({ id, stats }) => {
             </div>
             <div className = "container mt-5">
                 <div className = "mx-auto col-lg-8 col-md-10 col-xs-12">
-                    <p className="h3 text-center">{id}'s stats:</p>            
+                    <p className="h3 text-center">{id}'s stats:</p>                                
                     
-                    <div>Wins: {wins}</div>
-                    <div>Losses: {losses}</div>
-                    <div>Played: {played}</div>
-                    
-                    {/*}
                     {stats && Object.keys(stats).map(key => 
                         <div>
                             {key + ": " + stats[key]}
                         </div>
                     )}  
-                    */}
-
+                    
                     { stats && barChart}  
                     {!currentUser && <p className = "h5 mt-2 text-center">Want permanent stats? <Link to = "/login">Create an account</Link></p>}                      
                 </div>

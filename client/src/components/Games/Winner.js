@@ -3,6 +3,8 @@ import React, {useState, useEffect} from 'react';
 import { Link } from 'react-router-dom';
 import { Button } from 'react-bootstrap';
 import { getSocket } from '../Socket';
+import { db, increment } from '../../firebase';
+
 const Winner = ({ id, winners, timer }) => {
     
     const socket = getSocket();
@@ -24,12 +26,8 @@ const callWins = async (uID) => {
     return getWins(uID);
 }
 
-const getUserID = async () => {
-    return getUID();
-}
 
-
-    //Works, gets the specific player's wins
+    //updates the player's wins
     async function funct1(name) {
 
         const ID = await funct2(name)
@@ -41,10 +39,10 @@ const getUserID = async () => {
         });   
     }
 
-    //Works, gets the specific player's wins
+    //try another way
     async function funct2(name) {
 
-        const refID = await db.collection("usernames").doc(name);  
+        const refID = db.collection("usernames").doc(name);  
         
         return refID.get().then((snap1) => {
             if(snap1.exists) {
@@ -54,6 +52,61 @@ const getUserID = async () => {
                 alert("not found")
             }
         });
+    }
+
+    //Gets the specific user's id
+    async function getUserID(name) {
+
+        //Gets a snapshot of this user's id
+        const refID = db.collection("usernames").doc(name);  
+        
+        //Returns the user's id
+        const snap1 = await refID.get();
+        if (snap1.exists) {
+
+            //alert(snap1.get("uid"))
+            return snap1.get("uid");
+        }
+    }
+
+    //try this way
+    async function funct3(name) {
+        
+        const userID = await getUserID(name);
+        alert(userID)
+
+        db.collection("users").doc(userID).update({
+            "stats.wins": increment
+        }); 
+
+    }
+
+        //try this way
+    function funct4(name) {
+
+        const ref = db.collection("users").doc("sxfCyow1vQclhv1lOkOBoISRS432");
+        //const increaseBy = firebase.firestore.FieldValue.increment(1);
+
+        // ref.update({
+        //     "stats.wins": increaseBy
+        // }); 
+
+        // ref.update({
+        //     stats: {
+        //       [wins]: FieldValue.increment(1)
+        //     }
+        // }, { merge: true });
+
+        // ref.set({
+        //     stats: {
+        //       [wins]: FieldValue.increment(1)
+        //     }
+        // }, { merge: true });
+
+        ref.update({
+            'stats.wins': increment(1)
+        });
+
     }
 
     return (
@@ -67,6 +120,7 @@ const getUserID = async () => {
 
                             {/*Update the user's total games won*/}
                             {/*updateWins(getUID())*/}
+                            {/*funct4(id)*/}
 
                         </>
                     ) : <p className = "h3">Nobody wins!</p>}  

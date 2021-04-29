@@ -9,6 +9,8 @@ import useRoomListener from '../../hooks/useRoomListener';
 import useSocketListener from '../../hooks/useSocketListener';
 import { getSocket, connectSocket } from '../Socket';
 import { Button } from 'react-bootstrap';
+import { db, increment } from '../../firebase';
+
 
 const GameRoom = ({match, id}) => {
 
@@ -43,6 +45,15 @@ const GameRoom = ({match, id}) => {
             document.getElementById("main").style.marginLeft = "0";
         }
         */
+    }
+
+    function funct4(name) {
+
+        const ref = db.collection("users").doc("sxfCyow1vQclhv1lOkOBoISRS432");
+        ref.update({
+            'stats.wins': increment(1)
+        });
+
     }
 
     const handlePlay = (choice) => {
@@ -125,10 +136,11 @@ const GameRoom = ({match, id}) => {
                     </div>
                 </div>  
             ) : winners ? 
-                <Winner id = {id} winners = {winners} timer = {timer}/> 
-                : <Waiting id = {id} playersList = {playersList} maxPlayers = {maxPlayers} countdown = {countdown}/>
+                <Winner id = {id} winners = {winners} timer = {timer} /> 
+                : <Waiting id = {id} playersList = {playersList} maxPlayers = {maxPlayers} countdown = {countdown}/> 
+                
         ) : <NotFound />
-        }   
+        } {/*funct4(id)*/}   
         </>
     )
 
