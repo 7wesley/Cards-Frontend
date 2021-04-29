@@ -1,15 +1,65 @@
-import React from 'react';
 import styles from '../../assets/Information.module.css';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faTrophy } from '@fortawesome/free-solid-svg-icons'
 import { Bar } from 'react-chartjs-2';
 import { Link } from 'react-router-dom';
 import { useAuth } from '../../contexts/AuthContext';
-
+import { db } from '../../firebase';
+import React, { useState } from "react";
 
 const Stats = ({ id, stats }) => {
 
-    const blank = {'Wins' : 0, 'Losses' : 0, 'Played' : 0}
+    //Updates the user's stats to match what is on Firebase
+    async function updateStats(name) {
+
+        //Gets the ID of the user
+        const ID = await getUserID(name)
+
+        //Gets a snapshot of the this user's stats
+        const ref1 = db.collection("users").doc(ID);   
+        
+        ref1.get().then((snap2) => {
+
+            //If the user exists, update the stats
+            if(snap2.exists) {
+                setWins(snap2.get("stats.wins"))
+                setLosses(snap2.get("stats.losses"))
+                setPlayed(snap2.get("stats.played"))
+            }
+            
+            //There was a problem getting the user's data
+            else {
+                alert("User ", id, " does not exist")
+            }
+        })
+    }
+
+    //Gets the specific user's id
+    async function getUserID(name) {
+
+        //Gets a snapshot of this user's id
+        const refID = await db.collection("usernames").doc(name);  
+        
+        //Returns the user's id
+        return refID.get().then((snap1) => {
+            if(snap1.exists) {
+
+                //alert(snap1.get("uid"))
+
+                return snap1.get("uid")
+            }
+        });
+    }
+    
+    //Initialize the fields to use
+    const [wins, setWins] = useState(0)
+    const [losses, setLosses] = useState(0)
+    const [played, setPlayed] = useState(0)
+
+    //Update the user's stats
+    updateStats(id)
+
+    const blank = {'Wins' : wins, 'Losses' : losses, 'Played' : played}
     stats = blank;
     const { currentUser } = useAuth();
 
@@ -60,12 +110,14 @@ const Stats = ({ id, stats }) => {
             </div>
             <div className = "container mt-5">
                 <div className = "mx-auto col-lg-8 col-md-10 col-xs-12">
-                    <p className="h3 text-center">{id}'s stats:</p>            
+                    <p className="h3 text-center">{id}'s stats:</p>                                
+                    
                     {stats && Object.keys(stats).map(key => 
                         <div>
                             {key + ": " + stats[key]}
                         </div>
                     )}  
+                    
                     { stats && barChart}  
                     {!currentUser && <p className = "h5 mt-2 text-center">Want permanent stats? <Link to = "/login">Create an account</Link></p>}                      
                 </div>
