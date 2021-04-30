@@ -4,7 +4,7 @@ import { faTrophy } from '@fortawesome/free-solid-svg-icons'
 import { Bar } from 'react-chartjs-2';
 import { Link } from 'react-router-dom';
 import { useAuth } from '../../contexts/AuthContext';
-import { db } from '../../firebase';
+import { db } from '../../firebase'; 
 import React, { useState } from "react";
 import useStorage from '../../hooks/useStorage';
 
