@@ -1,6 +1,21 @@
 import styles from '../../assets/Transitions.module.css'
+import React, { useState, useRef } from 'react';
+import { InputGroup, FormControl, Overlay, Tooltip } from 'react-bootstrap';
 import { motion } from 'framer-motion';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import { faCopy } from '@fortawesome/free-regular-svg-icons'
 const Waiting = ({ id, playersList, maxPlayers, countdown }) => {
+
+    const [show, setShow] = useState(false);
+    const target = useRef(null);
+
+    const handleCopy = async () => {
+        navigator.clipboard.writeText(window.location.href);
+        setShow(true);
+        await new Promise(resolve => setTimeout(resolve, 1000));
+        setShow(false);
+    }
+
     return (
         <div className = {styles.bgWaiting}>
             <div className="d-flex flex-column min-vh-100 justify-content-center align-items-center" >
@@ -20,12 +35,31 @@ const Waiting = ({ id, playersList, maxPlayers, countdown }) => {
                         <>
                             <p className = "h3">Waiting for players... </p>
                             <p className = "h3 mb-4">({Object.keys(playersList).length} out of {maxPlayers})</p>
+                            
                             <p className = "h4">Players in room:</p> 
                             <motion.div layout>
                                 { Object.keys(playersList).map(player => (
                                     <p className = "mb-0"> { player } {id === player && "(You)"}</p>
                                 ))}
-                            </motion.div>
+                            </motion.div>             
+
+                            <InputGroup className="mb-2 mt-4" id = "copyIcon">
+                                <InputGroup.Prepend>
+                                <InputGroup.Text ref = {target} id = "copyText" onClick = {handleCopy}>
+                                    <FontAwesomeIcon size="lg" icon={faCopy} />
+                                </InputGroup.Text>
+                                </InputGroup.Prepend>
+                                <FormControl value = {window.location.href}/>
+                            </InputGroup>
+
+                            <Overlay target={target.current} show={show} placement="top">
+                                {(props) => (
+                                <Tooltip id="overlay" {...props}>
+                                    Copied!
+                                </Tooltip>
+                                )}
+                            </Overlay>
+                      
                         </>
                     )}
                 </div>

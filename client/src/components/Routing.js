@@ -16,30 +16,33 @@ import useStorage from '../hooks/useStorage'
 
 const Routing = () => {
 
-    const { result, setValue } = useStorage('username', Math.round(Math.random() * 100000));
-    //const { stats } = useQuerySessionAndDB('stats', {}, currentUser);
+    const { userData, updateStorage } = useStorage({
+        username: `Guest-${Math.round(Math.random() * 100000)}`,
+        stats: { Wins: 0, Losses: 0, Played: 0 }
+    });
+    const id = userData && userData.username;
 
     return (
         <Router>      
-            <Header name = {result}/>
+            <Header id = {id}/>
             <Switch>
                 <Route exact path = "/" component = {Welcome} />
                 <Route exact path = "/games" 
                     render ={() => (
-                    <Games id = {result} />)}
+                    <Games id = {id} />)}
                 />
                 <Route exact path = "/games/:roomId" render ={(props) => (
-                    <GameRoom {...props} id = {result}
+                    <GameRoom {...props} userData = {userData} updateStorage = {updateStorage}
                     />
                 )}/>
                 <Route path = "/about" component = {About} />
                 <Route path = "/contact" component = {Contact} />
                 <Route path = "/waiting" component = {Waiting}/>
                 <Route path = "/stats" render = {() => (
-                    <Stats id = {result} />
+                    <Stats userData = {userData} />
                 )}/>
                 <Route path = "/account" render = {() => (
-                    <Account id = {result} setValue = {setValue}/>
+                    <Account id = {id} updateStorage = {updateStorage}/>
                 )}/>
                 <Route path = "/login" component = {Login} />
                 <Route path = "/signup" component = {Signup} />

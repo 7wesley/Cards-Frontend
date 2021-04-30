@@ -16,11 +16,15 @@ package-lock.json
 /client/src/setupTests.js
 
 # production
+/production
 /client/build
 /client/.firebase
 /client/.firebaserc
 /client/firebase.json
 /client/public/robots.txt
+/server/server.bundle.js
+/server/server.bundle.js.LICENSE.txt
+/server/webpack.config.js
 
 # misc
 /client/src/contexts/SocketProvider.js
@@ -30,7 +34,6 @@ package-lock.json
 /client/.env.test.local
 /client/.env.production.local
 /server/.env
-/server/saved.txt
 /client/npm-debug.log*
 /client/yarn-debug.log*
 /client/yarn-error.log*
