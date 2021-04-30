@@ -2,32 +2,54 @@ import styles from '../../assets/Transitions.module.css'
 import React, {useState, useEffect} from 'react';
 import { Link } from 'react-router-dom';
 import { Button } from 'react-bootstrap';
-import { getSocket } from '../Socket';
+import { getSocket, updateWins } from '../Socket';
 import { db, increment } from '../../firebase';
+import { useAuth } from '../../contexts/AuthContext';
 
-const Winner = ({ id, winners, timer }) => {
+const Winner = ({ userData, winners, timer, updateStorage }) => {
     
     const socket = getSocket();
     const [loading, setLoading] = useState(false);
+    const id = userData && userData.username;
 
     useEffect(() => {
         timer == 0 && setLoading(true);
     }, [timer]);
 
+    //This logic could be handled in the backend
+    useEffect(() => {
+        const updateStats = async () => {
+            if (id) {
+                console.log(winners);
+                console.log(id);
+                if (winners.some(winner => winner.id === id))
+                    userData.stats.Wins++;
+                else 
+                    userData.stats.Losses++;
+                userData.stats.Played++;
+                await updateStorage({ stats: userData.stats })
+            }
+        }
+        updateStats();
+    }, [id])
+
     const handlePlayAgain = () => {
         socket.emit('play-again');
     }
 
-const updateStats = async (userID) => {
-    updateWins(userID);
-}
+    /*
+    const updateStats = async (userID) => {
+        updateWins(userID);
+    }
 
-const callWins = async (uID) => {
-    return getWins(uID);
-}
+    const callWins = async (uID) => {
+        return getWins(uID);
+    }
+    */
 
 
     //updates the player's wins
+    /*
     async function funct1(name) {
 
         const ID = await funct2(name)
@@ -38,8 +60,10 @@ const callWins = async (uID) => {
             "stats.wins": increment()
         });   
     }
+    */
 
     //try another way
+    /*
     async function funct2(name) {
 
         const refID = db.collection("usernames").doc(name);  
@@ -53,8 +77,10 @@ const callWins = async (uID) => {
             }
         });
     }
+    */
 
     //Gets the specific user's id
+    /*
     async function getUserID(name) {
 
         //Gets a snapshot of this user's id
@@ -68,8 +94,9 @@ const callWins = async (uID) => {
             return snap1.get("uid");
         }
     }
-
+    */
     //try this way
+    /*
     async function funct3(name) {
         
         const userID = await getUserID(name);
@@ -80,8 +107,9 @@ const callWins = async (uID) => {
         }); 
 
     }
-
+    */
         //try this way
+    /*
     function funct4(name) {
 
         const ref = db.collection("users").doc("sxfCyow1vQclhv1lOkOBoISRS432");
@@ -108,7 +136,7 @@ const callWins = async (uID) => {
         });
 
     }
-
+    */
     return (
         <div className = {styles.bgInProgress}>
             <div className="d-flex flex-column min-vh-100 justify-content-center align-items-center" >
@@ -117,7 +145,12 @@ const callWins = async (uID) => {
                         <>
                             <p className = "h3">{winner.id === id ? "You win!" : `${winner.id} wins!`}</p>
                             <p className = "h6">Final hand value: {winner.total}</p>
-
+                            <p className = "h4 mt-4">---Stats---</p>
+                            <p className = "h6">
+                                {userData && Object.keys(userData.stats).map((stat) => 
+                                    `  ${stat}: ` + userData.stats[stat]
+                                )}
+                            </p>
                             {/*Update the user's total games won*/}
                             {/*updateWins(getUID())*/}
                             {/*funct4(id)*/}

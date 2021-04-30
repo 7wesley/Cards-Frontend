@@ -4,9 +4,10 @@ import { Link, useHistory } from 'react-router-dom';
 import styles from '../../assets/Information.module.css';
 import { useAuth } from '../../contexts/AuthContext'
 import useQueryDocs from '../../hooks/useQueryDocs';
+import useStorage from '../../hooks/useStorage'
 import useSessionStorage from '../../hooks/useStorage';
 
-const Account = ({ id, setValue }) => {
+const Account = ({id, updateStorage}) => {
 
     const { currentUser, logout, upload, updateProfile } = useAuth();
     const [updated, setUpdated] = useState(false);
@@ -33,8 +34,11 @@ const Account = ({ id, setValue }) => {
             if (e.target[0] && e.target[0].value) {
                 if (currentUser) 
                     await updateProfile(e.target[0].value);    
-                else 
-                    setValue(e.target[0].value + '-' + Math.round((Math.random() * 100000)));
+                else {
+                    updateStorage({
+                        username: e.target[0].value + '-' + Math.round((Math.random() * 100000))      
+                    });
+                }
             }
             if (e.target[1] && e.target[1].files) 
                 await upload(e.target[1].files[0]);

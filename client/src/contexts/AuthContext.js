@@ -1,5 +1,5 @@
 import React, { useContext, useState, useEffect } from "react"
-import { auth, db, dbStorage, timestamp, increment } from "../firebase"
+import { auth, db, dbStorage, timestamp } from "../firebase"
 
 const AuthContext = React.createContext()
 
@@ -17,19 +17,19 @@ export function AuthProvider({ children }) {
         if (username.length < 3) throw 'Username should be 3 characters or longer'
         const doc = await db.collection('usernames').doc(username).get();
         if (doc.exists) throw 'Username already taken!';
-        console.log('nope');
     }
+
     const signup = async (username, email, password) => {
         await usernameCheck(username);
         const user = await auth.createUserWithEmailAndPassword(email, password)
         await db.collection('users').doc(user.user.uid).set({
             username: username,
             createdAt: timestamp(),
-            uid: user.user.uid,
+            id: user.user.uid,
             stats: {
-                wins: 0,
-                losses: 0,
-                played: 0,
+                Wins: 0,
+                Losses: 0,
+                Played: 0,
             }
         });
         await db.collection('usernames').doc(username).set({

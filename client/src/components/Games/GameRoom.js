@@ -12,12 +12,13 @@ import { Button } from 'react-bootstrap';
 import { db, increment } from '../../firebase';
 
 
-const GameRoom = ({match, id}) => {
+const GameRoom = ({match, userData, updateStorage}) => {
 
     const [loading, setLoading] = useState(true);
     const [connected, setConnected] = useState(false)
     const { playersList, maxPlayers, status } = useRoomListener(match.params.roomId);
     const { players, countdown, prompt, turn, timer, message, winners } = useSocketListener(connected);
+    const id = userData && userData.username;
 
     useEffect(() => {
         //if the room is open and they aren't already connected:
@@ -136,7 +137,7 @@ const GameRoom = ({match, id}) => {
                     </div>
                 </div>  
             ) : winners ? 
-                <Winner id = {id} winners = {winners} timer = {timer} /> 
+                <Winner userData = {userData} winners = {winners} timer = {timer} updateStorage = {updateStorage} /> 
                 : <Waiting id = {id} playersList = {playersList} maxPlayers = {maxPlayers} countdown = {countdown}/> 
                 
         ) : <NotFound />

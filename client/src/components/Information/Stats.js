@@ -6,9 +6,10 @@ import { Link } from 'react-router-dom';
 import { useAuth } from '../../contexts/AuthContext';
 import { db } from '../../firebase';
 import React, { useState } from "react";
+import useStorage from '../../hooks/useStorage';
 
-const Stats = ({ id, stats }) => {
-
+const Stats = ({ userData }) => {
+    /*
     //Updates the user's stats to match what is on Firebase
     async function updateStats(name) {
 
@@ -61,11 +62,12 @@ const Stats = ({ id, stats }) => {
 
     const blank = {'Wins' : wins, 'Losses' : losses, 'Played' : played}
     stats = blank;
+    */
     const { currentUser } = useAuth();
 
     const barChart = (
         <div className = "barChart">
-            {stats 
+            {userData
                 ? (
                     <Bar 
                         data = {{
@@ -75,7 +77,7 @@ const Stats = ({ id, stats }) => {
                                 backgroundColor: [
                                     'rgba(0, 0, 255, 0.5)', 'rgba(0, 255, 0, 0.5)', 'rgba(255, 0, 0, 0.5)'
                                 ],
-                                data: [stats.Wins, stats.Losses, stats.Played]
+                                data: [userData.stats.Wins, userData.stats.Losses, userData.stats.Played]
                             }]
                         }}
                     
@@ -110,15 +112,15 @@ const Stats = ({ id, stats }) => {
             </div>
             <div className = "container mt-5">
                 <div className = "mx-auto col-lg-8 col-md-10 col-xs-12">
-                    <p className="h3 text-center">{id}'s stats:</p>                                
+                    <p className="h3 text-center">{userData && userData.username}'s stats:</p>                                
                     
-                    {stats && Object.keys(stats).map(key => 
+                    {userData && Object.keys(userData.stats).map(key => 
                         <div>
-                            {key + ": " + stats[key]}
+                            {key + ": " + userData.stats[key]}
                         </div>
                     )}  
                     
-                    { stats && barChart}  
+                    { userData && barChart}  
                     {!currentUser && <p className = "h5 mt-2 text-center">Want permanent stats? <Link to = "/login">Create an account</Link></p>}                      
                 </div>
             </div>

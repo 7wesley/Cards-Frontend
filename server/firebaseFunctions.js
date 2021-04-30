@@ -43,8 +43,12 @@ module.exports = {
     },
 
     queryMax: async (roomId) => {
-        var roomDoc = await db.collection('rooms').doc(roomId).get();
-        return roomDoc.data().maxPlayers;
+        try {
+            var roomDoc = await db.collection('rooms').doc(roomId).get();
+            return roomDoc.data().maxPlayers;
+        } catch {
+            return 0;
+        }
     },
 
     setStatus: async (roomId, status) => {
