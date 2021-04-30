@@ -5,6 +5,7 @@ import { Button } from 'react-bootstrap';
 import { getSocket } from '../Socket';
 import { db, increment } from '../../firebase';
 
+
 const Winner = ({ id, winners, timer }) => {
     
     const socket = getSocket();
@@ -12,19 +13,20 @@ const Winner = ({ id, winners, timer }) => {
 
     useEffect(() => {
         timer == 0 && setLoading(true);
+        //funct4(id)
     }, [timer]);
 
     const handlePlayAgain = () => {
         socket.emit('play-again');
     }
 
-const updateStats = async (userID) => {
-    updateWins(userID);
-}
+    const updateStats = async (userID) => {
+        updateWins(userID);
+    }
 
-const callWins = async (uID) => {
-    return getWins(uID);
-}
+    const callWins = async (uID) => {
+        return getWins(uID);
+    }
 
 
     //updates the player's wins
@@ -108,6 +110,11 @@ const callWins = async (uID) => {
         });
 
     }
+
+
+    // useEffect(() => {
+    //     funct4(id)
+    // });
 
     return (
         <div className = {styles.bgInProgress}>
