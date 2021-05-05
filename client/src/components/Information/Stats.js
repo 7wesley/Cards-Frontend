@@ -4,65 +4,10 @@ import { faTrophy } from '@fortawesome/free-solid-svg-icons'
 import { Bar } from 'react-chartjs-2';
 import { Link } from 'react-router-dom';
 import { useAuth } from '../../contexts/AuthContext';
-import { db } from '../../firebase'; 
-import React, { useState } from "react";
-import useStorage from '../../hooks/useStorage';
+import React from "react";
 
 const Stats = ({ userData }) => {
-    /*
-    //Updates the user's stats to match what is on Firebase
-    async function updateStats(name) {
 
-        //Gets the ID of the user
-        const ID = await getUserID(name)
-
-        //Gets a snapshot of the this user's stats
-        const ref1 = db.collection("users").doc(ID);   
-        
-        ref1.get().then((snap2) => {
-
-            //If the user exists, update the stats
-            if(snap2.exists) {
-                setWins(snap2.get("stats.wins"))
-                setLosses(snap2.get("stats.losses"))
-                setPlayed(snap2.get("stats.played"))
-            }
-            
-            //There was a problem getting the user's data
-            else {
-                alert("User ", id, " does not exist")
-            }
-        })
-    }
-
-    //Gets the specific user's id
-    async function getUserID(name) {
-
-        //Gets a snapshot of this user's id
-        const refID = await db.collection("usernames").doc(name);  
-        
-        //Returns the user's id
-        return refID.get().then((snap1) => {
-            if(snap1.exists) {
-
-                //alert(snap1.get("uid"))
-
-                return snap1.get("uid")
-            }
-        });
-    }
-    
-    //Initialize the fields to use
-    const [wins, setWins] = useState(0)
-    const [losses, setLosses] = useState(0)
-    const [played, setPlayed] = useState(0)
-
-    //Update the user's stats
-    updateStats(id)
-
-    const blank = {'Wins' : wins, 'Losses' : losses, 'Played' : played}
-    stats = blank;
-    */
     const { currentUser } = useAuth();
 
     const barChart = (
@@ -130,3 +75,58 @@ const Stats = ({ userData }) => {
 }
 
 export default Stats;
+
+    /*
+    //Updates the user's stats to match what is on Firebase
+    async function updateStats(name) {
+
+        //Gets the ID of the user
+        const ID = await getUserID(name)
+
+        //Gets a snapshot of the this user's stats
+        const ref1 = db.collection("users").doc(ID);   
+        
+        ref1.get().then((snap2) => {
+
+            //If the user exists, update the stats
+            if(snap2.exists) {
+                setWins(snap2.get("stats.wins"))
+                setLosses(snap2.get("stats.losses"))
+                setPlayed(snap2.get("stats.played"))
+            }
+            
+            //There was a problem getting the user's data
+            else {
+                alert("User ", id, " does not exist")
+            }
+        })
+    }
+
+    //Gets the specific user's id
+    async function getUserID(name) {
+
+        //Gets a snapshot of this user's id
+        const refID = await db.collection("usernames").doc(name);  
+        
+        //Returns the user's id
+        return refID.get().then((snap1) => {
+            if(snap1.exists) {
+
+                //alert(snap1.get("uid"))
+
+                return snap1.get("uid")
+            }
+        });
+    }
+    
+    //Initialize the fields to use
+    const [wins, setWins] = useState(0)
+    const [losses, setLosses] = useState(0)
+    const [played, setPlayed] = useState(0)
+
+    //Update the user's stats
+    updateStats(id)
+
+    const blank = {'Wins' : wins, 'Losses' : losses, 'Played' : played}
+    stats = blank;
+    */

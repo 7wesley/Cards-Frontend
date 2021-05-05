@@ -21,7 +21,7 @@ const Header = ({ id }) => {
     } 
 
     const handleLink = (link) => {
-        if (open == true)
+        if (open === true)
             setOpen(false);
         history.push(`/${link}`);
     }

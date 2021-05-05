@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import { db } from '../firebase'
 import { useAuth } from "../contexts/AuthContext";
 
@@ -30,7 +30,6 @@ const useStorage = (initialData) => {
         if (currentUser) {
           const dbData = await db.collection('users').doc(currentUser.uid).get();
           setUserData(dbData.data());
-          console.log(userData);
         }
         else {
           let filteredData = {};

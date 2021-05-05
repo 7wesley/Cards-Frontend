@@ -2,9 +2,7 @@ import styles from '../../assets/Transitions.module.css'
 import React, {useState, useEffect} from 'react';
 import { Link } from 'react-router-dom';
 import { Button } from 'react-bootstrap';
-import { getSocket, updateWins } from '../Socket';
-import { db, increment } from '../../firebase';
-import { useAuth } from '../../contexts/AuthContext';
+import { getSocket } from '../Socket';
 
 const Winner = ({ userData, winners, timer, updateStorage }) => {
     
@@ -13,8 +11,7 @@ const Winner = ({ userData, winners, timer, updateStorage }) => {
     const id = userData && userData.username;
 
     useEffect(() => {
-        timer == 0 && setLoading(true);
-        //funct4(id)
+        timer === 0 && setLoading(true);
     }, [timer]);
 
     //This logic could be handled in the backend
@@ -32,13 +29,46 @@ const Winner = ({ userData, winners, timer, updateStorage }) => {
             }
         }
         updateStats();
-    }, [id])
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [id]) 
 
     const handlePlayAgain = () => {
         socket.emit('play-again');
     }
 
-    /*
+    return (
+        <div className = {styles.bgInProgress}>
+            <div className="d-flex flex-column min-vh-100 justify-content-center align-items-center" >
+                <div className="text-center text-light">
+                    { winners.length ? winners.map(winner =>
+                        <>
+                            <p className = "h3">{winner.id === id ? "You win!" : `${winner.id} wins!`}</p>
+                            <p className = "h6">Final hand value: {winner.total}</p>
+                            <p className = "h4 mt-4">---Stats---</p>
+                            <p className = "h6">
+                                {userData && Object.keys(userData.stats).map((stat) => 
+                                    `  ${stat}: ` + userData.stats[stat]
+                                )}
+                            </p>
+                            {/*Update the user's total games won*/}
+                            {/*updateWins(getUID())*/}
+                            {/*funct4(id)*/}
+
+                        </>
+                    ) : <p className = "h3">Nobody wins!</p>}  
+                    <div className = "row mt-4 mx-auto"> 
+                        <Link to = "/games" className = "btn btn-primary mr-2">Main Menu</Link>
+                        <Button disabled = {loading} onClick = {handlePlayAgain} className = "bml-2">Play Again {timer}</Button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    )
+}
+
+export default Winner;
+
+  /*
     const updateStats = async (userID) => {
         updateWins(userID);
     }
@@ -138,34 +168,3 @@ const Winner = ({ userData, winners, timer, updateStorage }) => {
 
     }
     */
-    return (
-        <div className = {styles.bgInProgress}>
-            <div className="d-flex flex-column min-vh-100 justify-content-center align-items-center" >
-                <div className="text-center text-light">
-                    { winners.length ? winners.map(winner =>
-                        <>
-                            <p className = "h3">{winner.id === id ? "You win!" : `${winner.id} wins!`}</p>
-                            <p className = "h6">Final hand value: {winner.total}</p>
-                            <p className = "h4 mt-4">---Stats---</p>
-                            <p className = "h6">
-                                {userData && Object.keys(userData.stats).map((stat) => 
-                                    `  ${stat}: ` + userData.stats[stat]
-                                )}
-                            </p>
-                            {/*Update the user's total games won*/}
-                            {/*updateWins(getUID())*/}
-                            {/*funct4(id)*/}
-
-                        </>
-                    ) : <p className = "h3">Nobody wins!</p>}  
-                    <div className = "row mt-4 mx-auto"> 
-                        <Link to = "/games" className = "btn btn-primary mr-2">Main Menu</Link>
-                        <Button disabled = {loading} onClick = {handlePlayAgain} className = "bml-2">Play Again {timer}</Button>
-                    </div>
-                </div>
-            </div>
-        </div>
-    )
-}
-
-export default Winner;

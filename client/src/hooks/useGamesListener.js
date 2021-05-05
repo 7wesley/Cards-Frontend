@@ -1,4 +1,4 @@
-import React, {useState, useEffect} from 'react';
+import {useState, useEffect} from 'react';
 import { db } from '../firebase'
 const useGames = (filter) => {
     const [games, setGames] = useState([]);
@@ -10,7 +10,7 @@ const useGames = (filter) => {
             let data = snap.docs.map(doc => doc.data());
             if (filter) 
                 data = data.filter((doc) => 
-                    doc.gameId.slice(0, filter.length) == filter || doc.gameId.slice(0, filter.length) == filter)
+                    doc.gameId.slice(0, filter.length) === filter || doc.gameId.slice(0, filter.length) === filter)
             setGames(data);
         })
         return () => {

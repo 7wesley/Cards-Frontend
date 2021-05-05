@@ -9,8 +9,6 @@ import useRoomListener from '../../hooks/useRoomListener';
 import useSocketListener from '../../hooks/useSocketListener';
 import { getSocket, connectSocket } from '../Socket';
 import { Button } from 'react-bootstrap';
-import { db, increment } from '../../firebase';
-
 
 const GameRoom = ({match, userData, updateStorage}) => {
 
@@ -26,36 +24,12 @@ const GameRoom = ({match, userData, updateStorage}) => {
             connectSocket(match.params.roomId, id);
             setConnected(true);
         }
-    }, [status])
+    }, [status, connected, match.params.roomId, id])
     
     useEffect(() => {
         if (turn === id)
             setLoading(false);
-    }, [turn]);
-    
-    //make separate component
-    const handleChat = () => {
-        /*
-        setOpened(!opened)
-        if (opened == true) {
-            document.getElementById("chatBox").style.width = "250px";
-            document.getElementById("main").style.marginLeft = "250px";
-        }
-        else{
-            document.getElementById("chatBox").style.width = "0";
-            document.getElementById("main").style.marginLeft = "0";
-        }
-        */
-    }
-
-    function funct4(name) {
-
-        const ref = db.collection("users").doc("sxfCyow1vQclhv1lOkOBoISRS432");
-        ref.update({
-            'stats.wins': increment(1)
-        });
-
-    }
+    }, [turn, id]);
 
     const handlePlay = (choice) => {
         getSocket().emit("player-move", choice);
@@ -84,9 +58,9 @@ const GameRoom = ({match, userData, updateStorage}) => {
         return (
             <div className = "col-4 pt-5">
                 { (!message && turn) && 
-                    <p>It is currently <span className="text-primary">{id == turn ? "YOUR" : `${turn}'s`}</span> turn</p>
+                    <p>It is currently <span className="text-primary">{id === turn ? "YOUR" : `${turn}'s`}</span> turn</p>
                 }
-                { (!message && turn) && (id == turn ? (
+                { (!message && turn) && (id === turn ? (
                     <>
                         <p>{prompt}</p>
                         <Button disabled = {loading} className = "mr-2" onClick = {() => handlePlay("draw")}>Confirm</Button>
@@ -105,7 +79,7 @@ const GameRoom = ({match, userData, updateStorage}) => {
         for (let i = 0; i < 9; i++) {
             if (players[i])
                 columns.push(renderPlayer(players[i]));
-            else if (i == players.length) {
+            else if (i === players.length) {
                 columns.push(renderPrompt());
             }
             else
@@ -141,7 +115,7 @@ const GameRoom = ({match, userData, updateStorage}) => {
                 : <Waiting id = {id} playersList = {playersList} maxPlayers = {maxPlayers} countdown = {countdown}/> 
                 
         ) : <NotFound />
-        } {/*funct4(id)*/}   
+        } 
         </>
     )
 

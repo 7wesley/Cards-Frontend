@@ -13,15 +13,16 @@ export function AuthProvider({ children }) {
     const [currentUser, setCurrentUser] = useState()
 
     const usernameCheck = async (username) => {
-        if (/[^a-zA-Z0-9]/.test(username)) throw 'Username should only contain letters and numbers';
-        if (username.length < 3) throw 'Username should be 3 characters or longer'
+        if (/[^a-zA-Z0-9]/.test(username)) throw new Error('Username should only contain letters and numbers');
+        if (username.length < 3) throw new Error('Username should be 3 characters or longer');
         const doc = await db.collection('usernames').doc(username).get();
-        if (doc.exists) throw 'Username already taken!';
+        if (doc.exists) throw new Error('Username already taken!');
     }
 
     const signup = async (username, email, password) => {
         await usernameCheck(username);
         const user = await auth.createUserWithEmailAndPassword(email, password)
+
         await db.collection('users').doc(user.user.uid).set({
             username: username,
             createdAt: timestamp(),
@@ -39,10 +40,9 @@ export function AuthProvider({ children }) {
 
     const upload = async (file) => {
         if (file && (file.type === 'image/png' || file.type === 'image/jpeg')) {
-            let storage = dbStorage.ref().child(file.name)
+            let storage = dbStorage.ref().child(file.name);
             await storage.put(file);
             const url = await storage.getDownloadURL();
-            console.log(url);
             await db.collection('users').doc(currentUser.uid).update({
                 picture: url
             })

@@ -4,8 +4,6 @@ import { Link, useHistory } from 'react-router-dom';
 import styles from '../../assets/Information.module.css';
 import { useAuth } from '../../contexts/AuthContext'
 import useQueryDocs from '../../hooks/useQueryDocs';
-import useStorage from '../../hooks/useStorage'
-import useSessionStorage from '../../hooks/useStorage';
 
 const Account = ({id, updateStorage}) => {
 
@@ -77,7 +75,8 @@ const Account = ({id, updateStorage}) => {
                     { currentUser &&
                         <Form.Group>
                             <p>Change profile picture</p>
-                            <img className = "w-25 rounded mb-3" src = {docs && docs.picture ? docs.picture : "/Images/blankProfile.png"}/>
+                            <img className = "w-25 rounded mb-3" src = {docs && docs.picture ? docs.picture : "/Images/blankProfile.png"}
+                                alt = "User profile" />
                             <Form.Control type="file" />
                         </Form.Group>
                     }

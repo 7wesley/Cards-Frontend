@@ -1,3 +1,6 @@
+/**
+ * Represents all the ranks a card could be.
+ */
 const Ranks = {
     //A: [1, 11],
     A: 1,

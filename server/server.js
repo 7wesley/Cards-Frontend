@@ -6,7 +6,6 @@ var app = express();
 var server = app.listen(5000);
 const io = require('socket.io')(server)
 var GameLogic = require('./GameLogic');
-
 let logic = new GameLogic(io);
 
 io.on('connection', socket => {
@@ -38,6 +37,8 @@ io.on('connection', socket => {
      * Every time a new socket is connected, it is added to 
      * the room that is passed in. If the room has met its player
      * quota, the countdown function will be called.
+     * @param {*} room - The room the socket is part of
+     * @param {*} uid - The uid of the socket that has just joined the room
      */
     socket.on('join', async (room, uid) => {
         //once the socket emits join, all of the subsequent code will
@@ -104,6 +105,12 @@ io.on('connection', socket => {
         }, 1000)
     }
 
+    /**
+     * Asks the room's board object who's turn it is and emits
+     * the appropriate information to each player depending 
+     * on what the board returns.
+     * @param {*} room - The room the socket is part of
+     */
     const turns = async (room) => {
         let board = io.sockets.adapter.rooms.get(room).board;
         let match = {};
@@ -132,6 +139,13 @@ io.on('connection', socket => {
         handleGameEnd(socket.room);
     }
 
+    /**
+     * Creates a countdown timer for 20 seconds. This is used to keep
+     * track of how much time a user has left on a specific turn.
+     * @param {*} room - The room the socket is part of
+     * @param {*} board - The board instance of the current room
+     * @returns 
+     */
     const turnTimer = (room, board) => {  
         let currRoom = io.sockets.adapter.rooms.get(room);
         return new Promise((resolve) => {
@@ -152,8 +166,8 @@ io.on('connection', socket => {
     }
 
     /**
-     * Takes the choice from a player's move and sets it to the 
-     * gameChoice variable and then ends the player's turn.
+     * Takes the choice from a player's move, sets it to the 
+     * gameChoice variable, and then ends the player's turn.
      */
     socket.on('player-move', (choice) => {
         let board = io.sockets.adapter.rooms.get(socket.room).board;
@@ -164,6 +178,11 @@ io.on('connection', socket => {
         //run concurrently with the timer
     })
 
+    /**
+     * Detects if a user decides to play again and increments the room's
+     * playAgain counter and resets states that were saved from the
+     * previous game.
+     */
     socket.on('play-again', async () => {
         socket.playAgain = true;
         let room = io.sockets.adapter.rooms.get(socket.room);
@@ -181,6 +200,12 @@ io.on('connection', socket => {
         }
     })
 
+    /**
+     * Determines what the current game is and then calls the
+     * appropriate method from the gameLogic instance.
+     * @param {*} id - The socket id of the current turn
+     * @param {*} board - The board instance of the current room
+     */
     const gameHandler = async (id, board) => {
         const currSocket = io.sockets.sockets.get(id); 
         switch (currSocket.game) {
@@ -189,6 +214,11 @@ io.on('connection', socket => {
         }
     }
 
+    /**
+     * Determines what the current game is and then returns an
+     * appropriate message for the specific game.
+     * @returns A prompt in the form of a string depending on the game type
+     */
     const getPrompt = () => {
         switch (socket.game) {
             case "Blackjack":
@@ -196,6 +226,12 @@ io.on('connection', socket => {
         }
     }
 
+    /**
+     * Creates a countdown timer for each socket in the room and
+     * updates the room status to 'waiting' if at least one user decides
+     * not to play again.
+     * @param {*} room - The room the socket is part of
+     */
     const handleGameEnd = async (room) => {
         let currRoom = io.sockets.adapter.rooms.get(room);
         if (currRoom) {
@@ -213,6 +249,13 @@ io.on('connection', socket => {
         }
     }
 
+    /**
+     * Generates a 20 second timer used for the ending screen
+     * and emits it to the client paramter in 1 second intervals.
+     * @param {*} client - The client to emit the timer to
+     * @returns A promise that will resolve once the timer
+     * reaches 0
+     */
     const playAgainTimer = (client) => {
         return new Promise((resolve) => {
             let seconds = 20;

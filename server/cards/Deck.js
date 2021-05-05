@@ -1,4 +1,7 @@
 var Card = require('./Card');
+/**
+ * Represents a deck of cards
+ */
 module.exports = class Deck {
     
     constructor() {
@@ -13,7 +16,9 @@ module.exports = class Deck {
         this.shuffle();
     }
 
-    //Fisher-Yates Shuffle
+    /**
+     * Performs a Fisher-Yates shuffle of the cards in the cards field.
+     */
     shuffle() {
         const cards = this.cards;
         let m = cards.length, i;
@@ -22,13 +27,20 @@ module.exports = class Deck {
       
           [cards[m], cards[i]] = [cards[i], cards[m]];
         }
-        return this;
     }
 
+    /**
+     * Deals a single card from the cards field.
+     * @returns - The top card of the deck
+     */
     deal() {
         return this.cards.pop();
     }
 
+    /**
+     * Formats the cards in a user readable string.
+     * @returns - A string representing all the cards in the deck
+     */
     toString() {
         var total = ``;
         for (const card of this.cards) {

@@ -2,7 +2,6 @@ import React, { useEffect, useState } from 'react';
 import { Form, Button, Alert } from 'react-bootstrap'; 
 import { Link, useHistory } from 'react-router-dom';
 import { useAuth } from '../../contexts/AuthContext';
-import { auth } from '../../firebase'
 
 const Login = () => {
     
@@ -30,7 +29,7 @@ const Login = () => {
     useEffect(() => {
         if (currentUser) 
             history.push('/account');
-    }, [])
+    }, [currentUser, history])
     
     return (
         <>

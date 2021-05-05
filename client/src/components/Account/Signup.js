@@ -1,19 +1,18 @@
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
 import { Form, Button, Alert } from 'react-bootstrap'; 
-import { Link, useHistory } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 import { useAuth } from '../../contexts/AuthContext';
-import { auth, db } from '../../firebase';
+import { db } from '../../firebase';
 
 const Signup = () => {
     const [loading, setLoading] = useState(false);
     const [error, setError] = useState('');
     const [success, setSuccess] = useState(false);
     const { signup } = useAuth();
-    const history = useHistory();
 
     const handleSignup = async (e) => {
         e.preventDefault();
-        if (e.target[2].value != e.target[3].value)
+        if (e.target[2].value !== e.target[3].value)
             return setError("Passwords do not match!");
         const doc = db.collection('usernames').doc(e.target[0].value);
         if (doc.exists) 

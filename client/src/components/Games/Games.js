@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useCallback } from 'react';
+import React, { useState, useCallback } from 'react';
 import styles from '../../assets/Space.module.css'
 import HostModal from '../Templates/HostModal.js'
 import { Modal, Form } from 'react-bootstrap';
@@ -36,7 +36,7 @@ const Games = ({ id }) => {
             </div>
             <div className = "row mt-4">
                 { games.length ? games.map((game) => 
-                    game.status == 'waiting' && 
+                    game.status === 'waiting' && 
                     <div className = "col-6" key = {game.gameId}>
                         <motion.div className = "card border-dark mb-3" layout 
                             initial={{ opacity: 0 }}

@@ -1,5 +1,5 @@
-import { getSocket, connectSocket, disconnectSocket } from "../components/Socket";
-import React, { useEffect, useState } from 'react';
+import { getSocket, disconnectSocket } from "../components/Socket";
+import { useEffect, useState } from 'react';
 
 const useSocketListener = (connected) => {
     const socket = getSocket();
@@ -27,7 +27,7 @@ const useSocketListener = (connected) => {
                 disconnectSocket();
             }
         }
-    }, [connected])
+    }, [connected, socket])
 
     return {players, countdown, prompt, turn, timer, message, winners};
 }

@@ -9,7 +9,7 @@ const Welcome = () => {
         <div className={styles.content + " container-fluid"}>
             <div className="d-flex flex-column min-vh-100 justify-content-center align-items-center" >
                 <div className="text-center ">
-                    <h3 className="mb-5"/> 
+
                     <FontAwesomeIcon size="3x" icon={faCoffee} />
                     <p className="mt-1 h4 mb-3">Welcome to virtual card games!</p>
                     <p className="mb-4 mt-1 h5"> Continue as...</p>
