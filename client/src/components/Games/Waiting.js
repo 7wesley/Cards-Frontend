@@ -56,7 +56,6 @@ const Waiting = ({ id, playersList, maxPlayers, countdown }) => {
                     )
                     : 
 
-                    {/*What is displayed to the user if not enough players have joined the room*/}
                     ( 
                         <>
                             <p className = "h3">Waiting for players... </p>
