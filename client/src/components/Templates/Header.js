@@ -1,3 +1,10 @@
+/**
+ * Creates a Header/Navbar that allows users to navigate through the website
+ * @author Nathan Jenkins
+ * @author Wesley Miller
+ * @version 5/13/2021
+ */
+
 import React, {useState} from 'react';
 import { Link, useHistory } from 'react-router-dom';
 import { Navbar, NavDropdown } from 'react-bootstrap';
@@ -5,6 +12,12 @@ import { useAuth } from '../../contexts/AuthContext';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faCrown } from '@fortawesome/free-solid-svg-icons'
 
+/**
+ * The Navbar that is displayed at the top of each screen and which users
+ *      can travers the site with
+ * @param {any} id the identification of the user using the pages
+ * @returns the header that can be displayed
+ */
 const Header = ({ id }) => { 
 
     const [open, setOpen] = useState(false);
@@ -12,6 +25,10 @@ const Header = ({ id }) => {
     const { currentUser, logout } = useAuth();
     const history  = useHistory();
 
+    /**
+     * For creating the header as a drop down menu if the screen does not
+     *      meet a standard computer's size
+     */
     const handleClick = async () => {
         if (currentUser)
             await logout();
@@ -20,6 +37,10 @@ const Header = ({ id }) => {
         history.push('login');
     } 
 
+    /**
+     * Creates the link that the user wants to navigate to when a button is clicked
+     * @param {any} link the link that the user wants to navigate to
+     */
     const handleLink = (link) => {
         if (open === true)
             setOpen(false);
@@ -35,6 +56,7 @@ const Header = ({ id }) => {
 
                 <Navbar.Toggle  onClick={() => setOpen(!open)}/>
                 
+                {/*A collapsable menu that can be opened if the header is too big for the screen*/}
                 <Navbar.Collapse in = {open} className = "justify-content-stretch">
                     <ul className="navbar-nav ml-auto">
                         <li className="nav-item" onClick={() => handleLink('games')}>

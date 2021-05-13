@@ -1,3 +1,10 @@
+/**
+ * Creates a Stats page that allows users to view their current game stats
+ * @author Nathan Jenkins
+ * @author Wesley Miller
+ * @version 5/13/2021
+ */
+
 import styles from '../../assets/Information.module.css';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faTrophy } from '@fortawesome/free-solid-svg-icons'
@@ -6,10 +13,16 @@ import { Link } from 'react-router-dom';
 import { useAuth } from '../../contexts/AuthContext';
 import React from "react";
 
+/**
+ * The page that shows the user's stats
+ * @param {any} userData the user's information 
+ * @returns The stats webpage
+ */
 const Stats = ({ userData }) => {
 
     const { currentUser } = useAuth();
 
+    //The chart that will be shown with the user's stats
     const barChart = (
         <div className = "barChart">
             {userData

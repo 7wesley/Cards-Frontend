@@ -1,15 +1,33 @@
+/**
+ * Creates a Signup page that allows users to create an account
+ * @author Nathan Jenkins
+ * @author Wesley Miller
+ * @version 5/13/2021
+ */
+
 import React, { useState } from 'react';
 import { Form, Button, Alert } from 'react-bootstrap'; 
 import { Link } from 'react-router-dom';
 import { useAuth } from '../../contexts/AuthContext';
 import { db } from '../../firebase';
 
+/**
+ * Creates the SignUp page that the users can use to create an account
+ * @returns The SignUp webpage
+ */
 const Signup = () => {
     const [loading, setLoading] = useState(false);
     const [error, setError] = useState('');
     const [success, setSuccess] = useState(false);
     const { signup } = useAuth();
 
+    /**
+     * The page that allows the users to create an account
+     * @param {*} e the user that is creating an account
+     * @returns an error if any information does not align, otherwise
+     *          returns textboxes that allow users to create a password,
+     *              enter a username, and enter an email for their new account
+     */
     const handleSignup = async (e) => {
         e.preventDefault();
         if (e.target[2].value !== e.target[3].value)

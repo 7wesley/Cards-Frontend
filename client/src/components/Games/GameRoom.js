@@ -1,3 +1,10 @@
+/**
+ * Manages and creates the card match that players interact with
+ * @author Nathan Jenkins
+ * @author Wesley Miller
+ * @version 5/13/2021
+ */
+
 import React, {useState, useEffect} from 'react';
 import { motion } from 'framer-motion';
 import { Prompt } from 'react-router';
@@ -10,6 +17,13 @@ import useSocketListener from '../../hooks/useSocketListener';
 import { getSocket, connectSocket } from '../Socket';
 import { Button } from 'react-bootstrap';
 
+/**
+ * The page that users play games
+ * @param {any} match contains the match of this gameroom
+ * @param {any} userData the user's information 
+ * @param {any} updateStorage for updating storing information
+ * @returns The webpage this class creates
+ */
 const GameRoom = ({match, userData, updateStorage}) => {
 
     const [loading, setLoading] = useState(true);
@@ -31,10 +45,19 @@ const GameRoom = ({match, userData, updateStorage}) => {
             setLoading(false);
     }, [turn, id]);
 
+    /**
+     * Takes care of the decision made by the player
+     * @param {*} choice the decision of the player for their turn
+     */
     const handlePlay = (choice) => {
         getSocket().emit("player-move", choice);
     }
 
+    /**
+     * Displays the player and their cards on screen
+     * @param {*} player the player to render
+     * @returns displays the players that are currently playing in this room
+     */
     const renderPlayer = (player) => {
         return (
         <div className = "col-4 text-center pt-3">
@@ -54,6 +77,12 @@ const GameRoom = ({match, userData, updateStorage}) => {
         )
     }
 
+    /**
+     * Handles displaying the "pass" and "confirm" buttons and for finding
+     *  which button the user clicked. 
+     * @returns Shows the buttons that the player can click to make a decision
+     *          for their turn
+     */
     const renderPrompt = () => {
         return (
             <div className = "col-4 pt-5">
@@ -73,6 +102,10 @@ const GameRoom = ({match, userData, updateStorage}) => {
         )
     }
 
+    /**
+     * Creates a display for each player that shows who is playing the game.
+     * @returns The row of players that will be displayed
+     */
     const renderRows = () => {
         let rows = [];
         let columns = [];

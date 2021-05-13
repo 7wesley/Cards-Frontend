@@ -1,3 +1,10 @@
+/**
+ * Creates the account page that allows users to manage their account
+ * @author Nathan Jenkins
+ * @author Wesley Miller
+ * @version 5/13/2021
+ */
+
 import React, { useState } from 'react';
 import { Form, Button, Alert } from 'react-bootstrap';
 import { Link, useHistory } from 'react-router-dom';
@@ -5,6 +12,12 @@ import styles from '../../assets/Information.module.css';
 import { useAuth } from '../../contexts/AuthContext'
 import useQueryDocs from '../../hooks/useQueryDocs';
 
+/**
+ * The Account Page that will be displayed
+ * @param {any} id the id of the player that uses this account page
+ * @param {any} updateStorage for updating the user's information
+ * @returns the account page that will be displayed
+ */
 const Account = ({id, updateStorage}) => {
 
     const { currentUser, logout, upload, updateProfile } = useAuth();
@@ -14,6 +27,9 @@ const Account = ({id, updateStorage}) => {
     const [error, setError] = useState('');
     const history = useHistory();
 
+    /**
+     * Logs the current user out when called
+     */
     const handleLogout = async () => {
         setError('');
         try {
@@ -24,6 +40,10 @@ const Account = ({id, updateStorage}) => {
         }
     }
 
+    /**
+     * Updates the information from the parameter that is passed (the player)
+     * @param {*} e the player that will have their information updated
+     */
     const handleUpdate = async (e) => {
         e.preventDefault(e);
         setError('');
@@ -62,12 +82,15 @@ const Account = ({id, updateStorage}) => {
             <div className = "container mt-5">
                 <div className = "mx-auto col-md-8 col-sm-10 col-xs-12">       
                     <Form onSubmit = { handleUpdate }>
+
                         {!currentUser ? 
                             <p className = "h3">Want more features? <Link to = "/login">Create an account</Link></p> 
                             : <p className = "h3">You are a premium member!</p>
                         }
+
                         { success && <Alert variant="success">{success}</Alert> }
                         { error && <Alert variant="danger">{error}</Alert> }
+                        
                         <Form.Group className = "mt-4"> 
                             <Form.Label>Change username</Form.Label>
                             <Form.Control placeholder = {id} type ="text" />

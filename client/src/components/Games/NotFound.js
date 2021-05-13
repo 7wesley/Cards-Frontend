@@ -1,6 +1,19 @@
+/**
+ * Creates a page that is displayed if a game room that is trying to be connected
+ *  to cannot be found
+ * @author Nathan Jenkins
+ * @author Wesley Miller
+ * @version 5/13/2021
+ */
+
 import styles from '../../assets/Transitions.module.css'
 import { Link } from 'react-router-dom';
 
+/**
+ * If for some reason the room th user is trying to join can't be found
+ *      the user will be directed to this page
+ * @returns The webpage that will be displayed
+ */
 const NotFound = () => {
     return (
         <div className = {styles.bgInProgress}>

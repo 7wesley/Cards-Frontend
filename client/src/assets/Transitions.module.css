@@ -1,3 +1,9 @@
+/**
+ * Styling for handling transitions of gamerooms
+ * @author Nathan Jenkins
+ * @author Wesley Miller
+ * @version 5/13/2021
+ */
 .bgWaiting {
     background: linear-gradient(120deg, #7bc6cc, #be93c5);
     height: 100vh;

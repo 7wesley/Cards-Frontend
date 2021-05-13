@@ -1,14 +1,35 @@
+/**
+ * Creates a Waiting page that users are redirected to when they join or create
+ *  a game that does not have enough players to start a game. 
+ * @author Nathan Jenkins
+ * @author Wesley Miller
+ * @version 5/13/2021
+ */
+
 import styles from '../../assets/Transitions.module.css'
 import React, { useState, useRef } from 'react';
 import { InputGroup, FormControl, Overlay, Tooltip } from 'react-bootstrap';
 import { motion } from 'framer-motion';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faCopy } from '@fortawesome/free-regular-svg-icons'
+
+/**
+ * The page that is displayed if the user is waiting for other players to join their game.
+ * @param {any} id the identification of the player
+ * @param {any} playersList the list of players currently in this room
+ * @param {any} maxPlayers the max amount of players this player can hold
+ * @param {any} countdown the number that is displayed and is count down to 0 when enough players
+ *      join the gameroom. 
+ * @returns this webpage
+ */
 const Waiting = ({ id, playersList, maxPlayers, countdown }) => {
 
     const [show, setShow] = useState(false);
     const target = useRef(null);
 
+    /**
+     * Copies the current game room information to the user's clipboard
+     */
     const handleCopy = async () => {
         navigator.clipboard.writeText(window.location.href);
         setShow(true);
@@ -20,6 +41,8 @@ const Waiting = ({ id, playersList, maxPlayers, countdown }) => {
         <div className = {styles.bgWaiting}>
             <div className="d-flex flex-column min-vh-100 justify-content-center align-items-center" >
                 <div className="text-center text-light">
+
+                    {/*The countdown that will display when enough users join*/}
                     { countdown ? (
                         <>
                             <p className = "h6"> Game starting in </p>
@@ -31,7 +54,10 @@ const Waiting = ({ id, playersList, maxPlayers, countdown }) => {
                              </motion.p> 
                         </>
                     )
-                    : ( 
+                    : 
+
+                    {/*What is displayed to the user if not enough players have joined the room*/}
+                    ( 
                         <>
                             <p className = "h3">Waiting for players... </p>
                             <p className = "h3 mb-4">({Object.keys(playersList).length} out of {maxPlayers})</p>

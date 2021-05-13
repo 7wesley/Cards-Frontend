@@ -1,3 +1,10 @@
+/**
+ * Manages how users are connected to the gamerooms
+ * @author Nathan Jenkins
+ * @author Wesley Miller
+ * @version 5/13/2021
+ */
+
 import io from 'socket.io-client';
 import { db, increment } from '../firebase';
 let socket;

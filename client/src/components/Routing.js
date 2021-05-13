@@ -1,3 +1,10 @@
+/**
+ * Handles how the user transitions between webpages
+ * @author Nathan Jenkins
+ * @author Wesley Miller
+ * @version 5/13/2021
+ */
+
 import React from 'react';
 import Header from './Templates/Header';
 import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
@@ -14,6 +21,10 @@ import Account from './Account/Account';
 import Layout from './Games/Layout';
 import useStorage from '../hooks/useStorage'
 
+/**
+ * Handles how the user is able to switch between pages
+ * @returns this class's routing method
+ */
 const Routing = () => {
 
     const { userData, updateStorage } = useStorage({

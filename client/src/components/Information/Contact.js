@@ -1,16 +1,34 @@
+/**
+ * Creates a Contact page that allows users to communicate with the creators of
+ *  this website
+ * @author Nathan Jenkins
+ * @author Wesley Miller
+ * @version 5/13/2021
+ */
+
 import React, {useState} from 'react';
 import styles from '../../assets/Information.module.css';
 import ReCAPTCHA from 'react-google-recaptcha';
 
+/**
+ * The page that contains information about contacting the creators of the site
+ * @returns This contact page
+ */
 const Contact = () => {
 
     const [loading, setLoading] = useState(true);
 
+    /**
+     * Finds if the user entered the correct Captcha selection
+     */
     const handleChange = () => {
         if (loading !== false)
             setLoading(false);
     }
 
+    /**
+     * What happens when the users click the submit button
+     */
     const handleSubmit = () => {
 
     }

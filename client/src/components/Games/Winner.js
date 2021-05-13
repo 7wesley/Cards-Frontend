@@ -1,20 +1,41 @@
+/**
+ * Creates a Winner page that is displayed at the end of a match. It shows the
+ *  winners of the match and the user's updated stats
+ * @author Nathan Jenkins
+ * @author Wesley Miller
+ * @version 5/13/2021
+ */
+
 import styles from '../../assets/Transitions.module.css'
 import React, {useState, useEffect} from 'react';
 import { Link } from 'react-router-dom';
 import { Button } from 'react-bootstrap';
 import { getSocket } from '../Socket';
 
+/**
+ * The page that is displayed when a gameroom has finished
+ * @param {any} userData the user's information
+ * @param {any} winners a list of the winners of the match
+ * @param {any} timer the timer that is countdown that kicks out players if it gets to 0
+ * @param {any} updateStorage a reference for updating this user's storage
+ * @returns this webpage
+ */
 const Winner = ({ userData, winners, timer, updateStorage }) => {
     
     const socket = getSocket();
     const [loading, setLoading] = useState(false);
     const id = userData && userData.username;
 
+    /**
+     * initializes the timer
+     */
     useEffect(() => {
         timer === 0 && setLoading(true);
     }, [timer]);
 
-    //This logic could be handled in the backend
+    /**
+     * Shows the winners and updates the user's stats
+     */
     useEffect(() => {
         const updateStats = async () => {
             if (id) {
@@ -32,6 +53,9 @@ const Winner = ({ userData, winners, timer, updateStorage }) => {
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [id]) 
 
+    /**
+     * Handles if the user wants to play again
+     */
     const handlePlayAgain = () => {
         socket.emit('play-again');
     }

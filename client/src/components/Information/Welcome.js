@@ -1,8 +1,19 @@
+/**
+ * Creates a Welcome page that asks the user to login or continue as a guest
+ * @author Nathan Jenkins
+ * @author Wesley Miller
+ * @version 5/13/2021
+ */
+
 import styles from '../../assets/Welcome.module.css'
 import { Link } from 'react-router-dom';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faCoffee } from '@fortawesome/free-solid-svg-icons'
 
+/**
+ * The welcome page that shows if the user wants to login or continue as a guest
+ * @returns This welcome page
+ */
 const Welcome = () => {
     
     return (  
