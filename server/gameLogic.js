@@ -1,6 +1,9 @@
 /**
  * Alerts users or modifies the current players in a game
  * depending on the statuses of a specific user.
+ * @author Nathan Jenkins
+ * @author Wesley Miller
+ * @version 5/13/2021
  */
 module.exports = class GameLogic {    
 

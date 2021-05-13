@@ -1,3 +1,10 @@
+/**
+ * Creates and manipulates the board the players play on
+ * @author Nathan Jenkins
+ * @author Wesley Miller
+ * @version 5/13/2021
+ */
+
 var Deck = require('./Deck');
 var Player = require('./Player');
 var Blackjack = require('./Blackjack');

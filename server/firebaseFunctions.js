@@ -1,3 +1,9 @@
+/**
+ * The functions that can be 
+ * @author Nathan Jenkins
+ * @author Wesley Miller
+ * @version 5/13/2021
+ */
 var { db, del } = require('./firebase');
 module.exports = {
 

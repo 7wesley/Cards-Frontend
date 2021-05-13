@@ -1,5 +1,8 @@
 /**
  * Represents a player that can be part of a Board.
+ * @author Nathan Jenkins
+ * @author Wesley Miller
+ * @version 5/13/2021
  */
 module.exports = class Player {
     constructor(id) {

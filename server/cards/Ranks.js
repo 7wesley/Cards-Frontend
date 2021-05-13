@@ -1,5 +1,8 @@
 /**
  * Represents all the ranks a card could be.
+ * @author Nathan Jenkins
+ * @author Wesley Miller
+ * @version 5/13/2021
  */
 const Ranks = {
     //A: [1, 11],

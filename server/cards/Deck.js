@@ -1,3 +1,10 @@
+/**
+ * Manages a deck of cards
+ * @author Nathan Jenkins
+ * @author Wesley Miller
+ * @version 5/13/2021
+ */
+
 var Card = require('./Card');
 /**
  * Represents a deck of cards

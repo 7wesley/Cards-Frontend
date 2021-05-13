@@ -1,3 +1,11 @@
+/**
+ * Handles what happens for each gameroom. This includes starting a match, 
+ *  connecting a player to the gameroom, disconnecting them, and finding
+ *  which player's turn it is to move. 
+ * @author Nathan Jenkins
+ * @author Wesley Miller
+ * @version 5/13/2021
+ */
 
 var db = require('./firebaseFunctions');
 var Board = require('./cards/Board');

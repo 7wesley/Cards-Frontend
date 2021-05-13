@@ -1,5 +1,5 @@
 /**
- * For creating the website in a strict mode
+ * For running the app in a strict mode to measure performance
  * @author Nathan Jenkins
  * @author Wesley Miller
  * @version 5/13/2021

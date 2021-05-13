@@ -42,7 +42,7 @@ const Account = ({id, updateStorage}) => {
 
     /**
      * Updates the information from the parameter that is passed (the player)
-     * @param {*} e the player that will have their information updated
+     * @param {any} e the player that will have their information updated
      */
     const handleUpdate = async (e) => {
         e.preventDefault(e);

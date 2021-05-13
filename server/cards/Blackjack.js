@@ -1,3 +1,10 @@
+/**
+ *Creates and manages a game of Blackjack
+ * @author Nathan Jenkins
+ * @author Wesley Miller
+ * @version 5/13/2021
+ */
+
 module.exports = class Blackjack {
     constructor(deck) {
         this.deck = deck;

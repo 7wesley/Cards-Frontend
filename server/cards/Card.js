@@ -1,3 +1,10 @@
+/**
+ * For creating a card simulated in the card games
+ * @author Nathan Jenkins
+ * @author Wesley Miller
+ * @version 5/13/2021
+ */
+
 let Ranks = require('./Ranks');
 
 /**
