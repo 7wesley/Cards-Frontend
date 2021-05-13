@@ -10,15 +10,18 @@ import { db } from '../firebase.js'
 
 /**
  * Updates the query in firebase and sets the new data to it
- * @param {*} collection the collection to add to
- * @param {*} doc the document to set the data for
- * @param {*} updated if the data was set
+ * @param {any} collection the collection to add to
+ * @param {any} doc the document to set the data for
+ * @param {any} updated if the data was set
  * @returns the documents that was updated
  */
 const useQueryDocs = (collection, doc, updated) => {
     
     const [docs, setDocs] = useState(null);
 
+    /**
+     * For setting the document's data
+     */
     useEffect(() => {
         const data = async () => {
             if (doc) {

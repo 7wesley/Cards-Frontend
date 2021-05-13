@@ -1,3 +1,10 @@
+/**
+ * Manages how users are connected to the gamerooms
+ * @author Nathan Jenkins
+ * @author Wesley Miller
+ * @version 5/13/2021
+ */
+
 import firebase from "firebase/app";
 import "firebase/auth";
 import "firebase/storage";
@@ -13,6 +20,7 @@ const app = firebase.initializeApp({
     appId: process.env.REACT_APP_FIREBASE_APP_ID,
 });
 
+//Creates the variables to import relating to firebase
 const auth = app.auth();
 const dbStorage = firebase.storage();
 const db = firebase.firestore();

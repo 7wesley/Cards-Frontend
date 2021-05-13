@@ -1,6 +1,18 @@
+/**
+ * For maintaining and initializing the sockets
+ * @author Nathan Jenkins
+ * @author Wesley Miller
+ * @version 5/13/2021
+ */
+
 import { getSocket, disconnectSocket } from "../components/Socket";
 import { useEffect, useState } from 'react';
 
+/**
+ * Finds the information of the socket that the user is connected to
+ * @param {any} connected if the user is connected to a socket
+ * @returns the gameroom information if the user is connected
+ */
 const useSocketListener = (connected) => {
     const socket = getSocket();
     const [players, setPlayers] = useState([]);

@@ -9,7 +9,11 @@ import io from 'socket.io-client';
 import { db, increment } from '../firebase';
 let socket;
 
-//Connects the the player to the room with the specific id via socket
+/**
+ * Connects the the player to the room with the specific id via socket
+ * @param {any} room the room to connect to 
+ * @param {any} id the identification of the user connecting to the room
+ */
 export const connectSocket = (room, id) => {
     socket = io(
         'http://localhost:5000', {
@@ -18,14 +22,20 @@ export const connectSocket = (room, id) => {
     if (socket && room) socket.emit('join', room, id);
 }
 
-//Disconnects the user from the room by terminating the connection 
-//  from the socket
+/**
+ * Disconnects the user from the room by terminating the connection 
+ * from the socket
+ */
 export const disconnectSocket = () => {
     console.log('User disconnecting');
     if (socket) socket.disconnect();
 }
 
-
+/**
+ * A method made to test the wins of a user
+ * @param {any} username the name of the user's account to test
+ * @returns the snapshot of query that contains the user's information
+ */
 export const testingWins = async (username) =>{
     var numberOfUsersRef = await db
     .collection('usernames')
@@ -36,6 +46,10 @@ export const testingWins = async (username) =>{
     return await snapshot.get("uid");
 }
 
+/**
+ * A Testing method to find if thiw way of updating wins works
+ * @param {any} userID the id of the user
+ */
 export const updateWins = async (userID) =>{
     await db.collection('users').doc(userID).update({
         "stats.wins": increment(1),
@@ -43,15 +57,29 @@ export const updateWins = async (userID) =>{
     }) 
 }
 
+/**
+ * Finds the wins of a user form the given userID
+ * @param {any} userID the id of the user to get the wins for
+ * @returns the snapshot of the query that contains the user's wins
+ */
 export const getWins = (userID) =>{
     //return  Promise.resolve(db.collection('users').doc(userID).collection("stats").get("wins"));
     return Promise.resolve(db.collection('users').doc("tester").get("wins"));
 }
 
+/**
+ * Gets the user's account id from a given username
+ * @param {any} name the name of the user
+ * @returns a snapshot of the query that contains the user's id
+ */
 export const getUID = (name) =>{
     return Promise.resolve(db.collection('usernames').doc(name).get("uid"));
 }
 
+/**
+ * Finds the socket
+ * @returns the sockect
+ */
 export const getSocket = () => {
     return socket;
 }
