@@ -50,7 +50,7 @@ const Header = ({ id }) => {
     return (
         <Navbar bg = 'dark' variant = 'dark' expand = 'lg'>
             <div className = "container">
-                <Link onClick = {() => handleLink('')} className="navbar-brand">
+                <Link to = "#" onClick = {() => handleLink('')} className="navbar-brand">
                     <FontAwesomeIcon size="lg" icon={faCrown} />
                 </Link>
 
@@ -60,13 +60,13 @@ const Header = ({ id }) => {
                 <Navbar.Collapse in = {open} className = "justify-content-stretch">
                     <ul className="navbar-nav ml-auto">
                         <li className="nav-item" onClick={() => handleLink('games')}>
-                            <Link className="nav-link">Play</Link> 
+                            <Link to = "#" className="nav-link">Play</Link> 
                         </li>
                         <li className="nav-item" onClick={() => handleLink('contact')}>
-                            <Link className="nav-link" >Contact</Link>
+                            <Link to = "#" className="nav-link" >Contact</Link>
                         </li>
                         <li className="nav-item" onClick={() => handleLink('about')}>
-                            <Link className="nav-link">About</Link>
+                            <Link to = "#" className="nav-link">About</Link>
                         </li>
                         <li className="nav-item">
                             <NavDropdown onMouseEnter={() => setDropOpen(true)} onMouseLeave={() => setDropOpen(false)} onClick = {() => setDropOpen(!dropOpen)} show = {dropOpen} title={id} id="basic-nav-dropdown">
@@ -83,56 +83,3 @@ const Header = ({ id }) => {
 }
 
 export default Header;
-
-/*
-<div className="text-align: center; border: 1px solid">
-<Link to = "/Games" className="nav-link">Play</Link>
-</div>
-
-
-
-<div class="dropdown dropdown-menu-right">
-
-
-    <button class="btn btn-secondary"
-        data-toggle="collapse" 
-        data-target="#navbarDropdown">
-
-
-        { id }
-
-    </button>
-    
-
-    <div id="navbarDropdown" class="dropdown-menu dropdown-menu-right">
-
-
-        <li className="nav-item">
-            <Link className="nav-link" to="/stats">Stats</Link>
-        </li>
-        
-
-        <li className="nav-item">
-            <Link className="nav-link" to="/account">Account</Link>
-        </li>
-
-        <li className="nav-item">
-            <div className="nav-link" onClick = {handleClick}> {currentUser ? 
-            
-                <Link className="nav-item" to="/login">Login</Link> : 
-                <Link className="nav-item" to="/signup">Sign-in</Link>} 
-            
-            </div>       
-        </li>
-
-    </div>
-</div>
-
-</ul>
-</Navbar.Collapse>
-
-</div>
-</Navbar>
-
-export default Header;
-*/
