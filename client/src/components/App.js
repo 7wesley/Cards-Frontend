@@ -5,8 +5,8 @@
  * @version 5/13/2021
  */
 
-import '../assets/App.css';
-import Routing from './Routing';
+import "../assets/App.css";
+import Routing from "./Routing";
 import { AuthProvider } from "../contexts/AuthContext";
 
 /**
@@ -14,12 +14,12 @@ import { AuthProvider } from "../contexts/AuthContext";
  */
 const App = () => {
     return (
-        <div className = "App">
+        <div className="App">
             <AuthProvider>
                 <Routing />
             </AuthProvider>
         </div>
-    )
-}
+    );
+};
 
 export default App;

@@ -4,8 +4,8 @@
  * @author Wesley Miller
  * @version 5/13/2021
  */
-const firebase = require('firebase');
-require('dotenv').config()
+const firebase = require("firebase");
+require("dotenv").config();
 
 firebaseApp = firebase.initializeApp({
     apiKey: process.env.REACT_APP_FIREBASE_API_KEY,
@@ -19,6 +19,6 @@ firebaseApp = firebase.initializeApp({
 module.exports = {
     db: firebase.firestore(),
     timestamp: firebase.firestore.FieldValue.serverTimestamp,
-    increment: firebase.firestore.FieldValue.increment, 
-    del: firebase.firestore.FieldValue.delete
-}
+    increment: firebase.firestore.FieldValue.increment,
+    del: firebase.firestore.FieldValue.delete,
+};

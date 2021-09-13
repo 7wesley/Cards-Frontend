@@ -6,17 +6,17 @@
  * @version 5/13/2021
  */
 
-import React, { useContext, useState, useEffect } from "react"
-import { auth, db, dbStorage, timestamp } from "../firebase"
+import React, { useContext, useState, useEffect } from "react";
+import { auth, db, dbStorage, timestamp } from "../firebase";
 
-const AuthContext = React.createContext()
+const AuthContext = React.createContext();
 
 /**
  * For using the authentication system
  * @returns the current context value
  */
 export function useAuth() {
-  return useContext(AuthContext)
+    return useContext(AuthContext);
 }
 
 /**
@@ -25,60 +25,64 @@ export function useAuth() {
  * @returns the AuthContext Provider
  */
 export function AuthProvider({ children }) {
-
     const [loading, setLoading] = useState(true);
-    const [currentUser, setCurrentUser] = useState()
+    const [currentUser, setCurrentUser] = useState();
 
     /**
      * Checks the given username
      * @param {any} username the name to check
      */
     const usernameCheck = async (username) => {
-        if (/[^a-zA-Z0-9]/.test(username)) throw new Error('Username should only contain letters and numbers');
-        if (username.length < 3) throw new Error('Username should be 3 characters or longer');
-        const doc = await db.collection('usernames').doc(username).get();
-        if (doc.exists) throw new Error('Username already taken!');
-    }
+        if (/[^a-zA-Z0-9]/.test(username))
+            throw new Error("Username should only contain letters and numbers");
+        if (username.length < 3)
+            throw new Error("Username should be 3 characters or longer");
+        const doc = await db.collection("usernames").doc(username).get();
+        if (doc.exists) throw new Error("Username already taken!");
+    };
 
     /**
      * If the user is wanting to create an account
      * @param {any} username the name to create an account with
-     * @param {any} email the email to create an account with 
+     * @param {any} email the email to create an account with
      * @param {any} password the password to create the account with
      */
     const signup = async (username, email, password) => {
         await usernameCheck(username);
-        const user = await auth.createUserWithEmailAndPassword(email, password)
+        const user = await auth.createUserWithEmailAndPassword(email, password);
 
-        await db.collection('users').doc(user.user.uid).set({
-            username: username,
-            createdAt: timestamp(),
-            id: user.user.uid,
-            stats: {
-                Wins: 0,
-                Losses: 0,
-                Played: 0,
-            }
+        await db
+            .collection("users")
+            .doc(user.user.uid)
+            .set({
+                username: username,
+                createdAt: timestamp(),
+                id: user.user.uid,
+                stats: {
+                    Wins: 0,
+                    Losses: 0,
+                    Played: 0,
+                },
+            });
+        await db.collection("usernames").doc(username).set({
+            uid: user.user.uid,
         });
-        await db.collection('usernames').doc(username).set({
-            uid: user.user.uid
-        });
-    } 
+    };
 
     /**
      * For if the user wants to upload an image to their profile
      * @param {any} file the image to upload
      */
     const upload = async (file) => {
-        if (file && (file.type === 'image/png' || file.type === 'image/jpeg')) {
+        if (file && (file.type === "image/png" || file.type === "image/jpeg")) {
             let storage = dbStorage.ref().child(file.name);
             await storage.put(file);
             const url = await storage.getDownloadURL();
-            await db.collection('users').doc(currentUser.uid).update({
-                picture: url
-            })
-        }   
-    }
+            await db.collection("users").doc(currentUser.uid).update({
+                picture: url,
+            });
+        }
+    };
 
     /**
      * Sets a new value for the user's username
@@ -86,15 +90,15 @@ export function AuthProvider({ children }) {
      */
     const updateProfile = async (username) => {
         await usernameCheck(username);
-        let user = await db.collection('users').doc(currentUser.uid).get();
-        await db.collection('usernames').doc(user.data().username).delete();
-        await db.collection('usernames').doc(username).set({
-            uid: currentUser.uid
+        let user = await db.collection("users").doc(currentUser.uid).get();
+        await db.collection("usernames").doc(user.data().username).delete();
+        await db.collection("usernames").doc(username).set({
+            uid: currentUser.uid,
         });
-        await db.collection('users').doc(currentUser.uid).update({
-            username
-        })
-    }
+        await db.collection("users").doc(currentUser.uid).update({
+            username,
+        });
+    };
 
     /**
      * Allows the user to login to their account
@@ -103,7 +107,7 @@ export function AuthProvider({ children }) {
      */
     const login = async (email, password) => {
         await auth.signInWithEmailAndPassword(email, password);
-    }
+    };
 
     /**
      * Logs the user out of thier account
@@ -111,7 +115,7 @@ export function AuthProvider({ children }) {
      */
     const logout = () => {
         return auth.signOut();
-    }
+    };
 
     /**
      * For if the user wants to reset their passowrd
@@ -120,7 +124,7 @@ export function AuthProvider({ children }) {
      */
     const resetPassword = (email) => {
         return auth.sendPasswordResetEmail(email);
-    }
+    };
 
     /**
      * Updates the email of an account
@@ -129,27 +133,27 @@ export function AuthProvider({ children }) {
      */
     const updateEmail = (email) => {
         return currentUser.updateEmail(email);
-    }
+    };
 
     /**
      * Updates the password of a user
-     * @param {any} password the new password to set with 
+     * @param {any} password the new password to set with
      * @returns the user who wants to update their password
      */
     const updatePassword = (password) => {
-        return currentUser.updatePassword(password);  
-    }
+        return currentUser.updatePassword(password);
+    };
 
     /**
      * Initializes the values to use
      */
     useEffect(() => {
-        const unsubscribe = auth.onAuthStateChanged(user => {
-            setCurrentUser(user)
-            setLoading(false)
-        })
+        const unsubscribe = auth.onAuthStateChanged((user) => {
+            setCurrentUser(user);
+            setLoading(false);
+        });
         return unsubscribe;
-    }, [])
+    }, []);
 
     const value = {
         currentUser,
@@ -161,12 +165,11 @@ export function AuthProvider({ children }) {
         updatePassword,
         upload,
         updateProfile,
-    }
+    };
 
     return (
-        <AuthContext.Provider value = {value}>
-            { !loading && children }
+        <AuthContext.Provider value={value}>
+            {!loading && children}
         </AuthContext.Provider>
-    )
+    );
 }
-

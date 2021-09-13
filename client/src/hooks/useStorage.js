@@ -6,7 +6,7 @@
  */
 
 import { useEffect, useState } from "react";
-import { db } from '../firebase'
+import { db } from "../firebase";
 import { useAuth } from "../contexts/AuthContext";
 
 //Passes in data always assuming it will update the session storage,
@@ -19,7 +19,6 @@ const PREFIX = "cards-";
  * @returns the user's data and the function to update the storage
  */
 const useStorage = (initialData) => {
-  
     //const prefixedKey = PREFIX + key;
     const { currentUser } = useAuth();
     const [userData, setUserData] = useState(null);
@@ -33,40 +32,45 @@ const useStorage = (initialData) => {
      * @param {any} updatedData the data to update
      */
     const updateStorage = async (updatedData) => {
-      if (currentUser) {
-        for (const [key, value] of Object.entries(updatedData))
-          await db.collection('users').doc(currentUser.uid).update({ 
-            [key]: value
-        })
-      }
-      setNewData(updatedData);
-    }
-  
+        if (currentUser) {
+            for (const [key, value] of Object.entries(updatedData))
+                await db
+                    .collection("users")
+                    .doc(currentUser.uid)
+                    .update({
+                        [key]: value,
+                    });
+        }
+        setNewData(updatedData);
+    };
+
     /**
      * For setting a logged-in user's data or for setting a guest user's
      *  temporary storage
      */
     useEffect(() => {
-      const data = async () => {
-        if (currentUser) {
-          const dbData = await db.collection('users').doc(currentUser.uid).get();
-          setUserData(dbData.data());
-        }
-        else {
-          let filteredData = {};
-          for (const [key, value] of Object.entries(newData)) {
-            sessionStorage.setItem(PREFIX + key, JSON.stringify(value));
-          }
-          for (const [key, value] of Object.entries(sessionStorage)) { 
-            filteredData[key.replace(PREFIX, '')] = JSON.parse(value);
-          }
-          setUserData(filteredData);
-        }
-      }
-      data();
+        const data = async () => {
+            if (currentUser) {
+                const dbData = await db
+                    .collection("users")
+                    .doc(currentUser.uid)
+                    .get();
+                setUserData(dbData.data());
+            } else {
+                let filteredData = {};
+                for (const [key, value] of Object.entries(newData)) {
+                    sessionStorage.setItem(PREFIX + key, JSON.stringify(value));
+                }
+                for (const [key, value] of Object.entries(sessionStorage)) {
+                    filteredData[key.replace(PREFIX, "")] = JSON.parse(value);
+                }
+                setUserData(filteredData);
+            }
+        };
+        data();
     }, [newData, currentUser]);
 
-  return { userData, updateStorage };
+    return { userData, updateStorage };
 };
 
 export default useStorage;

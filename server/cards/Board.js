@@ -5,17 +5,18 @@
  * @version 5/13/2021
  */
 
-var Deck = require('./Deck');
-var Player = require('./Player');
-var Blackjack = require('./Blackjack');
+var Deck = require("./Deck");
+var Player = require("./Player");
+var Blackjack = require("./Blackjack");
 
 module.exports = class Board {
-
     constructor(game, players) {
-        this.deck = new Deck();     
+        this.deck = new Deck();
         this.game = game;
         this.players = [];
-        for (const [index, [, value]] of Object.entries(Object.entries(players))) {
+        for (const [index, [, value]] of Object.entries(
+            Object.entries(players)
+        )) {
             this.players[index] = new Player(players[value]);
         }
         this.startGame();
@@ -26,7 +27,7 @@ module.exports = class Board {
      * game field.
      */
     startGame() {
-        if (this.game === 'Blackjack') {
+        if (this.game === "Blackjack") {
             this.game = new Blackjack(this.deck);
         }
     }
@@ -70,7 +71,7 @@ module.exports = class Board {
      * @param {*} uid - The player to be removed
      */
     removePlayer(uid) {
-        this.players = this.players.filter(player => player.id !== uid);
+        this.players = this.players.filter((player) => player.id !== uid);
     }
 
     /**
@@ -88,27 +89,29 @@ module.exports = class Board {
      * @returns - True if the user's status is 'playing', otherwise false
      */
     isPlaying(uid) {
-        let player = this.players.find(player => player.id === uid);
+        let player = this.players.find((player) => player.id === uid);
         return player && player.getStatus() === "playing";
     }
 
     /**
      * Checks if the game still has any players left
-     * @returns - True if there is a user who's status is still 'playing', 
+     * @returns - True if there is a user who's status is still 'playing',
      * otherwise false
      */
     inProgress() {
-        let playing = this.players.filter(player => player.getStatus() === "playing")
+        let playing = this.players.filter(
+            (player) => player.getStatus() === "playing"
+        );
         return playing.length !== 0;
     }
 
     /**
      * Gets a specific player from the players field
      * @param {*} uid - The player being searched for
-     * @returns - A player from the players field 
+     * @returns - A player from the players field
      */
     getPlayer(uid) {
-        return this.players.find(player => player.id === uid);
+        return this.players.find((player) => player.id === uid);
     }
 
     /**
@@ -126,4 +129,4 @@ module.exports = class Board {
     getWinners() {
         return this.game.findWinners(this.players);
     }
-}
+};

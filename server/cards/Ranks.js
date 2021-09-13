@@ -19,6 +19,6 @@ const Ranks = {
     8: 8,
     9: 9,
     10: 10,
-}
+};
 
 module.exports = Ranks;

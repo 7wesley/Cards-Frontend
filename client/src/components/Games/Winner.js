@@ -6,11 +6,11 @@
  * @version 5/13/2021
  */
 
-import styles from '../../assets/Transitions.module.css'
-import React, {useState, useEffect} from 'react';
-import { Link } from 'react-router-dom';
-import { Button } from 'react-bootstrap';
-import { getSocket } from '../Socket';
+import styles from "../../assets/Transitions.module.css";
+import React, { useState, useEffect } from "react";
+import { Link } from "react-router-dom";
+import { Button } from "react-bootstrap";
+import { getSocket } from "../Socket";
 
 /**
  * The page that is displayed when a gameroom has finished
@@ -21,7 +21,6 @@ import { getSocket } from '../Socket';
  * @returns this webpage
  */
 const Winner = ({ userData, winners, timer, updateStorage }) => {
-    
     const socket = getSocket();
     const [loading, setLoading] = useState(false);
     const id = userData && userData.username;
@@ -41,58 +40,77 @@ const Winner = ({ userData, winners, timer, updateStorage }) => {
             if (id) {
                 console.log(winners);
                 console.log(id);
-                if (winners.some(winner => winner.id === id))
+                if (winners.some((winner) => winner.id === id))
                     userData.stats.Wins++;
-                else 
-                    userData.stats.Losses++;
+                else userData.stats.Losses++;
                 userData.stats.Played++;
-                await updateStorage({ stats: userData.stats })
+                await updateStorage({ stats: userData.stats });
             }
-        }
+        };
         updateStats();
         // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [id]) 
+    }, [id]);
 
     /**
      * Handles if the user wants to play again
      */
     const handlePlayAgain = () => {
-        socket.emit('play-again');
-    }
+        socket.emit("play-again");
+    };
 
     return (
-        <div className = {styles.bgInProgress}>
-            <div className="d-flex flex-column min-vh-100 justify-content-center align-items-center" >
+        <div className={styles.bgInProgress}>
+            <div className="d-flex flex-column min-vh-100 justify-content-center align-items-center">
                 <div className="text-center text-light">
-                    { winners.length ? winners.map(winner =>
-                        <>
-                            <p className = "h3">{winner.id === id ? "You win!" : `${winner.id} wins!`}</p>
-                            <p className = "h6">Final hand value: {winner.total}</p>
-                            <p className = "h4 mt-4">---Stats---</p>
-                            <p className = "h6">
-                                {userData && Object.keys(userData.stats).map((stat) => 
-                                    `  ${stat}: ` + userData.stats[stat]
-                                )}
-                            </p>
-                            {/*Update the user's total games won*/}
-                            {/*updateWins(getUID())*/}
-                            {/*funct4(id)*/}
-
-                        </>
-                    ) : <p className = "h3">Nobody wins!</p>}  
-                    <div className = "row mt-4 mx-auto"> 
-                        <Link to = "/games" className = "btn btn-primary mr-2">Main Menu</Link>
-                        <Button disabled = {loading} onClick = {handlePlayAgain} className = "bml-2">Play Again {timer}</Button>
+                    {winners.length ? (
+                        winners.map((winner) => (
+                            <>
+                                <p className="h3">
+                                    {winner.id === id
+                                        ? "You win!"
+                                        : `${winner.id} wins!`}
+                                </p>
+                                <p className="h6">
+                                    Final hand value: {winner.total}
+                                </p>
+                                <p className="h4 mt-4">---Stats---</p>
+                                <p className="h6">
+                                    {userData &&
+                                        Object.keys(userData.stats).map(
+                                            (stat) =>
+                                                `  ${stat}: ` +
+                                                userData.stats[stat]
+                                        )}
+                                </p>
+                                {/*Update the user's total games won*/}
+                                {/*updateWins(getUID())*/}
+                                {/*funct4(id)*/}
+                            </>
+                        ))
+                    ) : (
+                        <p className="h3">Nobody wins!</p>
+                    )}
+                    <div className="row mt-4 mx-auto">
+                        <Link to="/games" className="btn btn-primary mr-2">
+                            Main Menu
+                        </Link>
+                        <Button
+                            disabled={loading}
+                            onClick={handlePlayAgain}
+                            className="bml-2"
+                        >
+                            Play Again {timer}
+                        </Button>
                     </div>
                 </div>
             </div>
         </div>
-    )
-}
+    );
+};
 
 export default Winner;
 
-  /*
+/*
     const updateStats = async (userID) => {
         updateWins(userID);
     }
@@ -102,9 +120,8 @@ export default Winner;
     }
     */
 
-
-    //updates the player's wins
-    /*
+//updates the player's wins
+/*
     async function funct1(name) {
 
         const ID = await funct2(name)
@@ -117,8 +134,8 @@ export default Winner;
     }
     */
 
-    //try another way
-    /*
+//try another way
+/*
     async function funct2(name) {
 
         const refID = db.collection("usernames").doc(name);  
@@ -134,8 +151,8 @@ export default Winner;
     }
     */
 
-    //Gets the specific user's id
-    /*
+//Gets the specific user's id
+/*
     async function getUserID(name) {
 
         //Gets a snapshot of this user's id
@@ -150,8 +167,8 @@ export default Winner;
         }
     }
     */
-    //try this way
-    /*
+//try this way
+/*
     async function funct3(name) {
         
         const userID = await getUserID(name);
@@ -163,8 +180,8 @@ export default Winner;
 
     }
     */
-        //try this way
-    /*
+//try this way
+/*
     function funct4(name) {
 
         const ref = db.collection("users").doc("sxfCyow1vQclhv1lOkOBoISRS432");

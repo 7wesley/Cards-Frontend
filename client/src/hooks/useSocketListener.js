@@ -6,7 +6,7 @@
  */
 
 import { getSocket, disconnectSocket } from "../components/Socket";
-import { useEffect, useState } from 'react';
+import { useEffect, useState } from "react";
 
 /**
  * Finds the information of the socket that the user is connected to
@@ -22,26 +22,26 @@ const useSocketListener = (connected) => {
     const [turn, setTurn] = useState();
     const [message, setMessage] = useState("");
     const [winners, setWinners] = useState();
-    
+
     useEffect(() => {
         //prevents socket from connecting if room is full
         if (connected) {
-            console.log('connected')
-            socket.on('countdown', (secs) => setCountdown(secs));
-            socket.on('update-hands', (plyrs) => setPlayers(plyrs));
-            socket.on('curr-turn', (user) => setTurn(user));
-            socket.on('your-turn', (msg) => setPrompt(msg));
-            socket.on('timer', (secs) => setTimer(secs));
-            socket.on('alert', (msg) => setMessage(msg));
-            socket.on('winners', (winList) => setWinners(winList));
+            console.log("connected");
+            socket.on("countdown", (secs) => setCountdown(secs));
+            socket.on("update-hands", (plyrs) => setPlayers(plyrs));
+            socket.on("curr-turn", (user) => setTurn(user));
+            socket.on("your-turn", (msg) => setPrompt(msg));
+            socket.on("timer", (secs) => setTimer(secs));
+            socket.on("alert", (msg) => setMessage(msg));
+            socket.on("winners", (winList) => setWinners(winList));
             return () => {
-                console.log('dc');
+                console.log("dc");
                 disconnectSocket();
-            }
+            };
         }
-    }, [connected, socket])
+    }, [connected, socket]);
 
-    return {players, countdown, prompt, turn, timer, message, winners};
-}
+    return { players, countdown, prompt, turn, timer, message, winners };
+};
 
 export default useSocketListener;

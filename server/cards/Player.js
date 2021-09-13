@@ -6,12 +6,12 @@
  */
 module.exports = class Player {
     constructor(id) {
-        this.id = id;  
+        this.id = id;
         this.cards = [];
         this.total = 0;
         this.status = "playing";
     }
-    
+
     /**
      * Sets the cards field to the card passed in.
      * @param {*} card - The card to be set
@@ -60,4 +60,4 @@ module.exports = class Player {
     get allCards() {
         return this.cards;
     }
-}
+};

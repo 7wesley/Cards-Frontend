@@ -27,7 +27,7 @@ module.exports = class Blackjack {
         if (this.playerIndex == players.length) {
             this.playerIndex = 0;
         }
-        return {id: player.id, card}
+        return { id: player.id, card };
     }
 
     /**
@@ -43,8 +43,7 @@ module.exports = class Blackjack {
             if (this.turnIndex == players.length) {
                 this.turnIndex = 0;
             }
-        }
-        else if (players) {
+        } else if (players) {
             this.turn = players[0];
             this.turnIndex = 0;
         }
@@ -52,14 +51,13 @@ module.exports = class Blackjack {
     }
 
     /**
-     * Gets the next card from the top of the deck and 
+     * Gets the next card from the top of the deck and
      * deals it to the user who's turn it currently is.
      */
     dealCard() {
         const card = this.deck.deal();
         this.turn.setCards(card);
-        if (this.turn.getTotal() > 21)
-            this.turn.setStatus("busted");
+        if (this.turn.getTotal() > 21) this.turn.setStatus("busted");
     }
 
     /**
@@ -69,12 +67,10 @@ module.exports = class Blackjack {
      * their move.
      */
     makeMove(choice) {
-        if (choice === "draw")
-            this.dealCard();
-        else 
-            this.turn.setStatus("standing");
+        if (choice === "draw") this.dealCard();
+        else this.turn.setStatus("standing");
     }
-    
+
     /**
      * Returns the turn field
      * @returns - The turn field
@@ -100,8 +96,10 @@ module.exports = class Blackjack {
      * @returns - The players who won
      */
     findWinners(players) {
-        let highest = Math.max(...players.map(player => player.getTotal()), 0);
-        return players.filter(player => player.getTotal() === highest)
+        let highest = Math.max(
+            ...players.map((player) => player.getTotal()),
+            0
+        );
+        return players.filter((player) => player.getTotal() === highest);
     }
-
-}
+};

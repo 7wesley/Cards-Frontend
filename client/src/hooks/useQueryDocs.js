@@ -5,8 +5,8 @@
  * @version 5/13/2021
  */
 
-import { useEffect, useState } from 'react';
-import { db } from '../firebase.js'
+import { useEffect, useState } from "react";
+import { db } from "../firebase.js";
 
 /**
  * Updates the query in firebase and sets the new data to it
@@ -16,7 +16,6 @@ import { db } from '../firebase.js'
  * @returns the documents that was updated
  */
 const useQueryDocs = (collection, doc, updated) => {
-    
     const [docs, setDocs] = useState(null);
 
     /**
@@ -25,14 +24,17 @@ const useQueryDocs = (collection, doc, updated) => {
     useEffect(() => {
         const data = async () => {
             if (doc) {
-                const dbData = await db.collection(collection).doc(doc.uid).get();
+                const dbData = await db
+                    .collection(collection)
+                    .doc(doc.uid)
+                    .get();
                 setDocs(dbData.data());
             }
-        }
+        };
         data();
-    }, [collection, doc, updated])
+    }, [collection, doc, updated]);
 
-    return { docs }
-}
+    return { docs };
+};
 
 export default useQueryDocs;

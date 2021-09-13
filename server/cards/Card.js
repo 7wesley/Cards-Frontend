@@ -5,7 +5,7 @@
  * @version 5/13/2021
  */
 
-let Ranks = require('./Ranks');
+let Ranks = require("./Ranks");
 
 /**
  * Represents a single card in a deck.
@@ -15,7 +15,6 @@ module.exports = class Card {
         this.suit = suit;
         this.rank = rank;
         this.value = Ranks[rank];
-        this.image = `/Images/Cards/${rank}${suit}.png` 
+        this.image = `/Images/Cards/${rank}${suit}.png`;
     }
-
-}
+};

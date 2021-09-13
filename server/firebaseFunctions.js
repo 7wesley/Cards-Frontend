@@ -1,21 +1,23 @@
 /**
- * The functions that can be 
+ * The functions that can be
  * @author Nathan Jenkins
  * @author Wesley Miller
  * @version 5/13/2021
  */
-var { db, del } = require('./firebase');
+var { db, del } = require("./firebase");
 module.exports = {
-
     /**
      * Adds a player to a room in the database.
      * @param {*} roomId - The room to add the player to
      * @param {*} uid - The uid of the player being added
      */
     addPlayer: async (roomId, uid) => {
-        await db.collection('rooms').doc(roomId).update({ 
-            ['players.' + uid]: uid,
-        })
+        await db
+            .collection("rooms")
+            .doc(roomId)
+            .update({
+                ["players." + uid]: uid,
+            });
     },
 
     /**
@@ -23,7 +25,7 @@ module.exports = {
      * @param {} roomId - The room to be deleted
      */
     deleteRoom: async (roomId) => {
-        await db.collection('rooms').doc(roomId).delete();
+        await db.collection("rooms").doc(roomId).delete();
     },
 
     /**
@@ -32,11 +34,14 @@ module.exports = {
      * @returns true if the room is full, else false
      */
     checkFull: async (roomId) => {
-        var roomDoc = await db.collection('rooms').doc(roomId).get();
-        if (Object.keys(roomDoc.data().players).length == roomDoc.data().maxPlayers) {
-            await db.collection('rooms').doc(roomId).update({
-                status: 'in-progress'
-            })
+        var roomDoc = await db.collection("rooms").doc(roomId).get();
+        if (
+            Object.keys(roomDoc.data().players).length ==
+            roomDoc.data().maxPlayers
+        ) {
+            await db.collection("rooms").doc(roomId).update({
+                status: "in-progress",
+            });
             return true;
         }
         return false;
@@ -48,9 +53,12 @@ module.exports = {
      * @param {*} uid - The player to be removed
      */
     removePlayer: async (roomId, uid) => {
-        await db.collection('rooms').doc(roomId).update({ 
-            ['players.' + uid]: del(),
-        })
+        await db
+            .collection("rooms")
+            .doc(roomId)
+            .update({
+                ["players." + uid]: del(),
+            });
     },
 
     /**
@@ -61,7 +69,7 @@ module.exports = {
      */
     queryUsers: async (roomId) => {
         try {
-            var roomDoc = await db.collection('rooms').doc(roomId).get();
+            var roomDoc = await db.collection("rooms").doc(roomId).get();
             return roomDoc.data().players;
         } catch {
             console.log("Room deleted");
@@ -75,7 +83,7 @@ module.exports = {
      * @returns The game type of the current room
      */
     queryGame: async (roomId) => {
-        var roomDoc = await db.collection('rooms').doc(roomId).get();
+        var roomDoc = await db.collection("rooms").doc(roomId).get();
         return roomDoc.data().game;
     },
 
@@ -86,7 +94,7 @@ module.exports = {
      */
     queryMax: async (roomId) => {
         try {
-            var roomDoc = await db.collection('rooms').doc(roomId).get();
+            var roomDoc = await db.collection("rooms").doc(roomId).get();
             return roomDoc.data().maxPlayers;
         } catch {
             return 0;
@@ -99,9 +107,8 @@ module.exports = {
      * @param {*} status - The status to set the room to
      */
     setStatus: async (roomId, status) => {
-        await db.collection('rooms').doc(roomId).update({ 
-            status
-        })
-    }
-
-}
+        await db.collection("rooms").doc(roomId).update({
+            status,
+        });
+    },
+};
