@@ -57,26 +57,26 @@ const Signup = () => {
                     <div className = "mx-auto col-xl-5 col-md-7 col-sm-10 col-xs-12">
                         <div className = "card p-4">
                             <p className = "h2 mb-4 text-center">Sign up</p>
-                            { error && <Alert variant="danger">{error}</Alert> }
-                            { success && <Alert variant="success">{success}</Alert> }
+                            { error && <Alert data-cy = "error" variant="danger">{error}</Alert> }
+                            { success && <Alert data-cy = "success" variant="success">{success}</Alert> }
                             <Form onSubmit={ handleSignup }>
                                 <Form.Group>
                                     <Form.Label>Username</Form.Label>
-                                    <Form.Control type = "text" placeholder = "Enter username here" required />
+                                    <Form.Control data-cy = "usernameInput" type = "text" placeholder = "Enter username here" required />
                                 </Form.Group>
                                 <Form.Group>
                                     <Form.Label>Email</Form.Label>
-                                    <Form.Control type = "email" placeholder = "Enter email here" required />
+                                    <Form.Control data-cy = "emailInput" type = "email" placeholder = "Enter email here" required />
                                 </Form.Group>
                                 <Form.Group>
                                     <Form.Label>Password</Form.Label>
-                                    <Form.Control type = "password" placeholder = "Enter password here" required />
+                                    <Form.Control data-cy = "passwordInput" type = "password" placeholder = "Enter password here" required />
                                 </Form.Group>
                                 <Form.Group>
                                     <Form.Label>Password Confirmation</Form.Label>
-                                    <Form.Control type="password" placeholder = "Confirm password here" required ></Form.Control>
+                                    <Form.Control data-cy = "confirmInput" type="password" placeholder = "Confirm password here" required ></Form.Control>
                                 </Form.Group>
-                                <Button disabled = {loading} className = "btn-danger w-100" type = "submit">Submit</Button>
+                                <Button data-cy = "submitButton" disabled = {loading} className = "btn-danger w-100" type = "submit">Submit</Button>
                             </Form>
                             <p className = "text-center mt-3 mb-0">Have an account? <Link to = "/login">Log in</Link></p>
                         </div>

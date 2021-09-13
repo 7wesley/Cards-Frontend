@@ -79,7 +79,10 @@ const Stats = ({ userData }) => {
                     )}  
                     
                     { userData && barChart}  
-                    {!currentUser && <p className = "h5 mt-2 text-center">Want permanent stats? <Link to = "/login">Create an account</Link></p>}                      
+                    {!currentUser && 
+                        <p className = "h5 mt-2 text-center" data-cy="createAccountText">
+                            Want permanent stats? <Link to = "/login">Create an account</Link>
+                        </p>}                      
                 </div>
             </div>
         </>

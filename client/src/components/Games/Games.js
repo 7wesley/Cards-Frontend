@@ -44,10 +44,17 @@ const Games = ({ id }) => {
             <div className = "text-center d-flex"> 
                 <div className = "mx-auto">
                     <p className = "h5">Welcome, {id}</p>
-                    {!currentUser && <p className = "h5">Want more features? <Link to = '/login'>Create an account</Link></p>}
+                    {!currentUser && 
+                        <p className = "h5" data-cy="createAccountText">
+                            Want more features? <Link to = '/login'>Create an account</Link>
+                        </p>}
 
                     {/*Opens the hostModal class when this host button is clicked*/}
-                    <button onClick = {() => setModalOpen(true)} className = "btn btn-primary mt-2" data-toggle="modal">
+                    <button 
+                        onClick = {() => setModalOpen(true)} 
+                        className = "btn btn-primary mt-2" 
+                        data-toggle="modal"
+                        data-cy = "hostButton">
                         Host
                     </button>
                 </div>
@@ -56,9 +63,10 @@ const Games = ({ id }) => {
                 { games.length ? games.map((game) => 
                     game.status === 'waiting' && 
                     <div className = "col-6" key = {game.gameId}>
-                        <motion.div className = "card border-dark mb-3" layout 
-                            initial={{ opacity: 0 }}
-                            animate = {{ opacity: 1 }}
+                        <motion.div 
+                            className = "card border-dark mb-3" 
+                            layout initial={{ opacity: 0 }} animate = {{ opacity: 1 }}
+                            data-cy="gameCard"
                         >
                             <div className = "card-header">
                                 <p className="text-dark h6">{game.gameId}</p>
@@ -81,7 +89,7 @@ const Games = ({ id }) => {
             </div>
 
             {/*Finds if the user wants to open the HostModal class*/}
-            <Modal show = {modalOpen} onHide = {closeModal}>
+            <Modal data-cy="hostModal" show = {modalOpen} onHide = {closeModal}>
                 <HostModal closeModal = {closeModal} id = {id}/>
             </Modal>
         </div>

@@ -1,5 +1,5 @@
 /**
- * Manages how users are connected to the gamerooms
+ * Initial firebase set up
  * @author Nathan Jenkins
  * @author Wesley Miller
  * @version 5/13/2021

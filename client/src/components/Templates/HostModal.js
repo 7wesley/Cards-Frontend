@@ -57,7 +57,10 @@ const HostModal = ({closeModal, id}) => {
 
                     {/*The radio button for selecting which game the user wants to play*/}
                     <div onChange={e => setGame(e.target.value)}>
-                        <div className="custom-control custom-radio custom-control-inline">
+                        <div 
+                            className="custom-control custom-radio custom-control-inline"
+                            data-cy="blackjackRadio"
+                        >
                             <input type="radio" id="customRadio1" name="customRadio" className="custom-control-input" value = "Blackjack" required/>
                             <label className="custom-control-label" htmlFor="customRadio1">Blackjack</label>
                         </div>
@@ -73,12 +76,22 @@ const HostModal = ({closeModal, id}) => {
 
                     {/*A textbox for selecting the number of players they want in a game*/}
                     <div className="form-group mt-3">
-                        <label className="mr-3" htmlFor="quantity">Number of Players (2 to 8)</label>
+                        <label className="mr-3" htmlFor="quantity">
+                            Number of Players (2 to 8)
+                        </label>
 
                         {/*the min and max fields hold the range of numbers that the user can input for this choice.
                         We will need to code this to a field or variable in the future so that we do not have
                         to go through every line of code and find where we specify a max of 8 plauers can play a game*/}
-                        <input placeholder = "2" type="number" id="quantity" name="quantity" min="2" max="8" required/>
+                        <input 
+                            data-cy = "playersInput"
+                            placeholder = "2" 
+                            type="number" 
+                            id="quantity" 
+                            name="quantity" 
+                            min="2" 
+                            max="8" 
+                            required/>
                     </div>
 
                     {/*A checkbox for selecting if the user wants to have computers*/}
@@ -89,7 +102,7 @@ const HostModal = ({closeModal, id}) => {
                 </Modal.Body>          
                 <Modal.Footer>
                     <Button onClick = {closeModal}>Close</Button>
-                    <Button type="submit">Submit</Button>
+                    <Button type="submit" data-cy="submitButton">Submit</Button>
                 </Modal.Footer>  
             </Form>
         </>               

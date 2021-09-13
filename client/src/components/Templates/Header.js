@@ -50,7 +50,7 @@ const Header = ({ id }) => {
     return (
         <Navbar bg = 'dark' variant = 'dark' expand = 'lg'>
             <div className = "container">
-                <Link to = "#" onClick = {() => handleLink('')} className="navbar-brand">
+                <Link data-cy = "homeLink" to = "#" onClick = {() => handleLink('')} className="navbar-brand">
                     <FontAwesomeIcon size="lg" icon={faCrown} />
                 </Link>
 
@@ -59,20 +59,20 @@ const Header = ({ id }) => {
                 {/*A collapsable menu that can be opened if the header is too big for the screen*/}
                 <Navbar.Collapse in = {open} className = "justify-content-stretch">
                     <ul className="navbar-nav ml-auto">
-                        <li className="nav-item" onClick={() => handleLink('games')}>
+                        <li data-cy = "gamesLink" className="nav-item" onClick={() => handleLink('games')}>
                             <Link to = "#" className="nav-link">Play</Link> 
                         </li>
-                        <li className="nav-item" onClick={() => handleLink('contact')}>
+                        <li data-cy = "contactLink" className="nav-item" onClick={() => handleLink('contact')}>
                             <Link to = "#" className="nav-link" >Contact</Link>
                         </li>
-                        <li className="nav-item" onClick={() => handleLink('about')}>
+                        <li data-cy = "aboutLink" className="nav-item" onClick={() => handleLink('about')}>
                             <Link to = "#" className="nav-link">About</Link>
                         </li>
-                        <li className="nav-item">
+                        <li className="nav-item" data-cy = "navDropdown">
                             <NavDropdown onMouseEnter={() => setDropOpen(true)} onMouseLeave={() => setDropOpen(false)} onClick = {() => setDropOpen(!dropOpen)} show = {dropOpen} title={id} id="basic-nav-dropdown">
                             <NavDropdown.Item onClick = {handleClick}> {currentUser ? 'Log out' : 'Sign in'}</NavDropdown.Item>
-                                <NavDropdown.Item onClick={() => handleLink('account')}>Manage Account</NavDropdown.Item>
-                                <NavDropdown.Item onClick={() => handleLink('stats')}>Your stats</NavDropdown.Item>
+                                <NavDropdown.Item data-cy="accountLink" onClick={() => handleLink('account')}>Manage Account</NavDropdown.Item>
+                                <NavDropdown.Item data-cy="statsLink" onClick={() => handleLink('stats')}>Your stats</NavDropdown.Item>
                             </NavDropdown>    
                         </li>
                     </ul>

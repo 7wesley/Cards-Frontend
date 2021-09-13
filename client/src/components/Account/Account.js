@@ -84,7 +84,12 @@ const Account = ({id, updateStorage}) => {
                     <Form onSubmit = { handleUpdate }>
 
                         {!currentUser ? 
-                            <p className = "h3">Want more features? <Link to = "/login">Create an account</Link></p> 
+                            <p 
+                                className = "h3" 
+                                data-cy = "createAccountText"
+                            >
+                                Want more features? <Link to = "/login">Create an account</Link>
+                            </p> 
                             : <p className = "h3">You are a premium member!</p>
                         }
 
@@ -93,7 +98,7 @@ const Account = ({id, updateStorage}) => {
                         
                         <Form.Group className = "mt-4"> 
                             <Form.Label>Change username</Form.Label>
-                            <Form.Control placeholder = {id} type ="text" />
+                            <Form.Control placeholder = {id} type = "text" data-cy="usernameInput"/>
                         </Form.Group>
                     { currentUser &&
                         <Form.Group>
@@ -103,7 +108,7 @@ const Account = ({id, updateStorage}) => {
                             <Form.Control type="file" />
                         </Form.Group>
                     }
-                    <Button type = "submit">Update</Button>
+                    <Button type = "submit" data-cy="updateButton">Update</Button>
                     
                     { currentUser &&  
                     <div className = "text-center">
