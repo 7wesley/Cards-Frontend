@@ -7,7 +7,7 @@
 
 import React, { useState } from "react";
 import { Form, Button, Alert } from "react-bootstrap";
-import { Link } from "react-router-dom";
+import { Link, useHistory } from "react-router-dom";
 import { useAuth } from "../../contexts/AuthContext";
 import { db } from "../../firebase";
 
@@ -20,12 +20,13 @@ const Signup = () => {
     const [error, setError] = useState("");
     const [success, setSuccess] = useState(false);
     const { signup } = useAuth();
+    const history = useHistory();
 
     /**
      * The page that allows the users to create an account
      * @param {*} e the user that is creating an account
      * @returns an error if any information does not align, otherwise
-     *          returns textboxes that allow users to create a password,
+     *          returns textboxes that allow users to create a password,P
      *              enter a username, and enter an email for their new account
      */
     const handleSignup = async (e) => {
@@ -44,6 +45,7 @@ const Signup = () => {
                 e.target[2].value
             );
             setSuccess("Success");
+            history.push("/account");
         } catch (e) {
             if (typeof e == "object") setError(e.message);
             else setError(e);

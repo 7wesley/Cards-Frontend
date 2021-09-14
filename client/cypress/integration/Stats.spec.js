@@ -1,4 +1,5 @@
 import { playersError } from "../support/resources";
+import { testEmail, testPassword, testUsername } from "../support/resources";
 
 describe("Stats page as guest", () => {
     beforeEach(() => {
@@ -11,7 +12,11 @@ describe("Stats page as guest", () => {
 });
 
 describe("Stats page as user", () => {
-    beforeEach(() => {
-        cy.visit("/stats");
+    before(() => {
+        cy.createAccount(testUsername, testEmail, testPassword);
+    });
+
+    after(() => {
+        cy.deleteAccount();
     });
 });

@@ -1,5 +1,5 @@
 import { playersError } from "../support/resources";
-
+import { testEmail, testPassword, testUsername } from "../support/resources";
 describe("Games page as guest", () => {
     beforeEach(() => {
         cy.visit("/games");
@@ -41,7 +41,11 @@ describe("Games page as guest", () => {
 });
 
 describe("Games page as user", () => {
-    beforeEach(() => {
-        cy.visit("/games");
+    before(() => {
+        cy.createAccount(testUsername, testEmail, testPassword);
+    });
+
+    after(() => {
+        cy.deleteAccount();
     });
 });

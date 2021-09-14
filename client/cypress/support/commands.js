@@ -60,10 +60,27 @@ Cypress.Commands.add("createGame", () => {
 });
 
 //Sign up with valid input
-Cypress.Commands.add("createAccount", (user) => {
-    cy.inputCY("usernameInput", user.username);
-    cy.inputCY("emailInput", user.email);
-    cy.inputCY("passwordInput", user.password);
-    cy.inputCY("confirmInput", user.confirmPassword);
-    cy.clickCY("submitButton");
+Cypress.Commands.add(
+    "createAccount",
+    (username, email, password, confirmPassword) => {
+        cy.visit("/signup");
+        cy.inputCY("usernameInput", username);
+        cy.inputCY("emailInput", email);
+        cy.inputCY("passwordInput", password);
+        if (confirmPassword) {
+            cy.inputCY("confirmInput", confirmPassword);
+        } else {
+            cy.inputCY("confirmInput", password);
+        }
+        cy.clickCY("submitButton");
+        cy.wait(1500);
+    }
+);
+
+//Sign up with valid input
+Cypress.Commands.add("deleteAccount", () => {
+    cy.visit("/account");
+    cy.clickCY("deleteButton");
+    cy.clickCY("confirmButton");
+    cy.wait(1000);
 });

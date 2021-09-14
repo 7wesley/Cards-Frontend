@@ -5,12 +5,14 @@
  * @version 5/13/2021
  */
 
-import React, { useState } from "react";
+import React, { useState, useCallback } from "react";
 import { Form, Button, Alert } from "react-bootstrap";
 import { Link, useHistory } from "react-router-dom";
 import styles from "../../assets/Information.module.css";
 import { useAuth } from "../../contexts/AuthContext";
 import useQueryDocs from "../../hooks/useQueryDocs";
+import { Modal } from "react-bootstrap";
+import ConfirmModal from "../Templates/ConfirmModal";
 
 /**
  * The Account Page that will be displayed
@@ -19,12 +21,17 @@ import useQueryDocs from "../../hooks/useQueryDocs";
  * @returns the account page that will be displayed
  */
 const Account = ({ id, updateStorage }) => {
+    const [modalOpen, setModalOpen] = useState(false);
     const { currentUser, logout, upload, updateProfile } = useAuth();
     const [updated, setUpdated] = useState(false);
     const { docs } = useQueryDocs("users", currentUser, updated);
     const [success, setSuccess] = useState("");
     const [error, setError] = useState("");
     const history = useHistory();
+
+    const closeModal = useCallback(() => {
+        setModalOpen(false);
+    }, [setModalOpen]);
 
     /**
      * Logs the current user out when called
@@ -88,7 +95,11 @@ const Account = ({ id, updateStorage }) => {
                             <p className="h3">You are a premium member!</p>
                         )}
 
-                        {success && <Alert variant="success">{success}</Alert>}
+                        {success && (
+                            <Alert variant="success" data-cy="success">
+                                {success}
+                            </Alert>
+                        )}
                         {error && <Alert variant="danger">{error}</Alert>}
 
                         <Form.Group className="mt-4">
@@ -100,7 +111,7 @@ const Account = ({ id, updateStorage }) => {
                             />
                         </Form.Group>
                         {currentUser && (
-                            <Form.Group>
+                            <Form.Group data-cy="profilePicture">
                                 <p>Change profile picture</p>
                                 <img
                                     className="w-25 rounded mb-3"
@@ -114,10 +125,21 @@ const Account = ({ id, updateStorage }) => {
                                 <Form.Control type="file" />
                             </Form.Group>
                         )}
-                        <Button type="submit" data-cy="updateButton">
-                            Update
-                        </Button>
-
+                        <div>
+                            <Button type="submit" data-cy="updateButton">
+                                Update
+                            </Button>
+                            {currentUser && (
+                                <Button
+                                    variant="danger"
+                                    onClick={() => setModalOpen(true)}
+                                    data-cy="deleteButton"
+                                    className="ml-2"
+                                >
+                                    Delete
+                                </Button>
+                            )}
+                        </div>
                         {currentUser && (
                             <div className="text-center">
                                 <Button
@@ -132,6 +154,9 @@ const Account = ({ id, updateStorage }) => {
                     </Form>
                 </div>
             </div>
+            <Modal data-cy="hostModal" show={modalOpen} onHide={closeModal}>
+                <ConfirmModal closeModal={closeModal} id={id} />
+            </Modal>
         </div>
     );
 };

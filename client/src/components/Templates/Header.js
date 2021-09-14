@@ -32,6 +32,7 @@ const Header = ({ id }) => {
         if (currentUser) await logout();
         //possibly POST logout success
         setDropOpen(false);
+        if (open === true) setOpen(false);
         history.push("login");
     };
 

@@ -23,7 +23,7 @@ npm run server
 # Run the client only
 npm run client
 
-# Create a .env.local file in client and .env file in server with firebase configurations
+# Create a .env file in client and .env file in server with firebase configurations
 # Server runs on http://localhost:5000 and client on http://localhost:3000
 ```
 ### Author

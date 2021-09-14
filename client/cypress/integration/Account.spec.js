@@ -1,4 +1,4 @@
-import { playersError } from "../support/resources";
+import { testEmail, testPassword, testUsername } from "../support/resources";
 import { expect } from "chai";
 
 describe("Account page as guest", () => {
@@ -6,7 +6,7 @@ describe("Account page as guest", () => {
         cy.visit("/account");
     });
 
-    it("Can view create account tet", () => {
+    it("Can view create account text", () => {
         cy.isVisible("createAccountText");
     });
 
@@ -29,7 +29,23 @@ describe("Account page as guest", () => {
 });
 
 describe("Account page as user", () => {
+    before(() => {
+        cy.createAccount(testUsername, testEmail, testPassword);
+    });
+
     beforeEach(() => {
         cy.visit("/account");
+    });
+
+    it("Can view profile picture", () => {
+        cy.isVisible("profilePicture");
+    });
+
+    it("Can view delete button", () => {
+        cy.isVisible("deleteButton");
+    });
+
+    after(() => {
+        cy.deleteAccount();
     });
 });

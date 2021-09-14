@@ -11,7 +11,7 @@
   "author": "Wesley Miller",
   "license": "ISC",
   "dependencies": {
-    "dotenv": "^8.2.0",
+    "dotenv": "^8.6.0",
     "express": "^4.17.1",
     "firebase": "^8.3.2",
     "socket.io": "^3.1.2"
