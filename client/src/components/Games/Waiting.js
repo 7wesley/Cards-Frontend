@@ -64,12 +64,14 @@ const Waiting = ({ id, playersList, maxPlayers, countdown }) => {
 
                             <p className="h4">Players in room:</p>
                             <motion.div layout data-cy="playersList">
-                                {Object.keys(playersList).map((player) => (
-                                    <p className="mb-0">
-                                        {" "}
-                                        {player} {id === player && "(You)"}
-                                    </p>
-                                ))}
+                                {Object.keys(playersList).map(
+                                    (player, index) => (
+                                        <p key={index} className="mb-0">
+                                            {" "}
+                                            {player} {id === player && "(You)"}
+                                        </p>
+                                    )
+                                )}
                             </motion.div>
 
                             <InputGroup className="mb-2 mt-4" id="copyIcon">
@@ -85,7 +87,9 @@ const Waiting = ({ id, playersList, maxPlayers, countdown }) => {
                                         />
                                     </InputGroup.Text>
                                 </InputGroup.Prepend>
-                                <FormControl value={window.location.href} />
+                                <FormControl
+                                    defaultValue={window.location.href}
+                                />
                             </InputGroup>
 
                             <Overlay

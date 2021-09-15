@@ -7,7 +7,6 @@
  */
 
 import React, { useState, useCallback } from "react";
-import styles from "../../assets/Space.module.css";
 import HostModal from "../Templates/HostModal.js";
 import { Modal, Form } from "react-bootstrap";
 import { Link } from "react-router-dom";
@@ -34,7 +33,7 @@ const Games = ({ id }) => {
     }, [setModalOpen]);
 
     return (
-        <div className={"container position-relative " + styles.headerSpace}>
+        <div className="container position-relative mt-5">
             <div>
                 <Form
                     onChange={(e) => setFilter(e.target.value)}

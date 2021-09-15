@@ -18,7 +18,6 @@ import Stats from "./Information/Stats";
 import Login from "./Account/Login";
 import Signup from "./Account/Signup";
 import Account from "./Account/Account";
-import Layout from "./Games/Layout";
 import useStorage from "../hooks/useStorage";
 
 /**
@@ -64,7 +63,6 @@ const Routing = () => {
                 />
                 <Route path="/login" component={Login} />
                 <Route path="/signup" component={Signup} />
-                <Route path="/layout" component={Layout} />
             </Switch>
         </Router>
     );

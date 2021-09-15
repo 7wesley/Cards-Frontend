@@ -83,7 +83,9 @@ const Stats = ({ userData }) => {
 
                     {userData &&
                         Object.keys(userData.stats).map((key) => (
-                            <div>{key + ": " + userData.stats[key]}</div>
+                            <div key={key}>
+                                {key + ": " + userData.stats[key]}
+                            </div>
                         ))}
 
                     {userData && barChart}

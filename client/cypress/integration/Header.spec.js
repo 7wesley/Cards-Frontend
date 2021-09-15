@@ -1,4 +1,6 @@
-describe("Navbar component", () => {
+import { testEmail, testPassword, testUsername } from "../support/resources";
+
+describe("Navbar component as guest", () => {
     beforeEach(() => {
         cy.visit("/");
     });
@@ -33,5 +35,25 @@ describe("Navbar component", () => {
         cy.getCY("navDropdown").trigger("mouseover");
         cy.clickCY("statsLink");
         cy.url().should("include", "stats");
+    });
+
+    it("Dropdown contains 'Sign in'", () => {
+        cy.getCY("navDropdown").trigger("mouseover");
+        cy.isVisible("logLink", "Sign in");
+    });
+});
+
+describe("Navbar component as user", () => {
+    before(() => {
+        cy.createAccount(testUsername, testEmail, testPassword);
+    });
+
+    it("Dropdown contains 'Log out'", () => {
+        cy.getCY("navDropdown").trigger("mouseover");
+        cy.isVisible("logLink", "Log out");
+    });
+
+    after(() => {
+        cy.deleteAccount();
     });
 });

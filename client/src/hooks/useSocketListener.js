@@ -26,7 +26,6 @@ const useSocketListener = (connected) => {
     useEffect(() => {
         //prevents socket from connecting if room is full
         if (connected) {
-            console.log("connected");
             socket.on("countdown", (secs) => setCountdown(secs));
             socket.on("update-hands", (plyrs) => setPlayers(plyrs));
             socket.on("curr-turn", (user) => setTurn(user));
@@ -35,7 +34,6 @@ const useSocketListener = (connected) => {
             socket.on("alert", (msg) => setMessage(msg));
             socket.on("winners", (winList) => setWinners(winList));
             return () => {
-                console.log("dc");
                 disconnectSocket();
             };
         }

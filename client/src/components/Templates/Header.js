@@ -59,7 +59,7 @@ const Header = ({ id }) => {
 
                 <Navbar.Toggle onClick={() => setOpen(!open)} />
 
-                {/*A collapsable menu that can be opened if the header is too big for the screen*/}
+                {/*A collapsable menu athat can be opened if the header is too big for the screen*/}
                 <Navbar.Collapse in={open} className="justify-content-stretch">
                     <ul className="navbar-nav ml-auto">
                         <li
@@ -98,7 +98,10 @@ const Header = ({ id }) => {
                                 title={id}
                                 id="basic-nav-dropdown"
                             >
-                                <NavDropdown.Item onClick={handleClick}>
+                                <NavDropdown.Item
+                                    data-cy="logLink"
+                                    onClick={handleClick}
+                                >
                                     {" "}
                                     {currentUser ? "Log out" : "Sign in"}
                                 </NavDropdown.Item>

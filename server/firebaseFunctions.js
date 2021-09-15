@@ -72,7 +72,6 @@ module.exports = {
             var roomDoc = await db.collection("rooms").doc(roomId).get();
             return roomDoc.data().players;
         } catch {
-            console.log("Room deleted");
             return null;
         }
     },

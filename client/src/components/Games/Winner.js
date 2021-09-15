@@ -38,8 +38,6 @@ const Winner = ({ userData, winners, timer, updateStorage }) => {
     useEffect(() => {
         const updateStats = async () => {
             if (id) {
-                console.log(winners);
-                console.log(id);
                 if (winners.some((winner) => winner.id === id))
                     userData.stats.Wins++;
                 else userData.stats.Losses++;
@@ -63,8 +61,8 @@ const Winner = ({ userData, winners, timer, updateStorage }) => {
             <div className="d-flex flex-column min-vh-100 justify-content-center align-items-center">
                 <div className="text-center text-light">
                     {winners.length ? (
-                        winners.map((winner) => (
-                            <>
+                        winners.map((winner, index) => (
+                            <div key={index}>
                                 <p className="h3">
                                     {winner.id === id
                                         ? "You win!"
@@ -85,7 +83,7 @@ const Winner = ({ userData, winners, timer, updateStorage }) => {
                                 {/*Update the user's total games won*/}
                                 {/*updateWins(getUID())*/}
                                 {/*funct4(id)*/}
-                            </>
+                            </div>
                         ))
                     ) : (
                         <p className="h3">Nobody wins!</p>

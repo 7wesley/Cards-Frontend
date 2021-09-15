@@ -26,7 +26,6 @@ export const connectSocket = (room, id) => {
  * from the socket
  */
 export const disconnectSocket = () => {
-    console.log("User disconnecting");
     if (socket) socket.disconnect();
 };
 
