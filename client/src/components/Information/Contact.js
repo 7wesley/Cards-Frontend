@@ -9,6 +9,8 @@
 import React, { useState } from "react";
 import styles from "../../assets/Information.module.css";
 import ReCAPTCHA from "react-google-recaptcha";
+import emailjs from "emailjs-com";
+import { Alert, Form, Button } from "react-bootstrap";
 
 /**
  * The page that contains information about contacting the creators of the site
@@ -16,18 +18,38 @@ import ReCAPTCHA from "react-google-recaptcha";
  */
 const Contact = () => {
     const [loading, setLoading] = useState(true);
+    const [error, setError] = useState("");
+    const [success, setSuccess] = useState(false);
 
     /**
      * Finds if the user entered the correct Captcha selection
      */
     const handleChange = () => {
-        if (loading !== false) setLoading(false);
+        if (loading) {
+            setLoading(false);
+        } else {
+            setLoading(true);
+        }
     };
 
     /**
      * What happens when the users click the submit button
      */
-    const handleSubmit = () => {};
+    const handleSubmit = async (e) => {
+        e.preventDefault();
+        try {
+            await emailjs.sendForm(
+                process.env.REACT_APP_EMAIL_SERVICE_ID,
+                process.env.REACT_APP_EMAIL_TEMPLATE,
+                e.target,
+                process.env.REACT_APP_EMAIL_USER_ID
+            );
+            setSuccess("Email sent successfully!");
+            e.target.reset();
+        } catch (error) {
+            setError(error.text);
+        }
+    };
 
     return (
         <>
@@ -41,41 +63,51 @@ const Contact = () => {
             <div className="container mt-5">
                 <div className="mx-auto col-md-8 col-sm-10 col-xs-12">
                     <h2>Questions or concerns?</h2>
-                    <form className="mt-3" onSubmit={handleSubmit}>
-                        <div className="form-group">
-                            <label htmlFor="form1">Email</label>
-                            <input
+                    {error && (
+                        <Alert data-cy="error" variant="danger">
+                            {error}
+                        </Alert>
+                    )}
+                    {success && (
+                        <Alert data-cy="success" variant="success">
+                            {success}
+                        </Alert>
+                    )}
+                    <Form onSubmit={handleSubmit}>
+                        <Form.Group>
+                            <Form.Label>Email</Form.Label>
+                            <Form.Control
+                                data-cy="emailInput"
                                 type="email"
-                                className="form-control"
-                                id="form1"
                                 placeholder="example@email.com"
                                 required
-                            />
-                        </div>
-                        <div className="form-group">
-                            <label htmlFor="form2">What should we know?</label>
-                            <textarea
-                                id="form2"
+                                name="email"
+                            ></Form.Control>
+                        </Form.Group>
+                        <Form.Group>
+                            <Form.Label>What should we know?</Form.Label>
+                            <Form.Control
+                                data-cy="messageInput"
                                 placeholder="Enter your comments here."
-                                name="description"
+                                name="message"
                                 type="text"
-                                className="form-control"
                                 minLength="1"
                                 required
-                            />
-                        </div>
+                            ></Form.Control>
+                        </Form.Group>
                         <ReCAPTCHA
                             sitekey={process.env.REACT_APP_RECAPTCHA_PUBLIC}
                             onChange={handleChange}
                         />
-                        <button
+                        <Button
                             disabled={loading}
-                            className="btn btn-primary w-100 mt-3"
+                            className="w-100 mt-3"
                             type="submit"
+                            data-cy="submitButton"
                         >
                             Submit
-                        </button>
-                    </form>
+                        </Button>
+                    </Form>
                 </div>
             </div>
         </>

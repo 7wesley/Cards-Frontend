@@ -50,7 +50,9 @@ const Games = ({ id }) => {
             </div>
             <div className="text-center d-flex">
                 <div className="mx-auto">
-                    <p className="h5">Welcome, {id}</p>
+                    <p className="h5" data-cy="usernameText">
+                        Welcome, {id}
+                    </p>
                     {!currentUser && (
                         <p className="h5" data-cy="createAccountText">
                             Want more features?{" "}

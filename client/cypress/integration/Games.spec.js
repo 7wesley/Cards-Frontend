@@ -1,5 +1,7 @@
 import { playersError } from "../support/resources";
 import { testEmail, testPassword, testUsername } from "../support/resources";
+import { expect } from "chai";
+
 describe("Games page as guest", () => {
     beforeEach(() => {
         cy.visit("/games");
@@ -9,7 +11,17 @@ describe("Games page as guest", () => {
         cy.isVisible("createAccountText");
     });
 
+    it("Username text contains sessionStorage username", () => {
+        cy.getCY("usernameText").should(($usernameText) => {
+            const text = $usernameText.text();
+            expect(text).to.include(
+                JSON.parse(sessionStorage.getItem("cards-username"))
+            );
+        });
+    });
+
     it("No games available", () => {
+        cy.wait(1000);
         cy.isNotVisible("gameCard");
     });
 
@@ -38,11 +50,26 @@ describe("Games page as guest", () => {
         cy.createGame();
         cy.url().should("include", "/games/");
     });
+
+    it("Room is deleted after leaving page", () => {
+        cy.createGame();
+        cy.visit("/games");
+        cy.wait(1000);
+        cy.isNotVisible("gameCard");
+    });
 });
 
 describe("Games page as user", () => {
     before(() => {
         cy.createAccount(testUsername, testEmail, testPassword);
+    });
+
+    beforeEach(() => {
+        cy.visit("/games");
+    });
+
+    it("Welcome text contains username", () => {
+        cy.isVisible("usernameText", testUsername);
     });
 
     after(() => {

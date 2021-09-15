@@ -49,11 +49,16 @@ const Login = () => {
                     <div className="mx-auto col-xl-5 col-md-7 col-sm-10 col-xs-12">
                         <div className="card p-4">
                             <p className="h2 mb-4 text-center">Login</p>
-                            {error && <Alert variant="danger">{error}</Alert>}
+                            {error && (
+                                <Alert variant="danger" data-cy="alert">
+                                    {error}
+                                </Alert>
+                            )}
                             <Form onSubmit={handleLogin}>
                                 <Form.Group>
                                     <Form.Label>Email</Form.Label>
                                     <Form.Control
+                                        data-cy="emailInput"
                                         type="email"
                                         placeholder="Enter username here"
                                         required
@@ -62,12 +67,14 @@ const Login = () => {
                                 <Form.Group>
                                     <Form.Label>Password</Form.Label>
                                     <Form.Control
+                                        data-cy="passwordInput"
                                         type="password"
                                         placeholder="Enter password here"
                                         required
                                     />
                                 </Form.Group>
                                 <Button
+                                    data-cy="submitButton"
                                     disabled={loading}
                                     className="btn-danger w-100"
                                     type="submit"

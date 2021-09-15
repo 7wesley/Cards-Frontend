@@ -1,4 +1,5 @@
 import * as res from "../support/resources";
+
 describe("Signup page as guest", () => {
     beforeEach(() => {
         cy.visit("/signup");
@@ -44,16 +45,6 @@ describe("Signup page as guest", () => {
     it("Valid sign up redirects user", () => {
         cy.createAccount(res.testUsername, res.testEmail, res.testPassword);
         cy.url().should("include", "account");
-    });
-
-    after(() => {
-        cy.deleteAccount();
-    });
-});
-
-describe("Signup page as user", () => {
-    before(() => {
-        cy.createAccount(res.testUsername, res.testEmail, res.testPassword);
     });
 
     after(() => {

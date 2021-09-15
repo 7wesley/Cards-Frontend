@@ -10,7 +10,7 @@ describe("Account page as guest", () => {
         cy.isVisible("createAccountText");
     });
 
-    it("Placeholder should be filled from sessionStorage", () => {
+    it("Placeholder contains sessionStorage data", () => {
         cy.get("input")
             .invoke("attr", "placeholder")
             .should((text) => {
@@ -20,7 +20,7 @@ describe("Account page as guest", () => {
             });
     });
 
-    it("Updating text should update sessionStorage", () => {
+    it("Updating text updates sessionStorage", () => {
         cy.inputCY("usernameInput", "text");
         cy.clickCY("updateButton").then(() => {
             expect(sessionStorage.getItem("cards-username")).to.include("text");
@@ -39,6 +39,14 @@ describe("Account page as user", () => {
 
     it("Can view profile picture", () => {
         cy.isVisible("profilePicture");
+    });
+
+    it("Can change username", () => {
+        cy.inputCY("usernameInput", "changed");
+        cy.clickCY("updateButton");
+        cy.wait(1000);
+        cy.reload();
+        cy.getCY("usernameInput").should("have.attr", "placeholder", "changed");
     });
 
     it("Can view delete button", () => {

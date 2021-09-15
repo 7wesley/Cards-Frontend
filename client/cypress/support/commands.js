@@ -57,6 +57,7 @@ Cypress.Commands.add("createGame", () => {
     cy.clickCY("blackjackRadio");
     cy.inputCY("playersInput", 2);
     cy.clickCY("submitButton");
+    cy.wait(1000);
 });
 
 //Sign up with valid input

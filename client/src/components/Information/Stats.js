@@ -77,7 +77,7 @@ const Stats = ({ userData }) => {
             </div>
             <div className="container mt-5">
                 <div className="mx-auto col-lg-8 col-md-10 col-xs-12">
-                    <p className="h3 text-center">
+                    <p className="h3 text-center" data-cy="usernameText">
                         {userData && userData.username}'s stats:
                     </p>
 
