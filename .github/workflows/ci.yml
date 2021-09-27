@@ -10,14 +10,17 @@ on:
 jobs:
   cypress-test:
     runs-on: ubuntu-latest
-    
     steps:
       - name: Checkout
         uses: actions/checkout@v2
+      - run: cd client
       # Install NPM dependencies, cache them correctly
       # and run all Cypress tests
       - name: Cypress run
         uses: cypress-io/github-action@v2
+        with:
+          build: npm run build
+          start: npm start
         
   build-pubish-frontend:
     needs: cypress-test
@@ -28,12 +31,12 @@ jobs:
 
     steps:
     - uses: actions/checkout@v2
+    - run: cd client
     - name: Use Node.js ${{ matrix.node-version }}
       uses: actions/setup-node@v2
       with:
         node-version: ${{ matrix.node-version }}
         cache: 'npm'
-    - run: cd client
     - run: npm ci
     - run: npm run build
     
@@ -53,12 +56,12 @@ jobs:
 
     steps:
     - uses: actions/checkout@v2
+    - run: cd server
     - name: Use Node.js ${{ matrix.node-version }}
       uses: actions/setup-node@v2
       with:
         node-version: ${{ matrix.node-version }}
         cache: 'npm'
-    - run: cd server
     - run: npm ci
     
     - name: Build and push Docker image
