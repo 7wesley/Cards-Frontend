@@ -10,9 +10,6 @@ on:
 jobs:
   cypress-test:
     runs-on: ubuntu-latest
-    defaults:
-      run:
-        working-directory: ./client
     steps:
       - name: Checkout
         uses: actions/checkout@v2
@@ -21,8 +18,9 @@ jobs:
       - name: Cypress run
         uses: cypress-io/github-action@v2
         with:
-          build: cd client && npm run build
-          start: cd client && npm start
+          working-directory: client
+          build: npm run build
+          start: npm start
         
   build-pubish-frontend:
     needs: cypress-test
@@ -41,6 +39,7 @@ jobs:
       with:
         node-version: ${{ matrix.node-version }}
         cache: 'npm'
+        working-directory: client
     - run: npm ci
     - run: npm run build
     
@@ -51,6 +50,7 @@ jobs:
         registry: docker.io
         username: ${{ secrets.DOCKER_USERNAME }}
         password: ${{ secrets.DOCKER_PASSWORD }}
+        working-directory: client
         
   build-publish-backend:
     runs-on: ubuntu-latest
@@ -68,6 +68,7 @@ jobs:
       with:
         node-version: ${{ matrix.node-version }}
         cache: 'npm'
+        working-directory: server
     - run: npm ci
     
     - name: Build and push Docker image
@@ -77,3 +78,4 @@ jobs:
         registry: docker.io
         username: ${{ secrets.DOCKER_USERNAME }}
         password: ${{ secrets.DOCKER_PASSWORD }}
+        working-directory: server
