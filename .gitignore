@@ -60,3 +60,4 @@ node_modules/
 
 # Miscellaneous 
 build
+.htaccess
