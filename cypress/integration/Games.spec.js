@@ -53,8 +53,9 @@ describe("Games page as guest", () => {
 
     it("Room is deleted after leaving page", () => {
         cy.createGame();
-        cy.visit("/games");
         cy.wait(1000);
+        cy.visit("/games");
+        cy.wait(1500);
         cy.isNotVisible("gameCard");
     });
 });

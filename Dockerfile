@@ -1,4 +1,4 @@
-FROM node:16 AS build
+FROM node:16
 
 WORKDIR /app
 
@@ -10,9 +10,6 @@ RUN npm ci
 
 COPY . .
 
-RUN npm run build
+EXPOSE 3000
 
-#Port 80 automatically exposed
-FROM httpd:2.4
-WORKDIR /usr/local/apache2/htdocs/
-COPY --from=build /app/build/ .
+CMD ["npm", "start"]

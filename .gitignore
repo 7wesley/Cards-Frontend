@@ -61,3 +61,5 @@ node_modules/
 # Miscellaneous 
 build
 .htaccess
+cypress/screenshots
+cypress/videos
