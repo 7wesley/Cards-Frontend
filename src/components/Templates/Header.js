@@ -81,6 +81,15 @@ const Header = ({ id }) => {
                             </Link>
                         </li>
                         <li
+                            data-cy="tutorialLink"
+                            className="nav-item"
+                            onClick={() => handleLink("tutorial")}
+                        >
+                            <Link to="#" className="nav-link">
+                                Tutorials
+                            </Link>
+                        </li>
+                        <li
                             data-cy="aboutLink"
                             className="nav-item"
                             onClick={() => handleLink("about")}

@@ -1,0 +1,78 @@
+/**
+ * Styling for the classes in the Tutorial package
+ * @author Nathan Jenkins
+ * @author Wesley Miller
+ * @version 5/13/2021
+ */
+
+.blackBlock {
+    height: 30vh;
+    width: 100%;
+}
+
+.blackjackBlock1 {
+  height: 50vh;
+  width: 50%;
+  background-color: rgb(115, 202, 115);
+}
+
+.blackjackBlock2 {
+  height: 50vh;
+  width: 50%;
+  background: url('./blackjack.PNG') center;
+  background-size: 90% 90%;
+  background-repeat: no-repeat;
+  background-color: rgb(115, 202, 115);
+}
+
+
+.warBlock1 {
+  height: 50vh;
+  width: 50%;
+  background-color: #d1c78f;
+}
+
+.warBlock2 {
+  height: 50vh;
+  width: 50%;
+  /* Will add a picure for War once we have a game of War working */
+  background: url('./warpicture.jpg') center;
+  background-size: 90% 90%;
+  background-repeat: no-repeat;  background-size: 90% 90%;
+  background-repeat: no-repeat;
+  background-color: #d1c78f;
+}
+
+.pokerBlock1 {
+  height: 50vh;
+  width: 50%;
+  background-color: rgb(110, 98, 98);
+}
+
+.pokerBlock2 {
+  height: 50vh;
+  width: 50%;
+  /* Will add a picure for War once we have a game of Poker working */
+  background: url('./pokerpic.png') center;
+  background-size: 90% 90%;
+  background-repeat: no-repeat;
+  background-color: rgb(110, 98, 98);
+}
+
+a {
+    color: #0068c4;
+    text-decoration: none;
+}
+
+a:hover {
+    color:#00A0C6; 
+    text-decoration:none; 
+    cursor:pointer;  
+}
+
+.vertical {
+  margin: auto;
+  width: 50%;
+  border: 3px solid green;
+  padding: 10px;
+}

@@ -15,6 +15,7 @@ import Games from "./Games/Games";
 import GameRoom from "./Games/GameRoom";
 import Waiting from "./Games/Waiting";
 import Stats from "./Information/Stats";
+import Tutorial from "./Information/Tutorial";
 import Login from "./Account/Login";
 import Signup from "./Account/Signup";
 import Account from "./Account/Account";
@@ -51,6 +52,7 @@ const Routing = () => {
                 <Route path="/about" component={About} />
                 <Route path="/contact" component={Contact} />
                 <Route path="/waiting" component={Waiting} />
+                <Route path="/tutorial" component={Tutorial} />
                 <Route
                     path="/stats"
                     render={() => <Stats userData={userData} />}
