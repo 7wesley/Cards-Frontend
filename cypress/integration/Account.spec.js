@@ -46,6 +46,7 @@ describe("Account page as user", () => {
         cy.clickCY("updateButton");
         cy.wait(1000);
         cy.reload();
+        cy.wait(1000);
         cy.getCY("usernameInput").should("have.attr", "placeholder", "changed");
     });
 
