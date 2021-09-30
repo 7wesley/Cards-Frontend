@@ -40,37 +40,16 @@ jobs:
       - name: Cypress run
         uses: cypress-io/github-action@v2
         with:
-<<<<<<< HEAD
-          build: npm run build
-          start: npm start
-=======
           build: npm build
           start: npm start, npm start --prefix server
           wait-on: 'http://localhost:3000, http://localhost:5000'
->>>>>>> 7582136adb776a7530995416c59254b9453ac038
         
   docker-publish:
     runs-on: ubuntu-latest
-<<<<<<< HEAD
-    strategy:
-      matrix:
-        node-version: [12.x, 14.x, 16.x]
-
-    steps:
-    - uses: actions/checkout@v2
-    - name: Use Node.js ${{ matrix.node-version }}
-      uses: actions/setup-node@v2
-      with:
-        node-version: ${{ matrix.node-version }}
-        cache: 'npm'
-    - run: npm ci
-    - run: npm run build
-=======
     needs: cypress-test
     steps:
     - name: Checkout
       uses: actions/checkout@v2
->>>>>>> 7582136adb776a7530995416c59254b9453ac038
     
     - name: Build and push Docker image
       uses: mr-smithers-excellent/docker-build-push@v5
@@ -78,31 +57,4 @@ jobs:
         image: 7wesley/cards-frontend
         registry: docker.io
         username: ${{ secrets.DOCKER_USERNAME }}
-<<<<<<< HEAD
         password: ${{ secrets.DOCKER_PASSWORD }}
-        
-  build-publish-backend:
-    runs-on: ubuntu-latest
-    strategy:
-      matrix:
-        node-version: [12.x, 14.x, 16.x]
-
-    steps:
-    - uses: actions/checkout@v2
-    - name: Use Node.js ${{ matrix.node-version }}
-      uses: actions/setup-node@v2
-      with:
-        node-version: ${{ matrix.node-version }}
-        cache: 'npm'
-    - run: npm ci
-    
-    - name: Build and push Docker image
-      uses: mr-smithers-excellent/docker-build-push@v5
-      with:
-        image: 7wesley/cards-backend
-        registry: docker.io
-        username: ${{ secrets.DOCKER_USERNAME }}
-        password: ${{ secrets.DOCKER_PASSWORD }}
-=======
-        password: ${{ secrets.DOCKER_PASSWORD }}
->>>>>>> 7582136adb776a7530995416c59254b9453ac038
