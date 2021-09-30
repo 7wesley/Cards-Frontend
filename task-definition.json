@@ -162,7 +162,7 @@
             "dockerLabels": null,
             "systemControls": null,
             "privileged": null,
-            "name": "Cards-Frontend"
+            "name": "Cards-Backend"
         }
     ],
     "placementConstraints": [],
