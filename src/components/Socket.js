@@ -15,7 +15,7 @@ let socket;
  * @param {any} id the identification of the user connecting to the room
  */
 export const connectSocket = (room, id) => {
-    socket = io("localhost:5000", {
+    socket = io("http://localhost:5000", {
         transports: ["websocket", "polling", "flashsocket"],
     });
     if (socket && room) socket.emit("join", room, id);

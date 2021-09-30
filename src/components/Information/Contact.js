@@ -62,7 +62,7 @@ const Contact = () => {
             </div>
             <div className="container mt-5">
                 <div className="mx-auto col-md-8 col-sm-10 col-xs-12">
-                    <h2>Questions or concerns? (update)</h2>
+                    <h2>Questions or concerns?</h2>
                     {error && (
                         <Alert data-cy="error" variant="danger">
                             {error}
