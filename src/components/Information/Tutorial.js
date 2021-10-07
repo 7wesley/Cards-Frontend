@@ -19,7 +19,7 @@
                 
                 {/* The row for the title tutorial row */}
                 <div class="row">
-                    <div className={styles.vertical}>
+                    <div className={styles.outline}>
                         <div className="container h-100">
                             <div className="row h-100 justify-content-center align-items-center">
                                 <h1>
@@ -42,7 +42,7 @@
                         </div>
                         <div className="row h-50 justify-content-center align-items-center">
                             <h6>
-                                <font color="white">Want to learn how to play Blackjack?  <br/>
+                                <font color="white">Want to learn how to play Blackjack? <br/>
                                     Click here: 
                                 </font> 
                                 <a href="https://www.casino.org/blackjack/how-to-play/"> Blackjack Tutorial</a>
@@ -51,8 +51,8 @@
                     </div>
 
                     {/* The right side of the Blackjack row */}
-                    <div class="column" className={styles.blackjackBlock2}>
-                    </div>
+                    <a href="https://www.casino.org/blackjack/how-to-play/" class="column" className={styles.blackjackBlock2}>
+                    </a>
 
                 </div>
 
@@ -85,10 +85,9 @@
 
                     {/* The right side of the War row */}
                     <div class="column" className={styles.warBlock2}>
-                        <div className="row h-100 justify-content-center align-items-center">
-                        </div>
+                        <a href="https://www.wikihow.com/Play-War-(Card-Game)" className="row h-100 justify-content-center align-items-center">
+                        </a>
                     </div>
-
                 </div>
 
                 {/* The row for the Poker tutorial block */}
@@ -119,8 +118,8 @@
 
                     {/* The right side of the War row */}
                     <div class="column" className={styles.pokerBlock2}>
-                        <div className="row h-100 justify-content-center align-items-center">
-                        </div>
+                        <a href="https://www.wikihow.com/Play-Poker" className="row h-100 justify-content-center align-items-center">
+                        </a>
                     </div>
 
                 </div>

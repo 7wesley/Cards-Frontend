@@ -60,7 +60,7 @@
 }
 
 a {
-    color: #0068c4;
+    color: #1580dd;
     text-decoration: none;
 }
 
@@ -70,7 +70,7 @@ a:hover {
     cursor:pointer;  
 }
 
-.vertical {
+.outline {
   margin: auto;
   width: 50%;
   border: 3px solid green;
