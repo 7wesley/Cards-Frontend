@@ -63,3 +63,5 @@ build
 .htaccess
 cypress/screenshots
 cypress/videos
+cypress.yml
+task-definition.json
