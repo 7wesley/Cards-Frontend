@@ -12,14 +12,18 @@ import { Bar } from "react-chartjs-2";
 import { Link } from "react-router-dom";
 import { useAuth } from "../../contexts/AuthContext";
 import React from "react";
+import {connect} from "react-redux"
+
 
 /**
  * The page that shows the user's stats
  * @param {any} userData the user's information
  * @returns The stats webpage
  */
-const Stats = ({ userData }) => {
+const Stats = ({ userData }, props) => {
     const { currentUser } = useAuth();
+
+    console.log("yes")
 
     //The chart that will be shown with the user's stats
     const barChart = (
@@ -66,6 +70,13 @@ const Stats = ({ userData }) => {
 
     return (
         <>
+            <button onClick={props.modifyState}>Add Something... </button>
+            <h4>
+                props.stateValue = {props.stateValue}
+            </h4>
+
+
+            
             <div className={styles.darkBlock}>
                 <div className="container h-100">
                     <div className="row h-100 justify-content-center align-items-center">
@@ -95,7 +106,7 @@ const Stats = ({ userData }) => {
                             data-cy="createAccountText"
                         >
                             Want permanent stats?{" "}
-                            <Link to="/login">Create an account</Link>
+                            <Link onClick={props.modifyState} to="/login">Create an account</Link>
                         </p>
                     )}
                 </div>
@@ -104,7 +115,23 @@ const Stats = ({ userData }) => {
     );
 };
 
-export default Stats;
+//Any time the store is updated, this function is called for this component
+const mapStateToProps = state => {
+    return {
+        stateValue: state
+    }
+}
+
+//Makes a call to the reducer so that it can tell the store to update state
+//This function is called whenever this component receives new props
+const mapDispatchToProps = dispatch => {
+    return {
+        //Returns a call to the reducer with this type of action
+        modifyState: () => dispatch( {type: "Obj_1_State"})
+    }
+}
+
+export default connect(mapStateToProps, mapDispatchToProps) (Stats);
 
 /*
     //Updates the user's stats to match what is on Firebase
