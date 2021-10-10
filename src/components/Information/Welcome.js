@@ -10,13 +10,29 @@ import { Link } from "react-router-dom";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faCoffee } from "@fortawesome/free-solid-svg-icons";
 import {connect} from "react-redux"
-import { action1 } from "../../actions";
+import { testAction } from "../../actions";
+
+
+
+//For reference only
+//For importing state from the store
+import { useSelector } from 'react-redux';
+function App() {
+  const birds = useSelector(state => state.birds);
+}
 
 /**
  * The welcome page that shows if the user wants to login or continue as a guest
  * @returns This welcome page
  */
 const Welcome = (props) => {
+
+    // constructor(props) {
+    //     super(props);
+    //     this.state:{lightOn: false};
+    //     this.OnClick = this.OnClick.bind(this);
+    // }
+
     return (
         <div className={styles.content + " container-fluid"}>
 
@@ -54,10 +70,7 @@ const Welcome = (props) => {
 
 //Any time the store is updated, this function is called for this component
 const mapStateToProps = state => {
-    return {...state, stateValue: state,
-        payload: {
-            description: "this"
-        }} 
+    return state 
     // {
     //     stateValue: state
     //   }  
@@ -68,7 +81,7 @@ const mapStateToProps = state => {
   //This function is called whenever this component receives new props
   const mapDispatchToProps = dispatch => {
     return {
-      modifyState: () => dispatch( action1("Clicked something on welcome page") )
+      modifyState: () => dispatch( testAction("Clicked something on welcome page") )
       
     }
   }

@@ -8,11 +8,26 @@ import * as actions from "./actionTypes"
 
 
 
-export function action1(description) {
+export function testAction(description) {
     return {
         type: actions.WelcomeAction, 
+        payload: {
+            description
+        },
+        stuff: "someygbhk"
+    }
+}
+
+
+//Not being used
+export function setUser(description) {
+    return {
+        type: actions.setUser, 
         payload: {
             description
         }
     }
 }
+
+
+

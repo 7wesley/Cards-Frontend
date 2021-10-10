@@ -10,6 +10,7 @@ import {logger} from "redux-logger"
 import * as actions from "./actionTypes"
 
 
+
 //Creates an array that holds 3 objects and 3 fields
 //The 3 fields are id, name, and age
 const PersonDetails = [
@@ -39,6 +40,8 @@ const PersonNames = PersonDetails.map(person => person.name);
 //     }
 // ];
 
+const name = 'Guest-'+Math.round(Math.random() * 100000)
+
 const initialState = {
     
     welcome: {
@@ -46,6 +49,15 @@ const initialState = {
     }, 
     payload: {
         description: "null"
+    }, 
+
+    user: {
+        username: `Guest-${Math.round(Math.random() * 100000)}`,
+        stats: {
+            wins: 0,
+            losses: 0,
+            played: 0
+        }
     }
 
     // css:{name: "name1"},
@@ -67,9 +79,9 @@ const reducer = (state = initialState, action) => {
     switch(action.type) {
         case actions.WelcomeAction:
             return {...state, 
-                payload: {
-                    description: "Run"
-                }
+            
+                payload: action.payload,
+            
             }
             // return Object.keys(state.welcome).map(state2 => state2.id !== action.payload.id ? 
             //     state : {...state, resolved: true})    
@@ -78,6 +90,13 @@ const reducer = (state = initialState, action) => {
             // case "Obj_2_State":
             // return state.map(state2 => state2.id !== action.payload.id ? 
             //     state2 : {...state2, resolved: true})
+        case actions.setUser:
+            return {...state, 
+            
+                payload: action.payload,
+                user: action.user
+            }
+
         default:
             return state
     }

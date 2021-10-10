@@ -19,6 +19,12 @@ import Tutorial from "./Information/Tutorial";
 import Login from "./Account/Login";
 import Signup from "./Account/Signup";
 import Account from "./Account/Account";
+import {connect} from "react-redux"
+import { setUser } from "../actions";
+import {store} from "../store.js"
+
+
+
 import useStorage from "../hooks/useStorage";
 
 /**
@@ -26,15 +32,31 @@ import useStorage from "../hooks/useStorage";
  * @returns this class's routing method
  */
 const Routing = () => {
+
+    
     const { userData, updateStorage } = useStorage({
         username: `Guest-${Math.round(Math.random() * 100000)}`,
         stats: { Wins: 0, Losses: 0, Played: 0 },
     });
+
     const id = userData && userData.username;
+    // const id = store.getState().user.username
+
+    // const action3 = {
+    //     user: userData,
+    //     type: actions.setUser, 
+    //     payload: {
+    //         description: "Initialized the user"
+    //     }, 
+    // }
+
+
+
+    
 
     return (
         <Router>
-            <Header id={id} />
+            <Header id={id}/>
             <Switch>
                 <Route exact path="/" component={Welcome} />
                 <Route exact path="/games" render={() => <Games id={id} />} />
@@ -55,7 +77,7 @@ const Routing = () => {
                 <Route path="/tutorial" component={Tutorial} />
                 <Route
                     path="/stats"
-                    render={() => <Stats userData={userData} />}
+                    render={() => <Stats /*userData={userData}*/ />}
                 />
                 <Route
                     path="/account"
@@ -70,4 +92,36 @@ const Routing = () => {
     );
 };
 
-export default Routing;
+//Any time the store is updated, this function is called for this component
+const mapStateToProps = state => {
+    return {...state, 
+        user: {
+            username: "new name"
+        }} 
+    // {
+    //     stateValue: state
+    //   }  
+}
+  
+  
+//Makes a call to the reducer so that it can tell the store to update state
+//This function is called whenever this component receives new props
+const mapDispatchToProps = dispatch => {
+    return {
+        // modifyState: (username1) => dispatch(setUser("Clicked something on Routing page"), {...store.getState(), 
+        //     username: username1,
+        //     stats: {
+        //         wins: 0,
+        //         losses: 0,
+        //         played: 0
+        //     }
+        // })   
+        modifyState: () => dispatch(setUser("Clicked something on Routing page"))   
+    }
+}
+
+
+
+//Connects this App component with the Redux store. 
+//exports the App object with the values from te store
+export default connect(mapStateToProps, mapDispatchToProps) (Routing);

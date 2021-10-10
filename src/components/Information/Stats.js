@@ -13,17 +13,19 @@ import { Link } from "react-router-dom";
 import { useAuth } from "../../contexts/AuthContext";
 import React from "react";
 import {connect} from "react-redux"
-
+import {store} from "../../store.js"
 
 /**
  * The page that shows the user's stats
  * @param {any} userData the user's information
  * @returns The stats webpage
  */
-const Stats = ({ userData }, props) => {
+const Stats = () => {
     const { currentUser } = useAuth();
 
     console.log("yes")
+
+    const userData = store.getState().user
 
     //The chart that will be shown with the user's stats
     const barChart = (
@@ -70,10 +72,10 @@ const Stats = ({ userData }, props) => {
 
     return (
         <>
-            <button onClick={props.modifyState}>Add Something... </button>
+            {/* <button onClick={props.modifyState}>Add Something... </button>
             <h4>
                 props.stateValue = {props.stateValue}
-            </h4>
+            </h4> */}
 
 
             
@@ -106,7 +108,7 @@ const Stats = ({ userData }, props) => {
                             data-cy="createAccountText"
                         >
                             Want permanent stats?{" "}
-                            <Link onClick={props.modifyState} to="/login">Create an account</Link>
+                            <Link to="/login">Create an account</Link>
                         </p>
                     )}
                 </div>

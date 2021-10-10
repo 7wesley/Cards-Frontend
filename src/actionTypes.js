@@ -7,3 +7,5 @@
 
 
 export const WelcomeAction = "Welcome action message"
+export const setUser = "Initialized the user"
+
