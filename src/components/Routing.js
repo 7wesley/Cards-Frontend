@@ -39,8 +39,8 @@ const Routing = () => {
         stats: { Wins: 0, Losses: 0, Played: 0 },
     });
 
-    const id = userData && userData.username;
-    // const id = store.getState().user.username
+    // const id = userData && userData.username;
+    const id = store.getState().user.username
 
     // const action3 = {
     //     user: userData,
@@ -82,7 +82,7 @@ const Routing = () => {
                 <Route
                     path="/account"
                     render={() => (
-                        <Account id={id} updateStorage={updateStorage} />
+                        <Account /**id={id} updateStorage={updateStorage}**/ />
                     )}
                 />
                 <Route path="/login" component={Login} />

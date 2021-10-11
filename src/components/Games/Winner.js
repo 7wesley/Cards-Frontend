@@ -11,6 +11,11 @@ import React, { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import { Button } from "react-bootstrap";
 import { getSocket } from "../Socket";
+import {connect} from "react-redux"
+import {store} from "../../store.js"
+import { useDispatch } from "react-redux";
+import { incrementWins, incrementLosses } from "../../actions";
+
 
 /**
  * The page that is displayed when a gameroom has finished
@@ -20,10 +25,24 @@ import { getSocket } from "../Socket";
  * @param {any} updateStorage a reference for updating this user's storage
  * @returns this webpage
  */
-const Winner = ({ userData, winners, timer, updateStorage }) => {
+const Winner = ({ /**userData,**/ winners, timer, updateStorage }) => {
     const socket = getSocket();
     const [loading, setLoading] = useState(false);
-    const id = userData && userData.username;
+
+    const userData = store.getState().user;
+    const id = store.getState().user.username
+
+    const dispatch = useDispatch()
+
+    //Updates the user's stats on a win
+    const handleIncreaseWins = () => {
+        dispatch(incrementWins("Incremented the user's wins"));
+    };
+
+    //Updates the user's stats on a loss
+    const handleIncreaseLosses = () => {
+        dispatch(incrementLosses("Incremented the user's losses"));
+    };
 
     /**
      * initializes the timer
@@ -36,12 +55,22 @@ const Winner = ({ userData, winners, timer, updateStorage }) => {
      * Shows the winners and updates the user's stats
      */
     useEffect(() => {
+                        
+        //Updates the stats of the winner or loser
         const updateStats = async () => {
             if (id) {
-                if (winners.some((winner) => winner.id === id))
+
+                //If the user wins
+                if (winners.some((winner) => winner.id === id)) {
                     userData.stats.Wins++;
-                else userData.stats.Losses++;
-                userData.stats.Played++;
+                    handleIncreaseWins()
+                }
+
+                //If the user losses
+                else userData.stats.Losses++; {
+                    userData.stats.Played++;
+                    handleIncreaseLosses()
+                }
                 await updateStorage({ stats: userData.stats });
             }
         };
@@ -106,104 +135,25 @@ const Winner = ({ userData, winners, timer, updateStorage }) => {
     );
 };
 
-export default Winner;
-
-/*
-    const updateStats = async (userID) => {
-        updateWins(userID);
+//Any time the store is updated, this function is called for this component
+const mapStateToProps = state => {
+    return {...state, 
+        user: {
+            username: "new name"
+        }} 
+}
+  
+  
+//Makes a call to the reducer so that it can tell the store to update state
+//This function is called whenever this component receives new props
+const mapDispatchToProps = dispatch => {
+    return {
+        modifyState: () => dispatch(incrementWins("Clicked something on Routing page"))   
     }
+}
 
-    const callWins = async (uID) => {
-        return getWins(uID);
-    }
-    */
 
-//updates the player's wins
-/*
-    async function funct1(name) {
 
-        const ID = await funct2(name)
-
-        alert(ID)
-
-        db.collection("users").doc(ID).update({
-            "stats.wins": increment()
-        });   
-    }
-    */
-
-//try another way
-/*
-    async function funct2(name) {
-
-        const refID = db.collection("usernames").doc(name);  
-        
-        return refID.get().then((snap1) => {
-            if(snap1.exists) {
-                return snap1.get("uid")
-            }
-            else {
-                alert("not found")
-            }
-        });
-    }
-    */
-
-//Gets the specific user's id
-/*
-    async function getUserID(name) {
-
-        //Gets a snapshot of this user's id
-        const refID = db.collection("usernames").doc(name);  
-        
-        //Returns the user's id
-        const snap1 = await refID.get();
-        if (snap1.exists) {
-
-            //alert(snap1.get("uid"))
-            return snap1.get("uid");
-        }
-    }
-    */
-//try this way
-/*
-    async function funct3(name) {
-        
-        const userID = await getUserID(name);
-        alert(userID)
-
-        db.collection("users").doc(userID).update({
-            "stats.wins": increment
-        }); 
-
-    }
-    */
-//try this way
-/*
-    function funct4(name) {
-
-        const ref = db.collection("users").doc("sxfCyow1vQclhv1lOkOBoISRS432");
-        //const increaseBy = firebase.firestore.FieldValue.increment(1);
-
-        // ref.update({
-        //     "stats.wins": increaseBy
-        // }); 
-
-        // ref.update({
-        //     stats: {
-        //       [wins]: FieldValue.increment(1)
-        //     }
-        // }, { merge: true });
-
-        // ref.set({
-        //     stats: {
-        //       [wins]: FieldValue.increment(1)
-        //     }
-        // }, { merge: true });
-
-        ref.update({
-            'stats.wins': increment(1)
-        });
-
-    }
-    */
+//Connects this component component with the Redux store. 
+//exports the component object with the values from the store
+export default connect(mapStateToProps, mapDispatchToProps) (Winner);

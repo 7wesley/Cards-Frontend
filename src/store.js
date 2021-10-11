@@ -7,7 +7,7 @@
 import { composeWithDevTools } from 'redux-devtools-extension';
 import {createStore, applyMiddleware} from "redux"
 import {logger} from "redux-logger"
-import * as actions from "./actionTypes"
+import * as actionTypes from "./actionTypes"
 
 
 
@@ -54,9 +54,9 @@ const initialState = {
     user: {
         username: `Guest-${Math.round(Math.random() * 100000)}`,
         stats: {
-            wins: 0,
-            losses: 0,
-            played: 0
+            Wins: 0,
+            Losses: 0,
+            Played: 0
         }
     }
 
@@ -77,7 +77,9 @@ const reducer = (state = initialState, action) => {
 
     //Action.type is viewed to see if an update is needed
     switch(action.type) {
-        case actions.WelcomeAction:
+
+        // A test case for the reducer
+        case actionTypes.WelcomeAction:
             return {...state, 
             
                 payload: action.payload,
@@ -90,13 +92,51 @@ const reducer = (state = initialState, action) => {
             // case "Obj_2_State":
             // return state.map(state2 => state2.id !== action.payload.id ? 
             //     state2 : {...state2, resolved: true})
-        case actions.setUser:
+        
+        // Initializes the user (for testing)
+        case actionTypes.setUser:
             return {...state, 
             
                 payload: action.payload,
                 user: action.user
             }
+        
+        // updates the store's state when the user wants to change their username
+        case actionTypes.replaceUsername:
+            return {...state, 
+                payload: action.payload,
 
+                user: {
+                    username: action.user.username,
+                    stats: state.user.stats
+                }
+                
+            }
+
+        //Updates the state for when a user wins a game
+        case actionTypes.increaseWins:
+            return {...state, 
+                user: {
+                    stats: {
+                        Wins: state.user.stats.Wins+1,
+                        Losses: state.user.stats.Losses,
+                        Played: state.user.stats.Played+1
+                    }
+                }  
+            }
+
+        //Updates the state for when a user losses a game
+        case actionTypes.increaseWins:
+            return {...state, 
+                user: {
+                    stats: {
+                        Wins: state.user.stats.Wins,
+                        Losses: state.user.stats.Losses+1,
+                        Played: state.user.stats.Played+1
+                    }
+                }  
+            }
+        
         default:
             return state
     }
