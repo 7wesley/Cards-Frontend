@@ -64,4 +64,3 @@ build
 cypress/screenshots
 cypress/videos
 cypress.yml
-task-definition.json

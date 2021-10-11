@@ -17,7 +17,12 @@
             "command": null,
             "linuxParameters": null,
             "cpu": 0,
-            "environment": [],
+            "environment": [
+                {
+                    "name": "REACT_APP_BACKEND_URL",
+                    "value": "18.222.164.132:5000"
+                }
+            ],
             "resourceRequirements": null,
             "ulimits": null,
             "dnsServers": null,
@@ -74,7 +79,7 @@
             "memoryReservation": null,
             "volumesFrom": [],
             "stopTimeout": null,
-            "image": "790396306150.dkr.ecr.us-east-2.amazonaws.com/cards-ecr:latest",
+            "image": "790396306150.dkr.ecr.us-east-2.amazonaws.com/cards-frontend:latest",
             "startTimeout": null,
             "firelensConfiguration": null,
             "dependsOn": null,
@@ -145,7 +150,7 @@
             "memoryReservation": null,
             "volumesFrom": [],
             "stopTimeout": null,
-            "image": "790396306150.dkr.ecr.us-east-2.amazonaws.com/cards-backend:3ee472eb6b09373881c93d987094954de8ecefca",
+            "image": "790396306150.dkr.ecr.us-east-2.amazonaws.com/cards-backend:77d5a5dd83b2a2c60a2dcfd7d8a539eba5d73d7a",
             "startTimeout": null,
             "firelensConfiguration": null,
             "dependsOn": null,
@@ -162,16 +167,22 @@
             "dockerLabels": null,
             "systemControls": null,
             "privileged": null,
-            "name": "Cards-Frontend"
+            "name": "Cards-Backend"
         }
     ],
     "placementConstraints": [],
-    "memory": "512",
+    "memory": "960",
     "taskRoleArn": "arn:aws:iam::790396306150:role/ecsTaskExecutionRole",
     "compatibilities": ["EXTERNAL", "EC2"],
-    "taskDefinitionArn": "arn:aws:ecs:us-east-2:790396306150:task-definition/CardsTask:17",
+    "taskDefinitionArn": "arn:aws:ecs:us-east-2:790396306150:task-definition/CardsTask:72",
     "family": "CardsTask",
     "requiresAttributes": [
+        {
+            "targetId": null,
+            "targetType": null,
+            "value": null,
+            "name": "com.amazonaws.ecs.capability.task-iam-role-network-host"
+        },
         {
             "targetId": null,
             "targetType": null,
@@ -195,13 +206,19 @@
             "targetType": null,
             "value": null,
             "name": "ecs.capability.execution-role-ecr-pull"
+        },
+        {
+            "targetId": null,
+            "targetType": null,
+            "value": null,
+            "name": "com.amazonaws.ecs.capability.docker-remote-api.1.18"
         }
     ],
     "pidMode": null,
     "requiresCompatibilities": ["EC2"],
-    "networkMode": null,
-    "cpu": "1024",
-    "revision": 17,
+    "networkMode": "host",
+    "cpu": "2048",
+    "revision": 72,
     "status": "ACTIVE",
     "inferenceAccelerators": null,
     "proxyConfiguration": null,
