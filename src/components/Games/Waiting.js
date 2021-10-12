@@ -23,92 +23,80 @@ import { faCopy } from "@fortawesome/free-regular-svg-icons";
  * @returns this webpage
  */
 const Waiting = ({ id, playersList, maxPlayers, countdown }) => {
-    const [show, setShow] = useState(false);
-    const target = useRef(null);
+  const [show, setShow] = useState(false);
+  const target = useRef(null);
 
-    /**
-     * Copies the current game room information to the user's clipboard
-     */
-    const handleCopy = async () => {
-        navigator.clipboard.writeText(window.location.href);
-        setShow(true);
-        await new Promise((resolve) => setTimeout(resolve, 1000));
-        setShow(false);
-    };
+  /**
+   * Copies the current game room information to the user's clipboard
+   */
+  const handleCopy = async () => {
+    navigator.clipboard.writeText(window.location.href);
+    setShow(true);
+    await new Promise((resolve) => setTimeout(resolve, 1000));
+    setShow(false);
+  };
 
-    return (
-        <div className={styles.bgWaiting}>
-            <div className="d-flex flex-column min-vh-100 justify-content-center align-items-center">
-                <div className="text-center text-light">
-                    {/*The countdown that will display when enough users join*/}
-                    {countdown ? (
-                        <>
-                            <p className="h6"> Game starting in </p>
-                            <motion.p
-                                animate={{
-                                    rotate: 360,
-                                }}
-                                className="h6"
-                            >
-                                {" "}
-                                {countdown}
-                            </motion.p>
-                        </>
-                    ) : (
-                        <>
-                            <p className="h3">Waiting for players... </p>
-                            <p className="h3 mb-4" data-cy="playerCount">
-                                ({Object.keys(playersList).length} out of{" "}
-                                {maxPlayers})
-                            </p>
+  return (
+    <div className={styles.bgWaiting}>
+      <div className="d-flex flex-column min-vh-100 justify-content-center align-items-center">
+        <div className="text-center text-light">
+          {/*The countdown that will display when enough users join*/}
+          {countdown ? (
+            <>
+              <p className="h6"> Game starting in </p>
+              <motion.p
+                animate={{
+                  rotate: 360,
+                }}
+                className="h6"
+              >
+                {" "}
+                {countdown}
+              </motion.p>
+            </>
+          ) : (
+            <>
+              <p className="h3">Waiting for players... </p>
+              <p className="h3 mb-4" data-cy="playerCount">
+                ({Object.keys(playersList).length} out of {maxPlayers})
+              </p>
 
-                            <p className="h4">Players in room:</p>
-                            <motion.div layout data-cy="playersList">
-                                {Object.keys(playersList).map(
-                                    (player, index) => (
-                                        <p key={index} className="mb-0">
-                                            {" "}
-                                            {player} {id === player && "(You)"}
-                                        </p>
-                                    )
-                                )}
-                            </motion.div>
+              <p className="h4">Players in room:</p>
+              <motion.div layout data-cy="playersList">
+                {Object.keys(playersList).map((player, index) => (
+                  <p key={index} className="mb-0">
+                    {" "}
+                    {player} {id === player && "(You)"}
+                  </p>
+                ))}
+              </motion.div>
 
-                            <InputGroup className="mb-2 mt-4" id="copyIcon">
-                                <InputGroup.Prepend>
-                                    <InputGroup.Text
-                                        ref={target}
-                                        id="copyText"
-                                        onClick={handleCopy}
-                                    >
-                                        <FontAwesomeIcon
-                                            size="lg"
-                                            icon={faCopy}
-                                        />
-                                    </InputGroup.Text>
-                                </InputGroup.Prepend>
-                                <FormControl
-                                    defaultValue={window.location.href}
-                                />
-                            </InputGroup>
+              <InputGroup className="mb-2 mt-4" id="copyIcon">
+                <InputGroup.Prepend>
+                  <InputGroup.Text
+                    ref={target}
+                    id="copyText"
+                    onClick={handleCopy}
+                  >
+                    <FontAwesomeIcon size="lg" icon={faCopy} />
+                  </InputGroup.Text>
+                </InputGroup.Prepend>
+                <FormControl defaultValue={window.location.href} />
+              </InputGroup>
 
-                            <Overlay
-                                target={target.current}
-                                show={show}
-                                placement="top"
-                            >
-                                {(props) => (
-                                    <Tooltip id="overlay" {...props}>
-                                        Copied!
-                                    </Tooltip>
-                                )}
-                            </Overlay>
-                        </>
-                    )}
-                </div>
-            </div>
+              <Overlay target={target.current} show={show} placement="top">
+                {(props) => (
+                  <Tooltip id="overlay" {...props}>
+                    Copied!
+                  </Tooltip>
+                )}
+              </Overlay>
+            </>
+          )}
         </div>
-    );
+      </div>
+    </div>
+  );
 };
 
 export default Waiting;

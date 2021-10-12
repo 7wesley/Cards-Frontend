@@ -26,66 +26,64 @@ function App() {
  * @returns This welcome page
  */
 const Welcome = (props) => {
-    // constructor(props) {
-    //     super(props);
-    //     this.state:{lightOn: false};
-    //     this.OnClick = this.OnClick.bind(this);
-    // }
+  // constructor(props) {
+  //     super(props);
+  //     this.state:{lightOn: false};
+  //     this.OnClick = this.OnClick.bind(this);
+  // }
 
-    return (
-        <div className={styles.content + " container-fluid"}>
-            {/* <div>
+  return (
+    <div className={styles.content + " container-fluid"}>
+      {/* <div>
             <h1>Redux Hello World</h1>
             <h3>State value from Props = {props.stateValue}</h3>
     
             <button onClick={props.modifyState}>Add Lastname </button>
         </div> */}
 
-            <div className="d-flex flex-column min-vh-100 justify-content-center align-items-center">
-                <div className="text-center ">
-                    <FontAwesomeIcon size="3x" icon={faCoffee} />
-                    <p className="mt-1 h4 mb-3">
-                        Welcome to virtual card games!
-                    </p>
-                    <p className="mb-4 mt-1 h5"> Continue as...</p>
+      <div className="d-flex flex-column min-vh-100 justify-content-center align-items-center">
+        <div className="text-center ">
+          <FontAwesomeIcon size="3x" icon={faCoffee} />
+          <p className="mt-1 h4 mb-3">Welcome to virtual card games!</p>
+          <p className="mb-4 mt-1 h5"> Continue as...</p>
 
-                    {/*Creates a link to the sign-in page when the user clicks the button*/}
-                    <Link
-                        onClick={props.modifyState}
-                        to="login"
-                        className="btn btn-primary btn-lg mr-2"
-                    >
-                        Login
-                    </Link>
-                    <Link
-                        onClick={props.modifyState}
-                        to="games"
-                        className="btn btn-primary btn-lg ml-2"
-                    >
-                        Guest
-                    </Link>
-                    {/* span is used to add spacing between the buttons*/}
-                </div>
-            </div>
+          {/*Creates a link to the sign-in page when the user clicks the button*/}
+          <Link
+            onClick={props.modifyState}
+            to="login"
+            className="btn btn-primary btn-lg mr-2"
+          >
+            Login
+          </Link>
+          <Link
+            onClick={props.modifyState}
+            to="games"
+            className="btn btn-primary btn-lg ml-2"
+          >
+            Guest
+          </Link>
+          {/* span is used to add spacing between the buttons*/}
         </div>
-    );
+      </div>
+    </div>
+  );
 };
 
 //Any time the store is updated, this function is called for this component
 const mapStateToProps = (state) => {
-    return state;
-    // {
-    //     stateValue: state
-    //   }
+  return state;
+  // {
+  //     stateValue: state
+  //   }
 };
 
 //Makes a call to the reducer so that it can tell the store to update state
 //This function is called whenever this component receives new props
 const mapDispatchToProps = (dispatch) => {
-    return {
-        modifyState: () =>
-            dispatch(testAction("Clicked something on welcome page")),
-    };
+  return {
+    modifyState: () =>
+      dispatch(testAction("Clicked something on welcome page")),
+  };
 };
 
 //Connects this App component with the Redux store.

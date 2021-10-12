@@ -14,28 +14,28 @@ import { db } from "../firebase";
  * @returns the games that are filtered through
  */
 const useGames = (filter) => {
-    const [games, setGames] = useState([]);
+  const [games, setGames] = useState([]);
 
-    useEffect(() => {
-        const unsubscribe = db
-            .collection("rooms")
-            .orderBy("createdAt", "desc")
-            .onSnapshot((snap) => {
-                let data = snap.docs.map((doc) => doc.data());
-                if (filter)
-                    data = data.filter(
-                        (doc) =>
-                            doc.gameId.slice(0, filter.length) === filter ||
-                            doc.gameId.slice(0, filter.length) === filter
-                    );
-                setGames(data);
-            });
-        return () => {
-            unsubscribe();
-        };
-    }, [filter]);
+  useEffect(() => {
+    const unsubscribe = db
+      .collection("rooms")
+      .orderBy("createdAt", "desc")
+      .onSnapshot((snap) => {
+        let data = snap.docs.map((doc) => doc.data());
+        if (filter)
+          data = data.filter(
+            (doc) =>
+              doc.gameId.slice(0, filter.length) === filter ||
+              doc.gameId.slice(0, filter.length) === filter
+          );
+        setGames(data);
+      });
+    return () => {
+      unsubscribe();
+    };
+  }, [filter]);
 
-    return { games };
+  return { games };
 };
 
 export default useGames;

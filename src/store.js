@@ -42,27 +42,27 @@ const PersonDetails = [
 //const name = 'Guest-'+Math.round(Math.random() * 100000)
 
 const initialState = {
-    welcome: {
-        id: "welcome",
-    },
-    payload: {
-        description: "null",
-    },
+  welcome: {
+    id: "welcome",
+  },
+  payload: {
+    description: "null",
+  },
 
-    user: {
-        username: `Guest-${Math.round(Math.random() * 100000)}`,
-        stats: {
-            Wins: 0,
-            Losses: 0,
-            Played: 0,
-        },
+  user: {
+    username: `Guest-${Math.round(Math.random() * 100000)}`,
+    stats: {
+      Wins: 0,
+      Losses: 0,
+      Played: 0,
     },
+  },
 
-    // css:{name: "name1"},
-    // items:[
-    //     {name:"name2"},
-    //     {name:"name3"},
-    //     {name:"name3"}]
+  // css:{name: "name1"},
+  // items:[
+  //     {name:"name2"},
+  //     {name:"name3"},
+  //     {name:"name3"}]
 };
 
 //Create the reducer
@@ -71,58 +71,58 @@ const initialState = {
 //An action is like an event that describes something that happened to the application. They contain
 //  the smallest amount of data needed to describe what happened
 const reducer = (state = initialState, action) => {
-    //Action.type is viewed to see if an update is needed
-    switch (action.type) {
-        // A test case for the reducer
-        case actionTypes.WelcomeAction:
-            return {
-                ...state,
+  //Action.type is viewed to see if an update is needed
+  switch (action.type) {
+    // A test case for the reducer
+    case actionTypes.WelcomeAction:
+      return {
+        ...state,
 
-                payload: action.payload,
-            };
-        // return Object.keys(state.welcome).map(state2 => state2.id !== action.payload.id ?
-        //     state : {...state, resolved: true})
+        payload: action.payload,
+      };
+    // return Object.keys(state.welcome).map(state2 => state2.id !== action.payload.id ?
+    //     state : {...state, resolved: true})
 
-        // case "Obj_2_State":
-        // return state.map(state2 => state2.id !== action.payload.id ?
-        //     state2 : {...state2, resolved: true})
+    // case "Obj_2_State":
+    // return state.map(state2 => state2.id !== action.payload.id ?
+    //     state2 : {...state2, resolved: true})
 
-        // Initializes the user (for testing)
-        case actionTypes.setUser:
-            return {
-                ...state,
+    // Initializes the user (for testing)
+    case actionTypes.setUser:
+      return {
+        ...state,
 
-                payload: action.payload,
-                user: action.user,
-            };
+        payload: action.payload,
+        user: action.user,
+      };
 
-        // updates the store's state when the user wants to change their username
-        case actionTypes.replaceUsername:
-            return {
-                ...state,
-                payload: action.payload,
+    // updates the store's state when the user wants to change their username
+    case actionTypes.replaceUsername:
+      return {
+        ...state,
+        payload: action.payload,
 
-                user: {
-                    username: action.user.username,
-                    stats: state.user.stats,
-                },
-            };
+        user: {
+          username: action.user.username,
+          stats: state.user.stats,
+        },
+      };
 
-        //Updates the state for when a user wins a game
-        case actionTypes.increaseWins:
-            return {
-                ...state,
-                user: {
-                    stats: {
-                        Wins: state.user.stats.Wins + 1,
-                        Losses: state.user.stats.Losses,
-                        Played: state.user.stats.Played + 1,
-                    },
-                },
-            };
+    //Updates the state for when a user wins a game
+    case actionTypes.increaseWins:
+      return {
+        ...state,
+        user: {
+          stats: {
+            Wins: state.user.stats.Wins + 1,
+            Losses: state.user.stats.Losses,
+            Played: state.user.stats.Played + 1,
+          },
+        },
+      };
 
-        //Updates the state for when a user losses a game
-        /*
+    //Updates the state for when a user losses a game
+    /*
         case actionTypes.increaseWins:
             return {...state, 
                 user: {
@@ -134,16 +134,16 @@ const reducer = (state = initialState, action) => {
                 }  
             }
         */
-        default:
-            return state;
-    }
+    default:
+      return state;
+  }
 };
 
 //Creates the store
 //The store holds the values of state
 export const store = createStore(
-    reducer,
-    composeWithDevTools(applyMiddleware(logger))
+  reducer,
+  composeWithDevTools(applyMiddleware(logger))
 );
 
 //This is called everytime the store changes

@@ -13,13 +13,13 @@ import { AuthProvider } from "../contexts/AuthContext";
  * Where the app is being run
  */
 const App = () => {
-    return (
-        <div className="App">
-            <AuthProvider>
-                <Routing />
-            </AuthProvider>
-        </div>
-    );
+  return (
+    <div className="App">
+      <AuthProvider>
+        <Routing />
+      </AuthProvider>
+    </div>
+  );
 };
 
 export default App;

@@ -14,32 +14,32 @@ import { useEffect, useState } from "react";
  * @returns the gameroom information if the user is connected
  */
 const useSocketListener = (connected) => {
-    const socket = getSocket();
-    const [players, setPlayers] = useState([]);
-    const [countdown, setCountdown] = useState(null);
-    const [prompt, setPrompt] = useState("");
-    const [timer, setTimer] = useState(null);
-    const [turn, setTurn] = useState();
-    const [message, setMessage] = useState("");
-    const [winners, setWinners] = useState();
+  const socket = getSocket();
+  const [players, setPlayers] = useState([]);
+  const [countdown, setCountdown] = useState(null);
+  const [prompt, setPrompt] = useState("");
+  const [timer, setTimer] = useState(null);
+  const [turn, setTurn] = useState();
+  const [message, setMessage] = useState("");
+  const [winners, setWinners] = useState();
 
-    useEffect(() => {
-        //prevents socket from connecting if room is full
-        if (connected) {
-            socket.on("countdown", (secs) => setCountdown(secs));
-            socket.on("update-hands", (plyrs) => setPlayers(plyrs));
-            socket.on("curr-turn", (user) => setTurn(user));
-            socket.on("your-turn", (msg) => setPrompt(msg));
-            socket.on("timer", (secs) => setTimer(secs));
-            socket.on("alert", (msg) => setMessage(msg));
-            socket.on("winners", (winList) => setWinners(winList));
-            return () => {
-                disconnectSocket();
-            };
-        }
-    }, [connected, socket]);
+  useEffect(() => {
+    //prevents socket from connecting if room is full
+    if (connected) {
+      socket.on("countdown", (secs) => setCountdown(secs));
+      socket.on("update-hands", (plyrs) => setPlayers(plyrs));
+      socket.on("curr-turn", (user) => setTurn(user));
+      socket.on("your-turn", (msg) => setPrompt(msg));
+      socket.on("timer", (secs) => setTimer(secs));
+      socket.on("alert", (msg) => setMessage(msg));
+      socket.on("winners", (winList) => setWinners(winList));
+      return () => {
+        disconnectSocket();
+      };
+    }
+  }, [connected, socket]);
 
-    return { players, countdown, prompt, turn, timer, message, winners };
+  return { players, countdown, prompt, turn, timer, message, winners };
 };
 
 export default useSocketListener;

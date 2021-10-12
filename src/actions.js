@@ -8,23 +8,23 @@ import * as actions from "./actionTypes";
 
 //This is only for testing
 export function testAction(description) {
-    return {
-        type: actions.WelcomeAction,
-        payload: {
-            description,
-        },
-        stuff: "something changed",
-    };
+  return {
+    type: actions.WelcomeAction,
+    payload: {
+      description,
+    },
+    stuff: "something changed",
+  };
 }
 
 //Not being used
 export function setUser(description) {
-    return {
-        type: actions.setUser,
-        payload: {
-            description,
-        },
-    };
+  return {
+    type: actions.setUser,
+    payload: {
+      description,
+    },
+  };
 }
 
 /**
@@ -34,15 +34,15 @@ export function setUser(description) {
  * @returns an object holding the new information
  */
 export function setUsername(description, newName) {
-    return {
-        type: actions.replaceUsername,
-        payload: {
-            description,
-        },
-        user: {
-            username: newName,
-        },
-    };
+  return {
+    type: actions.replaceUsername,
+    payload: {
+      description,
+    },
+    user: {
+      username: newName,
+    },
+  };
 }
 
 /**
@@ -51,12 +51,12 @@ export function setUsername(description, newName) {
  * @returns an object holding the new information
  */
 export function incrementWins(description) {
-    return {
-        type: actions.increaseWins,
-        payload: {
-            description,
-        },
-    };
+  return {
+    type: actions.increaseWins,
+    payload: {
+      description,
+    },
+  };
 }
 
 /**
@@ -65,10 +65,10 @@ export function incrementWins(description) {
  * @returns an object holding the new information
  */
 export function incrementLosses(description) {
-    return {
-        type: actions.increaseLosses,
-        payload: {
-            description,
-        },
-    };
+  return {
+    type: actions.increaseLosses,
+    payload: {
+      description,
+    },
+  };
 }

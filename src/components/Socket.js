@@ -15,10 +15,10 @@ let socket;
  * @param {any} id the identification of the user connecting to the room
  */
 export const connectSocket = (room, id) => {
-    socket = io(process.env.REACT_APP_BACKEND_URL, {
-        transports: ["websocket", "polling", "flashsocket"],
-    });
-    if (socket && room) socket.emit("join", room, id);
+  socket = io(process.env.REACT_APP_BACKEND_URL, {
+    transports: ["websocket", "polling", "flashsocket"],
+  });
+  if (socket && room) socket.emit("join", room, id);
 };
 
 /**
@@ -26,7 +26,7 @@ export const connectSocket = (room, id) => {
  * from the socket
  */
 export const disconnectSocket = () => {
-    if (socket) socket.disconnect();
+  if (socket) socket.disconnect();
 };
 
 /**
@@ -35,11 +35,11 @@ export const disconnectSocket = () => {
  * @returns the snapshot of query that contains the user's information
  */
 export const testingWins = async (username) => {
-    var numberOfUsersRef = await db.collection("usernames").doc(username);
+  var numberOfUsersRef = await db.collection("usernames").doc(username);
 
-    var snapshot = await numberOfUsersRef.get("uid");
-    //alert(snapshot.get("uid"))
-    return await snapshot.get("uid");
+  var snapshot = await numberOfUsersRef.get("uid");
+  //alert(snapshot.get("uid"))
+  return await snapshot.get("uid");
 };
 
 /**
@@ -47,13 +47,13 @@ export const testingWins = async (username) => {
  * @param {any} userID the id of the user
  */
 export const updateWins = async (userID) => {
-    await db
-        .collection("users")
-        .doc(userID)
-        .update({
-            "stats.wins": increment(1),
-            "stats.played": increment(1),
-        });
+  await db
+    .collection("users")
+    .doc(userID)
+    .update({
+      "stats.wins": increment(1),
+      "stats.played": increment(1),
+    });
 };
 
 /**
@@ -62,8 +62,8 @@ export const updateWins = async (userID) => {
  * @returns the snapshot of the query that contains the user's wins
  */
 export const getWins = (userID) => {
-    //return  Promise.resolve(db.collection('users').doc(userID).collection("stats").get("wins"));
-    return Promise.resolve(db.collection("users").doc("tester").get("wins"));
+  //return  Promise.resolve(db.collection('users').doc(userID).collection("stats").get("wins"));
+  return Promise.resolve(db.collection("users").doc("tester").get("wins"));
 };
 
 /**
@@ -72,7 +72,7 @@ export const getWins = (userID) => {
  * @returns a snapshot of the query that contains the user's id
  */
 export const getUID = (name) => {
-    return Promise.resolve(db.collection("usernames").doc(name).get("uid"));
+  return Promise.resolve(db.collection("usernames").doc(name).get("uid"));
 };
 
 /**
@@ -80,5 +80,5 @@ export const getUID = (name) => {
  * @returns the sockect
  */
 export const getSocket = () => {
-    return socket;
+  return socket;
 };

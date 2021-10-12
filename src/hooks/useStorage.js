@@ -19,58 +19,55 @@ const PREFIX = "cards-";
  * @returns the user's data and the function to update the storage
  */
 const useStorage = (initialData) => {
-    //const prefixedKey = PREFIX + key;
-    const { currentUser } = useAuth();
-    const [userData, setUserData] = useState(null);
-    const [newData, setNewData] = useState(initialData);
+  //const prefixedKey = PREFIX + key;
+  const { currentUser } = useAuth();
+  const [userData, setUserData] = useState(null);
+  const [newData, setNewData] = useState(initialData);
 
-    //Using this method instead of constantly listening
-    //for storage changes prevents users from setting
-    //their own usernames through browser settings
-    /**
-     * Updates the storage from the given data
-     * @param {any} updatedData the data to update
-     */
-    const updateStorage = async (updatedData) => {
-        if (currentUser) {
-            for (const [key, value] of Object.entries(updatedData))
-                await db
-                    .collection("users")
-                    .doc(currentUser.uid)
-                    .update({
-                        [key]: value,
-                    });
+  //Using this method instead of constantly listening
+  //for storage changes prevents users from setting
+  //their own usernames through browser settings
+  /**
+   * Updates the storage from the given data
+   * @param {any} updatedData the data to update
+   */
+  const updateStorage = async (updatedData) => {
+    if (currentUser) {
+      for (const [key, value] of Object.entries(updatedData))
+        await db
+          .collection("users")
+          .doc(currentUser.uid)
+          .update({
+            [key]: value,
+          });
+    }
+    setNewData(updatedData);
+  };
+
+  /**
+   * For setting a logged-in user's data or for setting a guest user's
+   *  temporary storage
+   */
+  useEffect(() => {
+    const data = async () => {
+      if (currentUser) {
+        const dbData = await db.collection("users").doc(currentUser.uid).get();
+        setUserData(dbData.data());
+      } else {
+        let filteredData = {};
+        for (const [key, value] of Object.entries(newData)) {
+          sessionStorage.setItem(PREFIX + key, JSON.stringify(value));
         }
-        setNewData(updatedData);
+        for (const [key, value] of Object.entries(sessionStorage)) {
+          filteredData[key.replace(PREFIX, "")] = JSON.parse(value);
+        }
+        setUserData(filteredData);
+      }
     };
+    data();
+  }, [newData, currentUser]);
 
-    /**
-     * For setting a logged-in user's data or for setting a guest user's
-     *  temporary storage
-     */
-    useEffect(() => {
-        const data = async () => {
-            if (currentUser) {
-                const dbData = await db
-                    .collection("users")
-                    .doc(currentUser.uid)
-                    .get();
-                setUserData(dbData.data());
-            } else {
-                let filteredData = {};
-                for (const [key, value] of Object.entries(newData)) {
-                    sessionStorage.setItem(PREFIX + key, JSON.stringify(value));
-                }
-                for (const [key, value] of Object.entries(sessionStorage)) {
-                    filteredData[key.replace(PREFIX, "")] = JSON.parse(value);
-                }
-                setUserData(filteredData);
-            }
-        };
-        data();
-    }, [newData, currentUser]);
-
-    return { userData, updateStorage };
+  return { userData, updateStorage };
 };
 
 export default useStorage;

@@ -25,130 +25,123 @@ import { incrementWins, incrementLosses } from "../../actions";
  * @returns this webpage
  */
 const Winner = ({ /**userData,**/ winners, timer, updateStorage }) => {
-    const socket = getSocket();
-    const [loading, setLoading] = useState(false);
+  const socket = getSocket();
+  const [loading, setLoading] = useState(false);
 
-    const userData = store.getState().user;
-    const id = store.getState().user.username;
+  const userData = store.getState().user;
+  const id = store.getState().user.username;
 
-    const dispatch = useDispatch();
+  const dispatch = useDispatch();
 
-    //Updates the user's stats on a win
-    const handleIncreaseWins = () => {
-        dispatch(incrementWins("Incremented the user's wins"));
+  //Updates the user's stats on a win
+  const handleIncreaseWins = () => {
+    dispatch(incrementWins("Incremented the user's wins"));
+  };
+
+  //Updates the user's stats on a loss
+  const handleIncreaseLosses = () => {
+    dispatch(incrementLosses("Incremented the user's losses"));
+  };
+
+  /**
+   * initializes the timer
+   */
+  useEffect(() => {
+    timer === 0 && setLoading(true);
+  }, [timer]);
+
+  /**
+   * Shows the winners and updates the user's stats
+   */
+  useEffect(() => {
+    //Updates the stats of the winner or loser
+    const updateStats = async () => {
+      if (id) {
+        //If the user wins
+        if (winners.some((winner) => winner.id === id)) {
+          userData.stats.Wins++;
+          handleIncreaseWins();
+        }
+        //If the user losses
+        else {
+          userData.stats.Losses++;
+          userData.stats.Played++;
+          handleIncreaseLosses();
+        }
+        await updateStorage({ stats: userData.stats });
+      }
     };
+    updateStats();
+  }, [id]);
 
-    //Updates the user's stats on a loss
-    const handleIncreaseLosses = () => {
-        dispatch(incrementLosses("Incremented the user's losses"));
-    };
+  /**
+   * Handles if the user wants to play again
+   */
+  const handlePlayAgain = () => {
+    socket.emit("play-again");
+  };
 
-    /**
-     * initializes the timer
-     */
-    useEffect(() => {
-        timer === 0 && setLoading(true);
-    }, [timer]);
-
-    /**
-     * Shows the winners and updates the user's stats
-     */
-    useEffect(() => {
-        //Updates the stats of the winner or loser
-        const updateStats = async () => {
-            if (id) {
-                //If the user wins
-                if (winners.some((winner) => winner.id === id)) {
-                    userData.stats.Wins++;
-                    handleIncreaseWins();
-                }
-                //If the user losses
-                else {
-                    userData.stats.Losses++;
-                    userData.stats.Played++;
-                    handleIncreaseLosses();
-                }
-                await updateStorage({ stats: userData.stats });
-            }
-        };
-        updateStats();
-        // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [id]);
-
-    /**
-     * Handles if the user wants to play again
-     */
-    const handlePlayAgain = () => {
-        socket.emit("play-again");
-    };
-
-    return (
-        <div className={styles.bgInProgress}>
-            <div className="d-flex flex-column min-vh-100 justify-content-center align-items-center">
-                <div className="text-center text-light">
-                    {winners.length ? (
-                        winners.map((winner, index) => (
-                            <div key={index}>
-                                <p className="h3">
-                                    {winner.id === id
-                                        ? "You win!"
-                                        : `${winner.id} wins!`}
-                                </p>
-                                <p className="h6">
-                                    Final hand value: {winner.total}
-                                </p>
-                                <p className="h4 mt-4">---Stats---</p>
-                                <p className="h6">
-                                    {userData &&
-                                        Object.keys(userData.stats).map(
-                                            (stat) =>
-                                                `  ${stat}: ` +
-                                                userData.stats[stat]
-                                        )}
-                                </p>
-                                {/*Update the user's total games won*/}
-                                {/*updateWins(getUID())*/}
-                                {/*funct4(id)*/}
-                            </div>
-                        ))
-                    ) : (
-                        <p className="h3">Nobody wins!</p>
+  return (
+    <div className={styles.bgInProgress}>
+      <div className="d-flex flex-column min-vh-100 justify-content-center align-items-center">
+        <div className="text-center text-light">
+          {winners.length ? (
+            winners.map((winner, index) => (
+              <div key={index}>
+                <p className="h3">
+                  {winner.id === id ? "You win!" : `${winner.id} wins!`}
+                </p>
+                <p className="h6">Final hand value: {winner.total}</p>
+                <p className="h4 mt-4">---Stats---</p>
+                <p className="h6">
+                  {userData &&
+                    Object.keys(userData.stats).map(
+                      (stat) => `  ${stat}: ` + userData.stats[stat]
                     )}
-                    <div className="row mt-4 mx-auto">
-                        <Link to="/games" className="btn btn-primary mr-2">
-                            Main Menu
-                        </Link>
-                        <Button
-                            disabled={loading}
-                            onClick={handlePlayAgain}
-                            className="bml-2"
-                        >
-                            Play Again {timer}
-                        </Button>
-                    </div>
-                </div>
-            </div>
+                </p>
+                {/*Update the user's total games won*/}
+                {/*updateWins(getUID())*/}
+                {/*funct4(id)*/}
+              </div>
+            ))
+          ) : (
+            <p className="h3">Nobody wins!</p>
+          )}
+          <div className="row mt-4 mx-auto">
+            <Link to="/games" className="btn btn-primary mr-2">
+              Main Menu
+            </Link>
+            <Button
+              disabled={loading}
+              onClick={handlePlayAgain}
+              className="bml-2"
+            >
+              Play Again {timer}
+            </Button>
+          </div>
         </div>
-    );
+      </div>
+    </div>
+  );
 };
 
 //Any time the store is updated, this function is called for this component
 const mapStateToProps = (state) => {
-    return {
-        ...state,
-        user: {
-            username: "new name",
-        },
-    };
+  return {
+    ...state,
+    user: {
+      username: "new name",
+    },
+  };
 };
 
 //Makes a call to the reducer so that it can tell the store to update state
 //This function is called whenever this component receives new props
 const mapDispatchToProps = (dispatch) => {
-    return {
-        modifyState: () =>
-            dispatch(incrementWins("Clicked something on Routing page")),
-    };
+  return {
+    modifyState: () =>
+      dispatch(incrementWins("Clicked something on Routing page")),
+  };
 };
 
 //Connects this component component with the Redux store.

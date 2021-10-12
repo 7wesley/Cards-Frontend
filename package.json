@@ -34,7 +34,7 @@
     "cypress": "cypress open",
     "e2e": "cypress run",
     "eslint": "eslint '**/*.js' --fix",
-    "prettier": "prettier --write 'src/**/*.js' --tab-width 4",
+    "prettier": "prettier --write '**/*.js'",
     "stylelint": "stylelint 'src/**/*.css' --fix"
   },
   "eslintConfig": {

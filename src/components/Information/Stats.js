@@ -21,114 +21,108 @@ import { store } from "../../store.js";
  * @returns The stats webpage
  */
 const Stats = () => {
-    const { currentUser } = useAuth();
+  const { currentUser } = useAuth();
 
-    console.log("yes");
+  console.log("yes");
 
-    const userData = store.getState().user;
+  const userData = store.getState().user;
 
-    //The chart that will be shown with the user's stats
-    const barChart = (
-        <div className="barChart">
-            {userData ? (
-                <Bar
-                    data={{
-                        labels: ["Wins", "Losses", "Played"],
-                        datasets: [
-                            {
-                                label: "Total",
-                                backgroundColor: [
-                                    "rgba(0, 0, 255, 0.5)",
-                                    "rgba(0, 255, 0, 0.5)",
-                                    "rgba(255, 0, 0, 0.5)",
-                                ],
-                                data: [
-                                    userData.stats.Wins,
-                                    userData.stats.Losses,
-                                    userData.stats.Played,
-                                ],
-                            },
-                        ],
-                    }}
-                    options={{
-                        responsive: true,
-                        legend: { display: false },
-                        title: { display: true, text: `Stats` },
-                        scales: {
-                            yAxes: [
-                                {
-                                    ticks: {
-                                        precision: 0,
-                                        beginAtZero: true,
-                                    },
-                                },
-                            ],
-                        },
-                    }}
-                />
-            ) : null}
-        </div>
-    );
+  //The chart that will be shown with the user's stats
+  const barChart = (
+    <div className="barChart">
+      {userData ? (
+        <Bar
+          data={{
+            labels: ["Wins", "Losses", "Played"],
+            datasets: [
+              {
+                label: "Total",
+                backgroundColor: [
+                  "rgba(0, 0, 255, 0.5)",
+                  "rgba(0, 255, 0, 0.5)",
+                  "rgba(255, 0, 0, 0.5)",
+                ],
+                data: [
+                  userData.stats.Wins,
+                  userData.stats.Losses,
+                  userData.stats.Played,
+                ],
+              },
+            ],
+          }}
+          options={{
+            responsive: true,
+            legend: { display: false },
+            title: { display: true, text: `Stats` },
+            scales: {
+              yAxes: [
+                {
+                  ticks: {
+                    precision: 0,
+                    beginAtZero: true,
+                  },
+                },
+              ],
+            },
+          }}
+        />
+      ) : null}
+    </div>
+  );
 
-    return (
-        <>
-            {/* <button onClick={props.modifyState}>Add Something... </button>
+  return (
+    <>
+      {/* <button onClick={props.modifyState}>Add Something... </button>
             <h4>
                 props.stateValue = {props.stateValue}
             </h4> */}
 
-            <div className={styles.darkBlock}>
-                <div className="container h-100">
-                    <div className="row h-100 justify-content-center align-items-center">
-                        <h5 className="text-light">
-                            <FontAwesomeIcon icon={faTrophy} size="3x" />
-                        </h5>
-                    </div>
-                </div>
-            </div>
-            <div className="container mt-5">
-                <div className="mx-auto col-lg-8 col-md-10 col-xs-12">
-                    <p className="h3 text-center" data-cy="usernameText">
-                        {userData && userData.username}'s stats:
-                    </p>
+      <div className={styles.darkBlock}>
+        <div className="container h-100">
+          <div className="row h-100 justify-content-center align-items-center">
+            <h5 className="text-light">
+              <FontAwesomeIcon icon={faTrophy} size="3x" />
+            </h5>
+          </div>
+        </div>
+      </div>
+      <div className="container mt-5">
+        <div className="mx-auto col-lg-8 col-md-10 col-xs-12">
+          <p className="h3 text-center" data-cy="usernameText">
+            {userData && userData.username}'s stats:
+          </p>
 
-                    {userData &&
-                        Object.keys(userData.stats).map((key) => (
-                            <div key={key}>
-                                {key + ": " + userData.stats[key]}
-                            </div>
-                        ))}
+          {userData &&
+            Object.keys(userData.stats).map((key) => (
+              <div key={key}>{key + ": " + userData.stats[key]}</div>
+            ))}
 
-                    {userData && barChart}
-                    {!currentUser && (
-                        <p
-                            className="h5 mt-2 text-center"
-                            data-cy="createAccountText"
-                        >
-                            Want permanent stats?{" "}
-                            <Link to="/login">Create an account</Link>
-                        </p>
-                    )}
-                </div>
-            </div>
-        </>
-    );
+          {userData && barChart}
+          {!currentUser && (
+            <p className="h5 mt-2 text-center" data-cy="createAccountText">
+              Want permanent stats? <Link to="/login">Create an account</Link>
+            </p>
+          )}
+        </div>
+      </div>
+    </>
+  );
 };
 
 //Any time the store is updated, this function is called for this component
 const mapStateToProps = (state) => {
-    return {
-        stateValue: state,
-    };
+  return {
+    stateValue: state,
+  };
 };
 
 //Makes a call to the reducer so that it can tell the store to update state
 //This function is called whenever this component receives new props
 const mapDispatchToProps = (dispatch) => {
-    return {
-        //Returns a call to the reducer with this type of action
-        modifyState: () => dispatch({ type: "Obj_1_State" }),
-    };
+  return {
+    //Returns a call to the reducer with this type of action
+    modifyState: () => dispatch({ type: "Obj_1_State" }),
+  };
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(Stats);

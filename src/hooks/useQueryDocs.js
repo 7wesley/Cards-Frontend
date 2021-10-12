@@ -16,25 +16,22 @@ import { db } from "../firebase.js";
  * @returns the documents that was updated
  */
 const useQueryDocs = (collection, doc, updated) => {
-    const [docs, setDocs] = useState(null);
+  const [docs, setDocs] = useState(null);
 
-    /**
-     * For setting the document's data
-     */
-    useEffect(() => {
-        const data = async () => {
-            if (doc) {
-                const dbData = await db
-                    .collection(collection)
-                    .doc(doc.uid)
-                    .get();
-                setDocs(dbData.data());
-            }
-        };
-        data();
-    }, [collection, doc, updated]);
+  /**
+   * For setting the document's data
+   */
+  useEffect(() => {
+    const data = async () => {
+      if (doc) {
+        const dbData = await db.collection(collection).doc(doc.uid).get();
+        setDocs(dbData.data());
+      }
+    };
+    data();
+  }, [collection, doc, updated]);
 
-    return { docs };
+  return { docs };
 };
 
 export default useQueryDocs;
