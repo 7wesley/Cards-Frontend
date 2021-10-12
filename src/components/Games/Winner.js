@@ -11,11 +11,10 @@ import React, { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import { Button } from "react-bootstrap";
 import { getSocket } from "../Socket";
-import {connect} from "react-redux"
-import {store} from "../../store.js"
+import { connect } from "react-redux";
+import { store } from "../../store.js";
 import { useDispatch } from "react-redux";
 import { incrementWins, incrementLosses } from "../../actions";
-
 
 /**
  * The page that is displayed when a gameroom has finished
@@ -30,9 +29,9 @@ const Winner = ({ /**userData,**/ winners, timer, updateStorage }) => {
     const [loading, setLoading] = useState(false);
 
     const userData = store.getState().user;
-    const id = store.getState().user.username
+    const id = store.getState().user.username;
 
-    const dispatch = useDispatch()
+    const dispatch = useDispatch();
 
     //Updates the user's stats on a win
     const handleIncreaseWins = () => {
@@ -55,21 +54,19 @@ const Winner = ({ /**userData,**/ winners, timer, updateStorage }) => {
      * Shows the winners and updates the user's stats
      */
     useEffect(() => {
-                        
         //Updates the stats of the winner or loser
         const updateStats = async () => {
             if (id) {
-
                 //If the user wins
                 if (winners.some((winner) => winner.id === id)) {
                     userData.stats.Wins++;
-                    handleIncreaseWins()
+                    handleIncreaseWins();
                 }
-
                 //If the user losses
-                else userData.stats.Losses++; {
+                else {
+                    userData.stats.Losses++;
                     userData.stats.Played++;
-                    handleIncreaseLosses()
+                    handleIncreaseLosses();
                 }
                 await updateStorage({ stats: userData.stats });
             }
@@ -136,24 +133,24 @@ const Winner = ({ /**userData,**/ winners, timer, updateStorage }) => {
 };
 
 //Any time the store is updated, this function is called for this component
-const mapStateToProps = state => {
-    return {...state, 
+const mapStateToProps = (state) => {
+    return {
+        ...state,
         user: {
-            username: "new name"
-        }} 
-}
-  
-  
+            username: "new name",
+        },
+    };
+};
+
 //Makes a call to the reducer so that it can tell the store to update state
 //This function is called whenever this component receives new props
-const mapDispatchToProps = dispatch => {
+const mapDispatchToProps = (dispatch) => {
     return {
-        modifyState: () => dispatch(incrementWins("Clicked something on Routing page"))   
-    }
-}
+        modifyState: () =>
+            dispatch(incrementWins("Clicked something on Routing page")),
+    };
+};
 
-
-
-//Connects this component component with the Redux store. 
+//Connects this component component with the Redux store.
 //exports the component object with the values from the store
-export default connect(mapStateToProps, mapDispatchToProps) (Winner);
+export default connect(mapStateToProps, mapDispatchToProps)(Winner);

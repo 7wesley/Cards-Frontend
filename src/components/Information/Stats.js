@@ -12,8 +12,8 @@ import { Bar } from "react-chartjs-2";
 import { Link } from "react-router-dom";
 import { useAuth } from "../../contexts/AuthContext";
 import React from "react";
-import {connect} from "react-redux"
-import {store} from "../../store.js"
+import { connect } from "react-redux";
+import { store } from "../../store.js";
 
 /**
  * The page that shows the user's stats
@@ -23,9 +23,9 @@ import {store} from "../../store.js"
 const Stats = () => {
     const { currentUser } = useAuth();
 
-    console.log("yes")
+    console.log("yes");
 
-    const userData = store.getState().user
+    const userData = store.getState().user;
 
     //The chart that will be shown with the user's stats
     const barChart = (
@@ -77,8 +77,6 @@ const Stats = () => {
                 props.stateValue = {props.stateValue}
             </h4> */}
 
-
-            
             <div className={styles.darkBlock}>
                 <div className="container h-100">
                     <div className="row h-100 justify-content-center align-items-center">
@@ -118,22 +116,22 @@ const Stats = () => {
 };
 
 //Any time the store is updated, this function is called for this component
-const mapStateToProps = state => {
+const mapStateToProps = (state) => {
     return {
-        stateValue: state
-    }
-}
+        stateValue: state,
+    };
+};
 
 //Makes a call to the reducer so that it can tell the store to update state
 //This function is called whenever this component receives new props
-const mapDispatchToProps = dispatch => {
+const mapDispatchToProps = (dispatch) => {
     return {
         //Returns a call to the reducer with this type of action
-        modifyState: () => dispatch( {type: "Obj_1_State"})
-    }
-}
+        modifyState: () => dispatch({ type: "Obj_1_State" }),
+    };
+};
 
-export default connect(mapStateToProps, mapDispatchToProps) (Stats);
+export default connect(mapStateToProps, mapDispatchToProps)(Stats);
 
 /*
     //Updates the user's stats to match what is on Firebase

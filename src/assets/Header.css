@@ -5,28 +5,27 @@
  * @version 5/13/2021
  */
 #brand {
-    max-width : 410px; 
-    height: auto;
+  max-width: 410px;
+  height: auto;
 }
 
 @media (max-width: 576px) {
-    #brand {
-        width: 220px !important;
-        height: auto !important;
-        padding: 5px !important;
-    }
+  #brand {
+    width: 220px !important;
+    height: auto !important;
+    padding: 5px !important;
+  }
 }
 
 .navbar {
-    background-color: #4185F2;
+  background-color: #4185f2;
 }
 
-/*Positions a button side-by-side while centering*/
+/* Positions a button side-by-side while centering */
 .order {
   display: flex;
   justify-content: center;
   align-items: center;
   height: 200px;
-  border: 3px solid green; 
+  border: 3px solid green;
 }
-

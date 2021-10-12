@@ -16,7 +16,7 @@ import useRoomListener from "../../hooks/useRoomListener";
 import useSocketListener from "../../hooks/useSocketListener";
 import { getSocket, connectSocket } from "../Socket";
 import { Button } from "react-bootstrap";
-import {store} from "../../store.js"
+import { store } from "../../store.js";
 
 /**
  * The page that users play games
@@ -34,9 +34,9 @@ const GameRoom = ({ match, /**, userData,**/ updateStorage }) => {
     const { players, countdown, prompt, turn, timer, message, winners } =
         useSocketListener(connected);
 
-    const userData = store.getState().user
+    const userData = store.getState().user;
 
-    const id = store.getState().user.username
+    const id = store.getState().user.username;
 
     useEffect(() => {
         //if the room is open and they aren't already connected:
@@ -180,16 +180,7 @@ const GameRoom = ({ match, /**, userData,**/ updateStorage }) => {
                     </div>
                 ) : winners ? (
                     <Winner
-
-
-
-
                         userData={userData}
-
-
-
-
-
                         winners={winners}
                         timer={timer}
                         updateStorage={updateStorage}
@@ -208,6 +199,5 @@ const GameRoom = ({ match, /**, userData,**/ updateStorage }) => {
         </>
     );
 };
-
 
 export default GameRoom;

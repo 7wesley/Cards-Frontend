@@ -7,14 +7,10 @@
 
 import React from "react";
 import ReactDOM from "react-dom";
-import "./assets/Index.css";
 import App from "./components/App";
 import reportWebVitals from "./reportWebVitals";
-import {Provider} from "react-redux"
-import {store} from "./store.js"
-
-
-
+import { Provider } from "react-redux";
+import { store } from "./store.js";
 
 ReactDOM.render(
     // <React.StrictMode>
@@ -24,9 +20,9 @@ ReactDOM.render(
 
     //Provider allows React components to access Redux store
     <Provider store={store}>
-        <App/>
+        <App />
     </Provider>,
-    document.getElementById('root')
+    document.getElementById("root")
 );
 
 // If you want to start measuring performance in your app, pass a function

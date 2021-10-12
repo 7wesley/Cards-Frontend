@@ -4,48 +4,45 @@
  * @author Wesley Miller
  * @version 10/7/2021
  */
-import * as actions from "./actionTypes"
-
+import * as actions from "./actionTypes";
 
 //This is only for testing
 export function testAction(description) {
     return {
-        type: actions.WelcomeAction, 
+        type: actions.WelcomeAction,
         payload: {
-            description
+            description,
         },
-        stuff: "something changed"
-    }
+        stuff: "something changed",
+    };
 }
-
 
 //Not being used
 export function setUser(description) {
     return {
-        type: actions.setUser, 
+        type: actions.setUser,
         payload: {
-            description
-        }
-    }
+            description,
+        },
+    };
 }
 
-
 /**
- * 
+ *
  * @param {any} description the description of the action
  * @param {any} newName the new name to set the current name to
  * @returns an object holding the new information
  */
 export function setUsername(description, newName) {
     return {
-        type: actions.replaceUsername, 
+        type: actions.replaceUsername,
         payload: {
-            description
+            description,
         },
         user: {
-            username: newName
-        }
-    }
+            username: newName,
+        },
+    };
 }
 
 /**
@@ -53,27 +50,25 @@ export function setUsername(description, newName) {
  * @param {any} description the description of the action
  * @returns an object holding the new information
  */
- export function incrementWins(description) {
+export function incrementWins(description) {
     return {
-        type: actions.increaseWins, 
+        type: actions.increaseWins,
         payload: {
-            description
-        }
-    }
+            description,
+        },
+    };
 }
-
 
 /**
  * Increments the user's losses and the number of games played
  * @param {any} description the description of the action
  * @returns an object holding the new information
  */
- export function incrementLosses(description) {
+export function incrementLosses(description) {
     return {
-        type: actions.increaseLosses, 
+        type: actions.increaseLosses,
         payload: {
-            description
-        }
-    }
+            description,
+        },
+    };
 }
-

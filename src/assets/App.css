@@ -5,18 +5,16 @@
  * @version 5/13/2021
  */
 #fixedbutton {
-    position: fixed;
-    bottom: 5px;
-    right: 10px;
+  position: fixed;
+  bottom: 5px;
+  right: 10px;
 }
 
 #clickableAwesomeFont {
-    cursor: pointer
+  cursor: pointer;
 }
 
 #copyText:hover {
-    color: #300000;
-    cursor: pointer;
+  color: #300000;
+  cursor: pointer;
 }
-
-

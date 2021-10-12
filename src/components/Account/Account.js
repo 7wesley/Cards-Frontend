@@ -14,9 +14,9 @@ import useQueryDocs from "../../hooks/useQueryDocs";
 import { Modal } from "react-bootstrap";
 import ConfirmModal from "../Templates/ConfirmModal";
 
-import {connect} from "react-redux"
+import { connect } from "react-redux";
 import { setUsername } from "../../actions";
-import {store} from "../../store.js"
+import { store } from "../../store.js";
 import { useDispatch } from "react-redux";
 
 /**
@@ -25,7 +25,7 @@ import { useDispatch } from "react-redux";
  * @param {any} updateStorage for updating the user's information
  * @returns the account page that will be displayed
  */
-const Account = ({ /**id,**/ /**updateStorage**/ }) => {
+const Account = () => {
     const [modalOpen, setModalOpen] = useState(false);
     const { currentUser, logout, upload, updateProfile } = useAuth();
     const [updated, setUpdated] = useState(false);
@@ -34,15 +34,13 @@ const Account = ({ /**id,**/ /**updateStorage**/ }) => {
     const [error, setError] = useState("");
     const history = useHistory();
 
-    const id = store.getState().user.username
-    const dispatch = useDispatch()
+    const id = store.getState().user.username;
+    const dispatch = useDispatch();
 
     //Updates the user's name
     const handleSetUsername = (newName) => {
         dispatch(setUsername("Reset the guest username", newName));
     };
-
-
 
     const closeModal = useCallback(() => {
         setModalOpen(false);
@@ -72,13 +70,15 @@ const Account = ({ /**id,**/ /**updateStorage**/ }) => {
         try {
             if (e.target[0] && e.target[0].value) {
                 if (currentUser) await updateProfile(e.target[0].value);
-
                 //If the user updates their username
                 else {
-                    const newName =  e.target[0].value+"-"+Math.round(Math.random() * 100000);
+                    const newName =
+                        e.target[0].value +
+                        "-" +
+                        Math.round(Math.random() * 100000);
 
                     //Update the information on the store
-                    handleSetUsername(newName)
+                    handleSetUsername(newName);
 
                     //Update the user's info through a function
                     // updateStorage({
@@ -109,17 +109,13 @@ const Account = ({ /**id,**/ /**updateStorage**/ }) => {
             <div className="container mt-5">
                 <div className="mx-auto col-md-8 col-sm-10 col-xs-12">
                     <Form onSubmit={handleUpdate}>
-                        
-
                         {!currentUser ? (
-
                             // If the user is not logged in
                             <p className="h3" data-cy="createAccountText">
                                 Want more features?{" "}
                                 <Link to="/login">Create an account</Link>
                             </p>
                         ) : (
-
                             // If the user is logged in
                             <p className="h3">You are a premium member!</p>
                         )}
@@ -198,29 +194,32 @@ const Account = ({ /**id,**/ /**updateStorage**/ }) => {
 };
 
 //Any time the store is updated, this function is called for this component
-const mapStateToProps = state => {
-    return state
-    // {...state, 
+const mapStateToProps = (state) => {
+    return state;
+    // {...state,
     //     user: {
     //         username: "new name"
-    // }} 
-}
-  
-  
+    // }}
+};
+
 //Makes a call to the reducer so that it can tell the store to update state
 //This function is called whenever this component receives new props
-const mapDispatchToProps = dispatch => {
+const mapDispatchToProps = (dispatch) => {
     return {
-        // modifyState: (username1) => dispatch(setUser("Clicked something on Routing page"), {...store.getState(), 
+        // modifyState: (username1) => dispatch(setUser("Clicked something on Routing page"), {...store.getState(),
         //     username: username1,
         //     stats: {
         //         wins: 0,
         //         losses: 0,
         //         played: 0
         //     }
-        // })   
-        modifyState: () => dispatch(setUsername("Clicked something on Account page"), "new name")   
-    }
-}
+        // })
+        modifyState: () =>
+            dispatch(
+                setUsername("Clicked something on Account page"),
+                "new name"
+            ),
+    };
+};
 
-export default connect(mapStateToProps, mapDispatchToProps) (Account);
+export default connect(mapStateToProps, mapDispatchToProps)(Account);

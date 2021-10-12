@@ -33,8 +33,9 @@
     "eject": "react-scripts eject",
     "cypress": "cypress open",
     "e2e": "cypress run",
-    "eslint": "eslint .  --ext .js",
-    "prettier": "prettier --check src/**/*.js"
+    "eslint": "eslint '**/*.js' --fix",
+    "prettier": "prettier --write 'src/**/*.js' --tab-width 4",
+    "stylelint": "stylelint 'src/**/*.css' --fix"
   },
   "eslintConfig": {
     "extends": [
@@ -63,6 +64,8 @@
     "@cypress/react": "^5.10.0",
     "@cypress/webpack-dev-server": "^1.6.0",
     "chai": "^4.3.4",
-    "cypress": "^8.5.0"
+    "cypress": "^8.5.0",
+    "stylelint": "^13.13.1",
+    "stylelint-config-standard": "^22.0.0"
   }
 }

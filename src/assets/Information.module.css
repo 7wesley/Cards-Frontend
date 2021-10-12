@@ -5,15 +5,15 @@
  * @version 5/13/2021
  */
 .blueBlock {
-    height: 30vh;
-    width: 100%;
-    background-color: aqua;
+  height: 30vh;
+  width: 100%;
+  background-color: aqua;
 }
 
 .greenBlock {
-    height: 30vh;
-    width: 100%;
-    background-color: #01FF70;
+  height: 30vh;
+  width: 100%;
+  background-color: #01ff70;
 }
 
 .vertical {
@@ -38,5 +38,5 @@
 .redBlock {
   height: 30vh;
   width: 100%;
-  background-color: #DC143C;
+  background-color: #dc143c;
 }

@@ -5,20 +5,17 @@
  * @version 5/13/2021
  */
 .bgWaiting {
-    background: linear-gradient(120deg, #7bc6cc, #be93c5);
-    height: 100vh;
+  background: linear-gradient(120deg, #7bc6cc, #be93c5);
+  height: 100vh;
 }
 
 .bgWinner {
-    background: #50C9C3;  /* fallback for old browsers */
-    background: -webkit-linear-gradient(to right, #96DEDA, #50C9C3);  /* Chrome 10-25, Safari 5.1-6 */
-    background: linear-gradient(to right, #96DEDA, #50C9C3); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
-    height: 100vh;
+  background: #50c9c3;  /* fallback for old browsers */
+  background: linear-gradient(to right, #96deda, #50c9c3); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
+  height: 100vh;
 }
 
 .bgInProgress {
-    background: #1D976C;  /* fallback for old browsers */
-    background: -webkit-linear-gradient(to right, #93F9B9, #1D976C);  /* Chrome 10-25, Safari 5.1-6 */
-    background: linear-gradient(to right, #93F9B9, #1D976C); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
+  background: #1d976c;  /* fallback for old browsers */
+  background: linear-gradient(to right, #93f9b9, #1d976c); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
 }
-

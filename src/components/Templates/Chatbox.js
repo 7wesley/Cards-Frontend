@@ -13,11 +13,7 @@
 const Chatbox = ({ handleChat }) => {
     return (
         <div id="chatBox" className="sidebar">
-            <a
-                href="javascript:void(0)"
-                className="closebtn"
-                onClick={handleChat}
-            >
+            <a href="/null" className="closebtn" onClick={handleChat}>
                 &times;
             </a>
             <h3 className="text-center text-light"> Chat </h3>
