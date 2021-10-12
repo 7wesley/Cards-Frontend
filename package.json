@@ -11,6 +11,7 @@
     "emailjs-com": "^3.2.0",
     "firebase": "^8.2.10",
     "framer-motion": "^3.10.0",
+    "prettier": "^2.4.1",
     "react": "^17.0.1",
     "react-bootstrap": "^1.6.4",
     "react-chartjs-2": "^2.11.1",
@@ -31,7 +32,9 @@
     "test": "react-scripts test",
     "eject": "react-scripts eject",
     "cypress": "cypress open",
-    "e2e": "cypress run"
+    "e2e": "cypress run",
+    "eslint": "eslint .  --ext .js",
+    "prettier": "prettier --check src/**/*.js"
   },
   "eslintConfig": {
     "extends": [
@@ -39,6 +42,11 @@
       "react-app/jest"
     ]
   },
+  "eslintIgnore": [
+    "node_modules",
+    "build/*",
+    "cypress"
+  ],
   "browserslist": {
     "production": [
       ">0.2%",
