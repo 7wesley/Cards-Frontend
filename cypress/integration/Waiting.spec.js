@@ -23,6 +23,7 @@ describe("Waiting page as guest", () => {
 describe("Waiting page as user", () => {
   before(() => {
     cy.createAccount(testUsername, testEmail, testPassword);
+    cy.url().should("include", "/account");
   });
 
   beforeEach(() => {

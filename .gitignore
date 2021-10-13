@@ -63,3 +63,5 @@ build
 cypress/screenshots
 cypress/videos
 cypress.yml
+coverage
+.nyc_output

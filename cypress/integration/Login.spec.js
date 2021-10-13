@@ -32,13 +32,15 @@ describe("Login page as guest", () => {
 
   it("Successful login redirects to account", () => {
     cy.createAccount(testUsername, testEmail, testPassword);
+    cy.url().should("include", "/account");
     cy.getCY("navDropdown").trigger("mouseover");
     cy.clickCY("logLink");
+    cy.wait(3000);
     cy.visit("/login");
     cy.inputCY("emailInput", testEmail);
     cy.inputCY("passwordInput", testPassword);
     cy.clickCY("submitButton");
-    cy.url().should("include", "account");
+    cy.url().should("include", "/account");
     cy.deleteAccount();
   });
 });
@@ -46,6 +48,7 @@ describe("Login page as guest", () => {
 describe("Login page as user", () => {
   before(() => {
     cy.createAccount(testUsername, testEmail, testPassword);
+    cy.url().should("include", "/account");
   });
 
   beforeEach(() => {
@@ -53,7 +56,7 @@ describe("Login page as user", () => {
   });
 
   it("Redirected on visit", () => {
-    cy.url().should("include", "account");
+    cy.url().should("include", "/account");
   });
 
   after(() => {

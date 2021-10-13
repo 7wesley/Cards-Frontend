@@ -23,6 +23,7 @@ describe("Stats page as guest", () => {
 describe("Stats page as user", () => {
   before(() => {
     cy.createAccount(testUsername, testEmail, testPassword);
+    cy.url().should("include", "/account");
   });
 
   beforeEach(() => {

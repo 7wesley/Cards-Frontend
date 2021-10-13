@@ -20,11 +20,6 @@ describe("Games page as guest", () => {
     });
   });
 
-  it("No games available", () => {
-    cy.wait(1000);
-    cy.isNotVisible("gameCard");
-  });
-
   it("Empty fields are invalid", () => {
     cy.clickCY("hostButton");
     cy.clickCY("submitButton");
@@ -50,19 +45,12 @@ describe("Games page as guest", () => {
     cy.createGame();
     cy.url().should("include", "/games/");
   });
-
-  it("Room is deleted after leaving page", () => {
-    cy.createGame();
-    cy.wait(1000);
-    cy.visit("/games");
-    cy.wait(1500);
-    cy.isNotVisible("gameCard");
-  });
 });
 
 describe("Games page as user", () => {
   before(() => {
     cy.createAccount(testUsername, testEmail, testPassword);
+    cy.url().should("include", "/account");
   });
 
   beforeEach(() => {

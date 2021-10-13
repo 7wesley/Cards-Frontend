@@ -57,7 +57,7 @@ Cypress.Commands.add("createGame", () => {
   cy.clickCY("blackjackRadio");
   cy.inputCY("playersInput", 2);
   cy.clickCY("submitButton");
-  cy.wait(1000);
+  cy.url().should("include", "/games/");
 });
 
 //Sign up with valid input
@@ -74,7 +74,6 @@ Cypress.Commands.add(
       cy.inputCY("confirmInput", password);
     }
     cy.clickCY("submitButton");
-    cy.wait(1500);
   }
 );
 
@@ -83,5 +82,5 @@ Cypress.Commands.add("deleteAccount", () => {
   cy.visit("/account");
   cy.clickCY("deleteButton");
   cy.clickCY("confirmButton");
-  cy.wait(1000);
+  cy.url().should("eq", Cypress.config().baseUrl + "/");
 });

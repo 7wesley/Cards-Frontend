@@ -8,6 +8,6 @@ export const invalidUserError =
   "There is no user record corresponding to this identifier. The user may have been deleted.";
 export const contactSuccess = "Email sent successfully!";
 //test user
-export const testUsername = "test";
+export const testUsername = "cypresstesting";
 export const testEmail = "test@test.com";
 export const testPassword = "testing";

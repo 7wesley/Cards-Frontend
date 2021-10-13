@@ -31,6 +31,7 @@ describe("Account page as guest", () => {
 describe("Account page as user", () => {
   before(() => {
     cy.createAccount(testUsername, testEmail, testPassword);
+    cy.url().should("include", "/account");
   });
 
   beforeEach(() => {
@@ -44,9 +45,8 @@ describe("Account page as user", () => {
   it("Can change username", () => {
     cy.inputCY("usernameInput", "changed");
     cy.clickCY("updateButton");
-    cy.wait(1000);
+    cy.wait(3000);
     cy.reload();
-    cy.wait(1000);
     cy.getCY("usernameInput").should("have.attr", "placeholder", "changed");
   });
 

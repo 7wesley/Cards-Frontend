@@ -46,6 +46,7 @@ describe("Navbar component as guest", () => {
 describe("Navbar component as user", () => {
   before(() => {
     cy.createAccount(testUsername, testEmail, testPassword);
+    cy.url().should("include", "/account");
   });
 
   it("Dropdown contains 'Log out'", () => {
