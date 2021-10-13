@@ -58,6 +58,7 @@ Cypress.Commands.add("createGame", () => {
   cy.inputCY("playersInput", 2);
   cy.clickCY("submitButton");
   cy.url().should("include", "/games/");
+  cy.url().should("match", /[A-Za-z0-9]{16,}/);
 });
 
 //Sign up with valid input
