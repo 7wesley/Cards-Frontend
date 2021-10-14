@@ -1,4 +1,4 @@
-name: Node.js CICD
+name: Node.js CI/CD
 
 on:
   push:
@@ -40,6 +40,12 @@ jobs:
         with:
           start: npm start, npm start --prefix server
           wait-on: "http://localhost:3000, http://localhost:5000"
+      - name: Upload e2e tests
+        uses: codecov/codecov-action@v2
+        with:
+          flags: e2e
+          name: cards-frontend-e2e
+          fail_ci_if_error: true
 
   docker-publish:
     runs-on: ubuntu-latest
