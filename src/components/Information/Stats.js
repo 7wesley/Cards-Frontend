@@ -3,7 +3,7 @@
  * @author Nathan Jenkins
  * @author Wesley Miller
  * @version 5/13/2021
- */
+ */ 
 
 import styles from "../../assets/Information.module.css";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
