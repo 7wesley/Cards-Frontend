@@ -30,7 +30,9 @@ const Waiting = ({ id, playersList, maxPlayers, countdown }) => {
    * Copies the current game room information to the user's clipboard
    */
   const handleCopy = async () => {
-    navigator.clipboard.writeText(window.location.href);
+    var copyText = document.querySelector("#copyText");
+    copyText.select();
+    document.execCommand("copy");
     setShow(true);
     await new Promise((resolve) => setTimeout(resolve, 1000));
     setShow(false);
@@ -73,15 +75,14 @@ const Waiting = ({ id, playersList, maxPlayers, countdown }) => {
 
               <InputGroup className="mb-2 mt-4" id="copyIcon">
                 <InputGroup.Prepend>
-                  <InputGroup.Text
-                    ref={target}
-                    id="copyText"
-                    onClick={handleCopy}
-                  >
+                  <InputGroup.Text ref={target} onClick={handleCopy}>
                     <FontAwesomeIcon size="lg" icon={faCopy} />
                   </InputGroup.Text>
                 </InputGroup.Prepend>
-                <FormControl defaultValue={window.location.href} />
+                <FormControl
+                  id="copyText"
+                  defaultValue={window.location.href}
+                />
               </InputGroup>
 
               <Overlay target={target.current} show={show} placement="top">
