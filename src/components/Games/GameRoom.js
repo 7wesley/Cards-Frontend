@@ -63,6 +63,18 @@ const GameRoom = ({ match, userData, updateStorage }) => {
     return (
       <div className="col-4 text-center pt-3">
         <p>{id === player.id ? "You" : player.id}</p>
+        
+        {player.cards.length > 5 ?         
+          
+          <motion.img
+            className="img-fluid"
+            style={{ width: 100 }}
+            src={`/Images/Cards/back.png`}
+            whileHover={{
+              scale: 1.1,
+            }}
+          />
+        : 
         <div className="row">
           <motion.div className="mx-auto" layout>
             {player.cards &&
@@ -78,6 +90,10 @@ const GameRoom = ({ match, userData, updateStorage }) => {
               ))}
           </motion.div>
         </div>
+        }
+
+
+        
         <p className="text-center">
           {player.total} {player.status === "standing" && `(${player.status})`}
         </p>
@@ -111,6 +127,14 @@ const GameRoom = ({ match, userData, updateStorage }) => {
               <Button
                 disabled={loading}
                 className="mr-2"
+
+
+
+
+
+
+
+
                 onClick={() => handlePlay("draw")}
               >
                 Confirm

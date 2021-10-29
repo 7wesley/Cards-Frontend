@@ -89,6 +89,7 @@ const Games = ({ id }) => {
                     {/*Shows the host and the current number of players of 
                             each gameroom*/}
                     <div className="card-body">
+                      <h4>Game: {game.game}</h4>
                       <h4>Host: {game.host}</h4>
                       <h4>
                         Players: {Object.keys(game.players).length}/
