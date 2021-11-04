@@ -32,7 +32,7 @@ const Welcome = () => {
           </Link>
           {/* span is used to add spacing between the buttons*/}
         </div>
-      </div> 
+      </div>
     </div>
   );
 };

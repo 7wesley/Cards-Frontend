@@ -27,7 +27,7 @@ const Account = ({ id, updateStorage }) => {
   const { docs } = useQueryDocs("users", currentUser, updated);
   const [success, setSuccess] = useState("");
   const [error, setError] = useState("");
-  const history = useHistory(); 
+  const history = useHistory();
 
   const closeModal = useCallback(() => {
     setModalOpen(false);

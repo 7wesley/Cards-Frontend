@@ -60,17 +60,15 @@ const GameRoom = ({ match, userData, updateStorage }) => {
    * @returns displays the players that are currently playing in this room
    */
   const renderPlayer = (player) => {
-
     //Displays the fields of the player
     // console.log(JSON.stringify(player, null, 4))
 
     return (
       <div className="col-4 text-center pt-3">
         <p>{id === player.id ? "You" : player.id}</p>
-        
+
         {/* Determines the layout depending on the gametype */}
-        {player.gameType === "War" ?         
-          
+        {player.gameType === "War" ? (
           <motion.img
             className="img-fluid"
             style={{ width: 100 }}
@@ -79,26 +77,29 @@ const GameRoom = ({ match, userData, updateStorage }) => {
               scale: 1.1,
             }}
           />
-        : 
-        <div className="row">
-          <motion.div className="mx-auto" layout>
-            {player.cards &&
-              Object.values(player.cards).map((card) => (
-                <motion.img
-                  className="img-fluid"
-                  style={{ width: 100 }}
-                  src={card.image}
-                  whileHover={{
-                    scale: 1.1,
-                  }}
-                />
-              ))}
-          </motion.div>
-        </div>
-        }
+        ) : (
+          <div className="row">
+            <motion.div className="mx-auto" layout>
+              {player.cards &&
+                Object.values(player.cards).map((card) => (
+                  <motion.img
+                    className="img-fluid"
+                    style={{ width: 100 }}
+                    src={card.image}
+                    whileHover={{
+                      scale: 1.1,
+                    }}
+                  />
+                ))}
+            </motion.div>
+          </div>
+        )}
 
         <p className="text-center">
-          Total Cards: {player.gameType === "War" ? player.cards.length+player.backupCards.length : player.total} 
+          Total Cards:{" "}
+          {player.gameType === "War"
+            ? player.cards.length + player.backupCards.length
+            : player.total}
           {player.status === "standing" && `(${player.status})`}
         </p>
       </div>
