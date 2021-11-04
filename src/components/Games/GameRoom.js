@@ -60,11 +60,16 @@ const GameRoom = ({ match, userData, updateStorage }) => {
    * @returns displays the players that are currently playing in this room
    */
   const renderPlayer = (player) => {
+
+    //Displays the fields of the player
+    // console.log(JSON.stringify(player, null, 4))
+
     return (
       <div className="col-4 text-center pt-3">
         <p>{id === player.id ? "You" : player.id}</p>
         
-        {player.cards.length > 5 ?         
+        {/* Determines the layout depending on the gametype */}
+        {player.gameType === "War" ?         
           
           <motion.img
             className="img-fluid"
@@ -92,10 +97,9 @@ const GameRoom = ({ match, userData, updateStorage }) => {
         </div>
         }
 
-
-        
         <p className="text-center">
-          {player.total} {player.status === "standing" && `(${player.status})`}
+          Total Cards: {player.gameType === "War" ? player.cards.length+player.backupCards.length : player.total} 
+          {player.status === "standing" && `(${player.status})`}
         </p>
       </div>
     );
@@ -127,14 +131,6 @@ const GameRoom = ({ match, userData, updateStorage }) => {
               <Button
                 disabled={loading}
                 className="mr-2"
-
-
-
-
-
-
-
-
                 onClick={() => handlePlay("draw")}
               >
                 Confirm

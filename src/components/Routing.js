@@ -12,7 +12,7 @@ import Contact from "./Information/Contact";
 import About from "./Information/About";
 import Welcome from "./Information/Welcome";
 import Games from "./Games/Games";
-import GameRoom from "./Games/GameRoom";
+import GameRoom from "./Games/GameRoom"; 
 import Waiting from "./Games/Waiting";
 import Stats from "./Information/Stats";
 import Tutorial from "./Information/Tutorial";

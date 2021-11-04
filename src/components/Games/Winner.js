@@ -12,7 +12,7 @@ import { Link } from "react-router-dom";
 import { Button } from "react-bootstrap";
 import { getSocket } from "../Socket";
 
-/**
+/** 
  * The page that is displayed when a gameroom has finished
  * @param {any} userData the user's information
  * @param {any} winners a list of the winners of the match
