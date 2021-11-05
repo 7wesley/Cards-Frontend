@@ -143,23 +143,38 @@ const GameRoom = ({ match, userData, updateStorage }) => {
         {!message &&
           turn &&
           (id === turn ? (
-            <>
-              <p>{prompt}</p>
-              <Button
-                disabled={loading}
-                className="mr-2"
-                onClick={() => handlePlay("draw")}
-              >
-                Confirm
-              </Button>
-              <Button
-                disabled={loading}
-                variant="danger"
-                onClick={() => handlePlay("pass")}
-              >
-                Pass
-              </Button>
-            </>
+            // Creates the prompt for blackjack
+            players[0].gameType === "Blackjack" ? (
+              <>
+                <p>{prompt}</p>
+                <Button
+                  disabled={loading}
+                  className="mr-2"
+                  onClick={() => handlePlay("draw")}
+                >
+                  Confirm
+                </Button>
+                <Button
+                  disabled={loading}
+                  variant="danger"
+                  onClick={() => handlePlay("pass")}
+                >
+                  Pass
+                </Button>
+              </>
+            ) : (
+              //Creates the prompt for War
+              <>
+                <p>{prompt}</p>
+                <Button
+                  disabled={loading}
+                  className="mr-2"
+                  onClick={() => handlePlay("draw")}
+                >
+                  Flip Card
+                </Button>
+              </>
+            )
           ) : (
             <p>Waiting for them to make their move...</p>
           ))}
@@ -196,9 +211,9 @@ const GameRoom = ({ match, userData, updateStorage }) => {
    */
   const renderFlippedPrompt = () => {
     return (
-      <h5>
-        Flipped <br></br> Cards:
-      </h5>
+      <div classname="col-3 pt-4">
+        <h5>Flipped Cards:</h5>
+      </div>
     );
   };
 
@@ -240,7 +255,7 @@ const GameRoom = ({ match, userData, updateStorage }) => {
     let columns = [];
     for (let i = 0; i < 9; i++) {
       if (i === 0) {
-        columns.push(renderFlippedPrompt());
+        rows.push(renderFlippedPrompt());
       }
       if (players[i] && players[i].lastCardFlipped != null) {
         // console.log("Last Card Flipped = "+players[i].lastCardFlipped.suit + " of "+players[i].lastCardFlipped.suit)
@@ -249,7 +264,14 @@ const GameRoom = ({ match, userData, updateStorage }) => {
         columns.push(<div className="col-1"></div>);
       }
       if ((i + 1) % 3 === 0) {
-        rows.push(<div className="row h-100">{columns}</div>);
+        rows.push(
+          <div
+            className="row h-100"
+            style={{ background: "rgb(22, 129, 44)", padding: "10px 0px" }}
+          >
+            {columns}
+          </div>
+        );
         columns = [];
       }
     }
@@ -276,9 +298,6 @@ const GameRoom = ({ match, userData, updateStorage }) => {
 
               {players[0].gameType === "War" ? renderFlippedCards() : null}
             </div>
-            {/* <div style={{background: "linear-gradient(to right, #93f9b9, #1d976c)"}}>
-              
-            </div> */}
           </div>
         ) : winners ? (
           <Winner
