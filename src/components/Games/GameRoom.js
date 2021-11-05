@@ -63,8 +63,24 @@ const GameRoom = ({ match, userData, updateStorage }) => {
     //Displays the fields of the player
     // console.log(JSON.stringify(player, null, 4))
 
+    //Sets the background color of the players
+    //Blue means not finished with their turn and green means finished
+    let color = "rgb(32, 187, 243)";
+    if (player.gameType === "War") {
+      if (player.lastCardFlipped != null) {
+        color = "rgb(0, 149, 50)";
+      }
+    } else {
+      if (player.status === "standing") {
+        color = "rgb(0, 149, 50)";
+      }
+    }
+
     return (
-      <div className="col-4 text-center pt-3">
+      <div
+        className="col-3 text-center pt-3"
+        style={{ backgroundColor: color, margin: "10px 10px" }}
+      >
         <p>{id === player.id ? "You" : player.id}</p>
 
         {/* Determines the layout depending on the gametype */}
@@ -118,8 +134,8 @@ const GameRoom = ({ match, userData, updateStorage }) => {
         {!message && turn && (
           <p>
             It is currently{" "}
-            <span className="text-primary">
-              {id === turn ? "YOUR" : `${turn}'s`}
+            <span>
+              <b>{id === turn ? "YOUR" : `${turn}'s`}</b>
             </span>{" "}
             turn
           </p>
@@ -172,8 +188,76 @@ const GameRoom = ({ match, userData, updateStorage }) => {
     return rows;
   };
 
+  /**
+   * Handles displaying the "pass" and "confirm" buttons and for finding
+   *  which button the user clicked.
+   * @returns Shows the buttons that the player can click to make a decision
+   *          for their turn
+   */
+  const renderFlippedPrompt = () => {
+    return (
+      <h5>
+        Flipped <br></br> Cards:
+      </h5>
+    );
+  };
+
+  /**
+   * Displays the card flipped over by the given player
+   * @param {*} player the player that the flipped over card will be displyed
+   * @returns The Card that was flipped over by the player
+   */
+  const renderFlippedCard = (player) => {
+    return (
+      <div
+        className="col-4 text-center pt-3" /*style={{backgroundColor: "rgb(0, 153, 0)"}}*/
+      >
+        <p>{id === player.id ? "You" : player.id}</p>
+
+        {/* Displays the flipped over card of the player*/}
+        <motion.div className="mx-auto" layout>
+          {
+            <motion.img
+              className="img-fluid"
+              style={{ width: 100 }}
+              src={player.lastCardFlipped.image}
+              whileHover={{
+                scale: 1.1,
+              }}
+            />
+          }
+        </motion.div>
+      </div>
+    );
+  };
+
+  /**
+   * Displays all of the player's flipped over cards
+   * @returns The list of flipped over cards
+   */
+  const renderFlippedCards = () => {
+    let rows = [];
+    let columns = [];
+    for (let i = 0; i < 9; i++) {
+      if (i === 0) {
+        columns.push(renderFlippedPrompt());
+      }
+      if (players[i] && players[i].lastCardFlipped != null) {
+        // console.log("Last Card Flipped = "+players[i].lastCardFlipped.suit + " of "+players[i].lastCardFlipped.suit)
+        columns.push(renderFlippedCard(players[i]));
+      } else {
+        columns.push(<div className="col-1"></div>);
+      }
+      if ((i + 1) % 3 === 0) {
+        rows.push(<div className="row h-100">{columns}</div>);
+        columns = [];
+      }
+    }
+    return rows;
+  };
+
   return (
-    <>
+    <div style={{ background: "linear-gradient(to right, #93f9b9, #1d976c)" }}>
       <Prompt
         when={connected && !winners}
         message="This will exit you from the game. Are you sure?"
@@ -189,7 +273,12 @@ const GameRoom = ({ match, userData, updateStorage }) => {
                 {timer}
               </div>
               {renderRows()}
+
+              {players[0].gameType === "War" ? renderFlippedCards() : null}
             </div>
+            {/* <div style={{background: "linear-gradient(to right, #93f9b9, #1d976c)"}}>
+              
+            </div> */}
           </div>
         ) : winners ? (
           <Winner
@@ -209,7 +298,7 @@ const GameRoom = ({ match, userData, updateStorage }) => {
       ) : (
         <NotFound />
       )}
-    </>
+    </div>
   );
 };
 
