@@ -15,7 +15,8 @@ import NotFound from "./NotFound";
 import useRoomListener from "../../hooks/useRoomListener";
 import useSocketListener from "../../hooks/useSocketListener";
 import { getSocket, connectSocket } from "../Socket";
-import { Button } from "react-bootstrap";
+import { Button, Container } from "react-bootstrap";
+import Board from "./Board";
 
 /**
  * The page that users play games
@@ -25,7 +26,6 @@ import { Button } from "react-bootstrap";
  * @returns The webpage this class creates
  */
 const GameRoom = ({ match, userData, updateStorage }) => {
-  const [loading, setLoading] = useState(true);
   const [connected, setConnected] = useState(false);
   const { playersList, maxPlayers, status } = useRoomListener(
     match.params.roomId
@@ -42,10 +42,6 @@ const GameRoom = ({ match, userData, updateStorage }) => {
     }
   }, [status, connected, match.params.roomId, id]);
 
-  useEffect(() => {
-    if (turn === id) setLoading(false);
-  }, [turn, id]);
-
   /**
    * Takes care of the decision made by the player
    * @param {*} choice the decision of the player for their turn
@@ -54,232 +50,8 @@ const GameRoom = ({ match, userData, updateStorage }) => {
     getSocket().emit("player-move", choice);
   };
 
-  /**
-   * Displays the player and their cards on screen
-   * @param {*} player the player to render
-   * @returns displays the players that are currently playing in this room
-   */
-  const renderPlayer = (player) => {
-    //Displays the fields of the player
-    // console.log(JSON.stringify(player, null, 4))
-
-    //Sets the background color of the players
-    //Blue means not finished with their turn and green means finished
-    let color = "rgb(32, 187, 243)";
-    if (player.gameType === "War") {
-      if (player.lastCardFlipped != null) {
-        color = "rgb(0, 149, 50)";
-      }
-    } else {
-      if (player.status === "standing") {
-        color = "rgb(0, 149, 50)";
-      }
-    }
-
-    return (
-      <div
-        className="col-3 text-center pt-3"
-        style={{ backgroundColor: color, margin: "10px 10px" }}
-      >
-        <p>{id === player.id ? "You" : player.id}</p>
-
-        {/* Determines the layout depending on the gametype */}
-        {player.gameType === "War" ? (
-          <motion.img
-            className="img-fluid"
-            style={{ width: 100 }}
-            src={`/Images/Cards/back.png`}
-            whileHover={{
-              scale: 1.1,
-            }}
-          />
-        ) : (
-          <div className="row">
-            <motion.div className="mx-auto" layout>
-              {player.cards &&
-                Object.values(player.cards).map((card) => (
-                  <motion.img
-                    className="img-fluid"
-                    style={{ width: 100 }}
-                    src={card.image}
-                    whileHover={{
-                      scale: 1.1,
-                    }}
-                  />
-                ))}
-            </motion.div>
-          </div>
-        )}
-
-        <p className="text-center">
-          Total Cards:{" "}
-          {player.gameType === "War"
-            ? player.cards.length + player.backupCards.length
-            : player.total}
-          {player.status === "standing" && `(${player.status})`}
-        </p>
-      </div>
-    );
-  };
-
-  /**
-   * Handles displaying the "pass" and "confirm" buttons and for finding
-   *  which button the user clicked.
-   * @returns Shows the buttons that the player can click to make a decision
-   *          for their turn
-   */
-  const renderPrompt = () => {
-    return (
-      <div className="col-4 pt-5">
-        {!message && turn && (
-          <p>
-            It is currently{" "}
-            <span>
-              <b>{id === turn ? "YOUR" : `${turn}'s`}</b>
-            </span>{" "}
-            turn
-          </p>
-        )}
-        {!message &&
-          turn &&
-          (id === turn ? (
-            // Creates the prompt for blackjack
-            players[0].gameType === "Blackjack" ? (
-              <>
-                <p>{prompt}</p>
-                <Button
-                  disabled={loading}
-                  className="mr-2"
-                  onClick={() => handlePlay("draw")}
-                >
-                  Confirm
-                </Button>
-                <Button
-                  disabled={loading}
-                  variant="danger"
-                  onClick={() => handlePlay("pass")}
-                >
-                  Pass
-                </Button>
-              </>
-            ) : (
-              //Creates the prompt for War
-              <>
-                <p>{prompt}</p>
-                <Button
-                  disabled={loading}
-                  className="mr-2"
-                  onClick={() => handlePlay("draw")}
-                >
-                  Flip Card
-                </Button>
-              </>
-            )
-          ) : (
-            <p>Waiting for them to make their move...</p>
-          ))}
-        {<p className="h2">{message}</p>}
-      </div>
-    );
-  };
-
-  /**
-   * Creates a display for each player that shows who is playing the game.
-   * @returns The row of players that will be displayed
-   */
-  const renderRows = () => {
-    let rows = [];
-    let columns = [];
-    for (let i = 0; i < 9; i++) {
-      if (players[i]) columns.push(renderPlayer(players[i]));
-      else if (i === players.length) {
-        columns.push(renderPrompt());
-      } else columns.push(<div className="col-4"></div>);
-      if ((i + 1) % 3 === 0) {
-        rows.push(<div className="row h-100">{columns}</div>);
-        columns = [];
-      }
-    }
-    return rows;
-  };
-
-  /**
-   * Handles displaying the "pass" and "confirm" buttons and for finding
-   *  which button the user clicked.
-   * @returns Shows the buttons that the player can click to make a decision
-   *          for their turn
-   */
-  const renderFlippedPrompt = () => {
-    return (
-      <div classname="col-3 pt-4">
-        <h5>Flipped Cards:</h5>
-      </div>
-    );
-  };
-
-  /**
-   * Displays the card flipped over by the given player
-   * @param {*} player the player that the flipped over card will be displyed
-   * @returns The Card that was flipped over by the player
-   */
-  const renderFlippedCard = (player) => {
-    return (
-      <div
-        className="col-4 text-center pt-3" /*style={{backgroundColor: "rgb(0, 153, 0)"}}*/
-      >
-        <p>{id === player.id ? "You" : player.id}</p>
-
-        {/* Displays the flipped over card of the player*/}
-        <motion.div className="mx-auto" layout>
-          {
-            <motion.img
-              className="img-fluid"
-              style={{ width: 100 }}
-              src={player.lastCardFlipped.image}
-              whileHover={{
-                scale: 1.1,
-              }}
-            />
-          }
-        </motion.div>
-      </div>
-    );
-  };
-
-  /**
-   * Displays all of the player's flipped over cards
-   * @returns The list of flipped over cards
-   */
-  const renderFlippedCards = () => {
-    let rows = [];
-    let columns = [];
-    for (let i = 0; i < 9; i++) {
-      if (i === 0) {
-        rows.push(renderFlippedPrompt());
-      }
-      if (players[i] && players[i].lastCardFlipped != null) {
-        // console.log("Last Card Flipped = "+players[i].lastCardFlipped.suit + " of "+players[i].lastCardFlipped.suit)
-        columns.push(renderFlippedCard(players[i]));
-      } else {
-        columns.push(<div className="col-1"></div>);
-      }
-      if ((i + 1) % 3 === 0) {
-        rows.push(
-          <div
-            className="row h-100"
-            style={{ background: "rgb(22, 129, 44)", padding: "10px 0px" }}
-          >
-            {columns}
-          </div>
-        );
-        columns = [];
-      }
-    }
-    return rows;
-  };
-
   return (
-    <div style={{ background: "linear-gradient(to right, #93f9b9, #1d976c)" }}>
+    <>
       <Prompt
         when={connected && !winners}
         message="This will exit you from the game. Are you sure?"
@@ -289,16 +61,13 @@ const GameRoom = ({ match, userData, updateStorage }) => {
         status === "in-progress" && !connected ? (
           <InProgress playersList={playersList} />
         ) : !winners && players.length ? (
-          <div className="container position-relative mt-4">
-            <div className="d-flex flex-column vh-100 text-center">
-              <div className="mt-5 position-absolute" style={{ right: 0 }}>
-                {timer}
-              </div>
-              {renderRows()}
-
-              {players[0].gameType === "War" ? renderFlippedCards() : null}
-            </div>
-          </div>
+          <Board
+            players={players}
+            prompt={prompt}
+            turn={turn}
+            timer={timer}
+            message={message}
+          />
         ) : winners ? (
           <Winner
             userData={userData}
@@ -317,7 +86,7 @@ const GameRoom = ({ match, userData, updateStorage }) => {
       ) : (
         <NotFound />
       )}
-    </div>
+    </>
   );
 };
 

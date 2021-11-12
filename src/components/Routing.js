@@ -20,6 +20,8 @@ import Login from "./Account/Login";
 import Signup from "./Account/Signup";
 import Account from "./Account/Account";
 import useStorage from "../hooks/useStorage";
+import Template from "./Templates/GameTemplate";
+import GameTemplatePlayers from "./Templates/GameTemplatePlayers";
 
 /**
  * Handles how the user is able to switch between pages
@@ -49,6 +51,8 @@ const Routing = () => {
             />
           )}
         />
+        <Route path="/template" component={Template} />
+        <Route path="/templatePlayers" component={GameTemplatePlayers} />
         <Route path="/about" component={About} />
         <Route path="/contact" component={Contact} />
         <Route path="/waiting" component={Waiting} />

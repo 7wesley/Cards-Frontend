@@ -15,13 +15,6 @@ let socket;
  * @param {any} id the identification of the user connecting to the room
  */
 export const connectSocket = (room, id) => {
-  //Not work
-  // console.log("BACKEND_URL = "+process.env.BACKEND_URL)
-
-  console.log("REACT_APP_BACKEND_URL = " + process.env.REACT_APP_BACKEND_URL);
-
-  console.log(process.env);
-
   socket = io(process.env.REACT_APP_BACKEND_URL, {
     transports: ["websocket", "polling", "flashsocket"],
   });

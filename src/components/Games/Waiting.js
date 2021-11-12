@@ -65,9 +65,8 @@ const Waiting = ({ id, playersList, maxPlayers, countdown }) => {
 
               <p className="h4">Players in room:</p>
               <motion.div layout data-cy="playersList">
-                {Object.keys(playersList).map((player, index) => (
+                {Object.values(playersList).map((player, index) => (
                   <p key={index} className="mb-0">
-                    {" "}
                     {player} {id === player && "(You)"}
                   </p>
                 ))}

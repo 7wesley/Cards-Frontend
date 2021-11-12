@@ -1,0 +1,161 @@
+/* Rem is relative to room element <html> 16px */
+
+.board {
+  display: flex;
+  overflow: hidden;
+  background-size: cover;
+  position: absolute;
+  height: calc(100% - 56px);
+  width: 100%;
+  background-color: rgb(22, 129, 44);
+}
+
+.gameContainer {
+  width: 100%;
+  height: 100%;
+}
+
+.position-number {
+  margin-left: 0.75rem;
+  margin-top: 0.4rem;
+}
+
+.card-container {
+  width: 3.05rem;
+  height: 3.7rem;
+}
+
+.player-cards {
+  z-index: 1;
+  position: absolute;
+  left: -0.9rem;
+  top: -0.1rem;
+  opacity: 1;
+}
+
+.card-img {
+  box-shadow: 0 0 0.8rem 0 rgb(0 0 0 / 38%);
+}
+
+.card-0 {
+  transform: rotate(-7deg);
+  left: 0.3rem;
+  top: 0;
+  position: absolute;
+  transition: top ease 0.25s;
+}
+
+.card-1 {
+  transform: rotate(7deg);
+  left: 3.5rem;
+  top: 0;
+  position: absolute;
+  transition: top ease 0.25s;
+}
+
+.card-0:hover {
+  z-index: 2;
+  top: -0.75rem;
+}
+
+.card-1:hover {
+  z-index: 2;
+  top: -0.75rem;
+}
+
+.card-img {
+  width: 5rem;
+}
+
+.player-info {
+  font-weight: bold;
+  box-shadow: 0 0rem 0.6em 0 rgb(0 0 0 / 25%);
+  border-radius: 0.3rem;
+  background: rgba(41, 40, 40, 0.8);
+  width: 100%;
+  height: 100%;
+  box-sizing: border-box;
+  position: relative;
+  overflow: hidden;
+}
+
+.player-bet {
+  width: 2rem;
+  top: 2.5rem;
+  position: absolute;
+  margin: 0;
+  right: 0;
+  left: 9rem;
+  color: #fff;
+}
+
+.player-name {
+  left: 9rem;
+  font-size: 1.2rem;
+  width: 2rem;
+  top: 0.8rem;
+  position: absolute;
+  margin: 0;
+  right: 0;
+  color: #d3d1d1;
+}
+
+.board-player {
+  width: 18%;
+  height: 13.5%;
+  position: absolute;
+}
+
+.board-player-empty {
+  border: 1px dashed rgba(212, 193, 193, 0.699);
+}
+
+.board-player-0 {
+  top: 82%;
+  left: 53%;
+}
+
+.board-player-1 {
+  top: 82%;
+  left: 29%;
+}
+
+.board-player-2 {
+  top: 66%;
+  left: 8%;
+}
+
+.board-player-3 {
+  top: 40%;
+  left: 2.2%;
+}
+
+.board-player-4 {
+  top: 14%;
+  left: 8%;
+}
+
+.board-player-5 {
+  top: 2%;
+  left: 29%;
+}
+
+.board-player-6 {
+  top: 2%;
+  left: 53%;
+}
+
+.board-player-7 {
+  top: 14%;
+  left: 74%;
+}
+
+.board-player-8 {
+  top: 40%;
+  left: 80.5%;
+}
+
+.board-player-9 {
+  top: 66%;
+  left: 75%;
+}
