@@ -62,6 +62,7 @@ const GameRoom = ({ match, userData, updateStorage }) => {
           <InProgress playersList={playersList} />
         ) : !winners && players.length ? (
           <Board
+            id = {id}
             players={players}
             prompt={prompt}
             turn={turn}

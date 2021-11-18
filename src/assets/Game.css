@@ -1,18 +1,16 @@
 /* Rem is relative to room element <html> 16px */
 
 .board {
-  display: flex;
   overflow: hidden;
-  background-size: cover;
   position: absolute;
   height: calc(100% - 56px);
   width: 100%;
   background-color: rgb(22, 129, 44);
 }
 
-.gameContainer {
-  width: 100%;
-  height: 100%;
+.players {
+  height: 84%;
+  position: relative;
 }
 
 .position-number {
@@ -34,6 +32,7 @@
 }
 
 .card-img {
+  width: 150%;
   box-shadow: 0 0 0.8rem 0 rgb(0 0 0 / 38%);
 }
 
@@ -63,9 +62,6 @@
   top: -0.75rem;
 }
 
-.card-img {
-  width: 5rem;
-}
 
 .player-info {
   font-weight: bold;
@@ -75,12 +71,24 @@
   width: 100%;
   height: 100%;
   box-sizing: border-box;
-  position: relative;
   overflow: hidden;
 }
 
+.player-turn {
+  box-shadow: 0 0 90px rgb(255, 255, 255);
+}
+
+.player-timer {
+  -webkit-transition: width 1s ease-in-out;
+  -moz-transition: width 1s ease-in-out;
+  -o-transition: width 1s ease-in-out;
+  transition: width 1s ease-in-out;
+  background: rgba(122, 112, 216, 0.8);
+  height: 0.15rem;
+  width: 100%;
+}
+
 .player-bet {
-  width: 2rem;
   top: 2.5rem;
   position: absolute;
   margin: 0;
@@ -92,12 +100,12 @@
 .player-name {
   left: 9rem;
   font-size: 1.2rem;
-  width: 2rem;
   top: 0.8rem;
   position: absolute;
   margin: 0;
   right: 0;
   color: #d3d1d1;
+  overflow: hidden;
 }
 
 .board-player {
@@ -158,4 +166,46 @@
 .board-player-9 {
   top: 66%;
   left: 75%;
+}
+
+.dashboard {
+  width: 100%;
+  height: calc(20% - 56px);
+}
+
+.choice-button {
+  background: transparent;
+  border-style: solid;
+  border-width: 0.08rem;
+  border-bottom-width: 0.15rem;
+  border-color: #fff;
+  color: #fff;
+  font-weight: bold;
+  height: 3.2rem;
+  width: 8rem;
+  border-radius: 0.3rem;
+  text-transform: uppercase;
+  position: relative;
+}
+
+.button-symbol::before {
+  border-width: 0.08rem;
+  position: absolute;
+  top: -0.4rem;
+  right: 0.5rem;
+  width: 1rem;
+  text-align: center;
+  font-weight: bold;
+  font-size: 0.6rem;
+  border-radius: 0.5rem;
+  background: #fff;
+  color: black;
+}
+
+.hit::before {
+  content: "h";
+}
+
+.stand::before {
+  content: "s";
 }
