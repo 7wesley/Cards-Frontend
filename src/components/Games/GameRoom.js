@@ -6,7 +6,6 @@
  */
 
 import React, { useState, useEffect } from "react";
-import { motion } from "framer-motion";
 import { Prompt } from "react-router";
 import Waiting from "./Waiting";
 import Winner from "./Winner";
@@ -15,8 +14,7 @@ import NotFound from "./NotFound";
 import useRoomListener from "../../hooks/useRoomListener";
 import useSocketListener from "../../hooks/useSocketListener";
 import { getSocket, connectSocket } from "../Socket";
-import { Button, Container } from "react-bootstrap";
-import Board from "./Board";
+import Blackjack from "./Blackjack";
 
 /**
  * The page that users play games
@@ -61,7 +59,7 @@ const GameRoom = ({ match, userData, updateStorage }) => {
         status === "in-progress" && !connected ? (
           <InProgress playersList={playersList} />
         ) : !winners && players.length ? (
-          <Board
+          <Blackjack
             id = {id}
             players={players}
             prompt={prompt}

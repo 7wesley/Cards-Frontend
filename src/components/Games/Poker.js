@@ -1,11 +1,17 @@
 import { useEffect } from "react";
 import { Container } from "react-bootstrap";
 import "../../assets/Game.css";
+import { getSocket } from "../Socket";
 
-const Board = ({ players, prompt, turn, timer, message, id }) => {
+const Poker = ({ players, turn, timer, id }) => {
+  const myTurn = turn === id;
   useEffect(() => {
     console.log(players);
   });
+
+  const handlePlay = (choice) => {
+    getSocket().emit("player-move", choice);
+  };
 
   return (
     <>
@@ -14,10 +20,10 @@ const Board = ({ players, prompt, turn, timer, message, id }) => {
           {players.map((player, index) => (
             <div
               className={`board-player board-player-${index} ${
-                player.id === turn && " player-turn"
+                player.id === turn ? " player-turn" : ""
               }`}
             >
-              <div className="player-cards">
+              <div className={`player-cards ${player.status && player.status}`}>
                 {player.cards.map((card, index) => (
                   <div className={"card-container card-" + index}>
                     <img
@@ -43,10 +49,22 @@ const Board = ({ players, prompt, turn, timer, message, id }) => {
         </div>
         <div className="dashboard">
           <div className="row d-flex justify-content-center mt-5 text-center">
-            <button className="choice-button mx-2 button-symbol hit">
+            <button
+              disabled={!myTurn}
+              className={`choice-button mx-2 button-symbol hit${
+                !myTurn ? " disabled" : ""
+              }`}
+              onClick={() => handlePlay("draw")}
+            >
               Hit
             </button>
-            <button className="choice-button mx-2 button-symbol stand">
+            <button
+              disabled={!myTurn}
+              className={`choice-button mx-2 button-symbol stand${
+                !myTurn ? " disabled" : ""
+              }`}
+              onClick={() => handlePlay("stand")}
+            >
               Stand
             </button>
           </div>
@@ -56,4 +74,4 @@ const Board = ({ players, prompt, turn, timer, message, id }) => {
   );
 };
 
-export default Board;
+export default Poker;

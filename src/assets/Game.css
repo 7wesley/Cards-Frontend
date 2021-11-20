@@ -18,21 +18,34 @@
   margin-top: 0.4rem;
 }
 
-.card-container {
-  width: 3.05rem;
-  height: 3.7rem;
-}
-
 .player-cards {
   z-index: 1;
   position: absolute;
   left: -0.9rem;
   top: -0.1rem;
   opacity: 1;
+  transition: opacity ease 1s;
+  transition: top ease 1s;
+}
+
+.busted {
+  top: 1px;
+  opacity: 0.25;
+}
+
+.card-container {
+  width: 3.05rem;
+  height: 3.7rem;
+}
+
+.blackjack-card-img {
+  width: 4.5rem;
+  box-shadow: 0 0 0.8rem 0 rgb(0 0 0 / 38%);
+  position: absolute;
 }
 
 .card-img {
-  width: 150%;
+  width: 4.5rem;
   box-shadow: 0 0 0.8rem 0 rgb(0 0 0 / 38%);
 }
 
@@ -62,7 +75,6 @@
   top: -0.75rem;
 }
 
-
 .player-info {
   font-weight: bold;
   box-shadow: 0 0rem 0.6em 0 rgb(0 0 0 / 25%);
@@ -86,6 +98,11 @@
   background: rgba(122, 112, 216, 0.8);
   height: 0.15rem;
   width: 100%;
+}
+
+.disabled {
+  top: -0.75rem;
+  opacity: 0.25;
 }
 
 .player-bet {

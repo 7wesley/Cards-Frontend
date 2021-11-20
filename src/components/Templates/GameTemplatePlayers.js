@@ -2,8 +2,15 @@ import { Container } from "react-bootstrap";
 import "../../assets/Game.css";
 
 const GameTemplatePlayers = () => {
-  const style = {
-    width: `${100 / 2}%`,
+  const getRandomRotation = (min, max) => {
+    return Math.random() * (max - min) + min;
+  };
+
+  const cardStyle = (index) => {
+    return {
+      left: `${index}rem`,
+      transform: `rotate(${getRandomRotation(-3, 3)}deg)`,
+    };
   };
 
   const players = [
@@ -12,12 +19,12 @@ const GameTemplatePlayers = () => {
       bet: 15,
       cards: [
         {
-          Suit: "D",
-          Rank: "A",
+          suit: "D",
+          rank: "A",
         },
         {
-          Suit: "D",
-          Rank: "A",
+          suit: "D",
+          rank: "A",
         },
       ],
     },
@@ -26,12 +33,12 @@ const GameTemplatePlayers = () => {
       bet: 20,
       cards: [
         {
-          Suit: "D",
-          Rank: "A",
+          suit: "D",
+          rank: "A",
         },
         {
-          Suit: "D",
-          Rank: "A",
+          suit: "D",
+          rank: "A",
         },
       ],
     },
@@ -40,12 +47,12 @@ const GameTemplatePlayers = () => {
       bet: 21,
       cards: [
         {
-          Suit: "D",
-          Rank: "A",
+          suit: "D",
+          rank: "A",
         },
         {
-          Suit: "D",
-          Rank: "A",
+          suit: "D",
+          rank: "A",
         },
       ],
     },
@@ -56,20 +63,19 @@ const GameTemplatePlayers = () => {
       <div className="board">
         <div className="players">
           {players.map((player, index) => (
-            <div className={"board-player board-player-" + index}>
-              <div className="player-cards">
+            <div className={`board-player board-player-${index}`}>
+              <div className={`player-cards ${player.status && player.status}`}>
                 {player.cards.map((card, index) => (
-                  <div className={"card-container card-" + index}>
-                    <img
-                      className="card-img"
-                      src={`/Images/Cards/${card.Rank}${card.Suit}.png`}
-                    />
-                  </div>
+                  <img
+                    className="blackjack-card-img"
+                    style={cardStyle(index)}
+                    src={`/Images/Cards/${card.rank}${card.suit}.png`}
+                  />
                 ))}
               </div>
 
               <div className="player-info">
-                <div className="player-timer" style={style} />
+                <div className="player-timer" />
                 <p className="player-name">{player.id}</p>
                 <p class="player-bet">${player.bet}</p>
               </div>
@@ -78,10 +84,10 @@ const GameTemplatePlayers = () => {
         </div>
         <div className="dashboard">
           <div className="row d-flex justify-content-center mt-5 text-center">
-            <button className="choice-button mx-2 button-symbol hit">
+            <button className={`choice-button mx-2 button-symbol hit`}>
               Hit
             </button>
-            <button className="choice-button mx-2 button-symbol stand">
+            <button className={`choice-button mx-2 button-symbol stand`}>
               Stand
             </button>
           </div>
