@@ -1,7 +1,10 @@
+import { useState } from "react";
 import { Container } from "react-bootstrap";
 import "../../assets/Game.css";
+import Bets from "../Games/Bets";
 
 const GameTemplatePlayers = () => {
+  const [betsVisible, setBetsVisible] = useState(true);
   const getRandomRotation = (min, max) => {
     return Math.random() * (max - min) + min;
   };
@@ -83,14 +86,7 @@ const GameTemplatePlayers = () => {
           ))}
         </div>
         <div className="dashboard">
-          <div className="row d-flex justify-content-center mt-5 text-center">
-            <button className={`choice-button mx-2 button-symbol hit`}>
-              Hit
-            </button>
-            <button className={`choice-button mx-2 button-symbol stand`}>
-              Stand
-            </button>
-          </div>
+          {betsVisible && <Bets setBetsVisible={setBetsVisible} />}
         </div>
       </div>
     </>
