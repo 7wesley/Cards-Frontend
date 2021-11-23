@@ -64,10 +64,16 @@ const GameTemplatePlayers = () => {
   return (
     <>
       <div className="board">
+        <div className="board-prompt">
+          <p className="h5">Awaiting player bets...</p>
+        </div>
+
         <div className="players">
           {players.map((player, index) => (
             <div className={`board-player board-player-${index}`}>
-              <div className={`player-cards ${player.status && player.status}`}>
+              <div
+                className={`player-cards ${player.status ? player.status : ""}`}
+              >
                 {player.cards.map((card, index) => (
                   <img
                     className="blackjack-card-img"

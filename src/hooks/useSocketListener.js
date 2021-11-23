@@ -18,8 +18,8 @@ const useSocketListener = (connected) => {
   const [players, setPlayers] = useState([]);
   const [countdown, setCountdown] = useState(null);
   const [timer, setTimer] = useState(null);
-  const [turn, setTurn] = useState();
-  const [winners, setWinners] = useState();
+  const [turn, setTurn] = useState(null);
+  const [winners, setWinners] = useState(null);
 
   useEffect(() => {
     //prevents socket from connecting if room is full

@@ -8,7 +8,6 @@
 import React, { useState, useEffect } from "react";
 import { Prompt } from "react-router";
 import Waiting from "./Waiting";
-import Winner from "./Winner";
 import InProgress from "./InProgress";
 import NotFound from "./NotFound";
 import useRoomListener from "../../hooks/useRoomListener";
@@ -28,9 +27,11 @@ const GameRoom = ({ match, userData, updateStorage }) => {
   const { playersList, maxPlayers, status } = useRoomListener(
     match.params.roomId
   );
-  const { players, countdown, prompt, turn, timer, message, winners } =
+  const { players, countdown, turn, timer, winners } =
     useSocketListener(connected);
   const id = userData && userData.username;
+
+  const inProgress = status === "in-progress" && !connected;
 
   useEffect(() => {
     //if the room is open and they aren't already connected:
@@ -40,14 +41,6 @@ const GameRoom = ({ match, userData, updateStorage }) => {
     }
   }, [status, connected, match.params.roomId, id]);
 
-  /**
-   * Takes care of the decision made by the player
-   * @param {*} choice the decision of the player for their turn
-   */
-  const handlePlay = (choice) => {
-    getSocket().emit("player-move", choice);
-  };
-
   return (
     <>
       <Prompt
@@ -56,23 +49,16 @@ const GameRoom = ({ match, userData, updateStorage }) => {
       />
 
       {playersList ? (
-        status === "in-progress" && !connected ? (
+        inProgress ? (
           <InProgress playersList={playersList} />
-        ) : !winners && players.length ? (
+        ) : players.length ? (
           <Blackjack
-            id = {id}
+            userData={userData}
             players={players}
-            prompt={prompt}
             turn={turn}
             timer={timer}
-            message={message}
-          />
-        ) : winners ? (
-          <Winner
-            userData={userData}
-            winners={winners}
-            timer={timer}
             updateStorage={updateStorage}
+            userData={userData}
           />
         ) : (
           <Waiting

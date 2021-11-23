@@ -36,7 +36,7 @@
 .custom-form {
   background-color: transparent !important;
   border: 0px;
-  border-bottom: 1px solid !important;
+  border-bottom-width: 0.1rem;
   color: white;
   width: 80%;
 }
@@ -54,6 +54,12 @@
   width: 4.5rem;
   box-shadow: 0 0 0.8rem 0 rgb(0 0 0 / 38%);
   position: absolute;
+  transition: top ease 0.25s;
+}
+
+.blackjack-card-img:hover {
+  z-index: 2;
+  top: -0.75rem;
 }
 
 .card-img {
@@ -112,6 +118,19 @@
   width: 100%;
 }
 
+.bet-timer {
+  -webkit-transition: width 1s ease-in-out;
+  -moz-transition: width 1s ease-in-out;
+  -o-transition: width 1s ease-in-out;
+  transition: width 1s ease-in-out;
+  background: #007bff;
+  border: 0.06rem black solid;
+  border-bottom-width: 0.1rem;
+  border-radius: 10px;
+  height: 0.5rem;
+  width: 40%;
+}
+
 .disabled {
   top: -0.75rem;
   opacity: 0.25;
@@ -135,6 +154,19 @@
   right: 0;
   color: #d3d1d1;
   overflow: hidden;
+}
+
+.board-prompt {
+  position: absolute;
+  left: 0;
+  right: 0;
+  top: 40%;
+  text-align: center;
+  font-weight: bold;
+}
+
+.hide-text {
+  display: none;
 }
 
 .board-player {

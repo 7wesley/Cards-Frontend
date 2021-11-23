@@ -2,11 +2,20 @@ import { useEffect, useState } from "react";
 import "../../assets/Game.css";
 import { getSocket } from "../Socket";
 import Bets from "./Bets";
+import Winners from "./Winners";
 
-const Blackjack = ({ players, turn, timer, id }) => {
+const Blackjack = ({
+  userData,
+  players,
+  turn,
+  timer,
+  winners,
+  updateStorage,
+}) => {
   const [betsVisible, setBetsVisible] = useState(true);
-
+  const id = userData && userData.username;
   const myTurn = turn === id;
+
   useEffect(() => {
     console.log(players);
   });
@@ -31,6 +40,18 @@ const Blackjack = ({ players, turn, timer, id }) => {
   return (
     <>
       <div className="board">
+        <div className={"board-prompt"}>
+          {winners ? (
+            <Winners
+              userData={userData}
+              winners={winners}
+              updateStorage={updateStorage}
+            />
+          ) : (
+            !turn && <p className="h5">Awaiting player bets...</p>
+          )}
+        </div>
+
         <div className="players">
           {players.map((player, index) => (
             <div
@@ -58,7 +79,7 @@ const Blackjack = ({ players, turn, timer, id }) => {
         </div>
         <div className="dashboard">
           {betsVisible ? (
-            <Bets setBetsVisible={setBetsVisible} />
+            <Bets setBetsVisible={setBetsVisible} id={id} timer={timer} />
           ) : (
             <div className="row d-flex justify-content-center mt-5 text-center">
               <button
