@@ -19,7 +19,7 @@ const useSocketListener = (connected) => {
   const [countdown, setCountdown] = useState(null);
   const [timer, setTimer] = useState(null);
   const [turn, setTurn] = useState(null);
-  const [winners, setWinners] = useState(null);
+  const [results, setResults] = useState(null);
 
   useEffect(() => {
     //prevents socket from connecting if room is full
@@ -28,14 +28,14 @@ const useSocketListener = (connected) => {
       socket.on("update-hands", (plyrs) => setPlayers(plyrs));
       socket.on("curr-turn", (user) => setTurn(user));
       socket.on("timer", (secs) => setTimer(secs));
-      socket.on("winners", (winList) => setWinners(winList));
+      socket.on("results", (results) => setResults(results));
       return () => {
         disconnectSocket();
       };
     }
   }, [connected, socket]);
 
-  return { players, countdown, turn, timer, winners };
+  return { players, countdown, turn, timer, results };
 };
 
 export default useSocketListener;

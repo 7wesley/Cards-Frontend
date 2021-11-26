@@ -19,7 +19,8 @@ const GameTemplatePlayers = () => {
   const players = [
     {
       id: "Player1",
-      bet: 15,
+      bet: 50,
+      bank: 1000,
       cards: [
         {
           suit: "D",
@@ -33,7 +34,9 @@ const GameTemplatePlayers = () => {
     },
     {
       id: "Player2",
-      bet: 20,
+      bet: 100,
+      bank: 1000,
+
       cards: [
         {
           suit: "D",
@@ -47,7 +50,8 @@ const GameTemplatePlayers = () => {
     },
     {
       id: "Player3",
-      bet: 21,
+      bank: 1000,
+      bet: 50,
       cards: [
         {
           suit: "D",
@@ -86,7 +90,8 @@ const GameTemplatePlayers = () => {
               <div className="player-info">
                 <div className="player-timer" />
                 <p className="player-name">{player.id}</p>
-                <p class="player-bet">${player.bet}</p>
+                <p class="player-bank">${player.bank}</p>
+                <p class="player-bet">{player.bet}</p>
               </div>
             </div>
           ))}

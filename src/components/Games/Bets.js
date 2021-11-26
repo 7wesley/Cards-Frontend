@@ -1,7 +1,7 @@
 import { useEffect, useRef, useState } from "react";
 import { getSocket } from "../Socket";
 
-const Bets = ({ setBetsVisible, timer }) => {
+const Bets = ({ setBetsVisible, timer, bank }) => {
   const [bet, setBet] = useState("");
   const DEFAULT_BET = 50;
   const timerStyle = {
@@ -38,11 +38,14 @@ const Bets = ({ setBetsVisible, timer }) => {
     let betChosen = bet ? bet : DEFAULT_BET;
     if (bet === "custom") {
       const customInput = document.getElementById("custom-input").value;
-      if (/[0-9]*/.test(customInput)) {
+      if (/^\d+$/.test(customInput)) {
         betChosen = customInput;
       } else {
         betChosen = DEFAULT_BET;
       }
+    }
+    if (betChosen > bank) {
+      betChosen = bank;
     }
     setBetsVisible(false);
     getSocket().emit("player-bet", betChosen);

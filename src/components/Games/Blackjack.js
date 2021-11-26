@@ -2,23 +2,31 @@ import { useEffect, useState } from "react";
 import "../../assets/Game.css";
 import { getSocket } from "../Socket";
 import Bets from "./Bets";
-import Winners from "./Winners";
+import Results from "./Results";
 
 const Blackjack = ({
   userData,
   players,
   turn,
   timer,
-  winners,
+  results,
   updateStorage,
 }) => {
+  const [bank, setBank] = useState(0);
   const [betsVisible, setBetsVisible] = useState(true);
   const id = userData && userData.username;
   const myTurn = turn === id;
 
   useEffect(() => {
-    console.log(players);
-  });
+    if (!results && !turn) {
+      setBetsVisible(true);
+    }
+  }, [results, turn]);
+
+  useEffect(() => {
+    const myBank = players.find((p) => p.id === id).bank;
+    setBank(myBank);
+  }, [players, id]);
 
   const handlePlay = (choice) => {
     getSocket().emit("player-move", choice);
@@ -41,10 +49,10 @@ const Blackjack = ({
     <>
       <div className="board">
         <div className={"board-prompt"}>
-          {winners ? (
-            <Winners
+          {results ? (
+            <Results
               userData={userData}
-              winners={winners}
+              results={results}
               updateStorage={updateStorage}
             />
           ) : (
@@ -71,15 +79,26 @@ const Blackjack = ({
 
               <div className="player-info">
                 <div className="player-timer" style={timerStyle(player.id)} />
-                <p className="player-name">{player.id}</p>
-                <p class="player-bet">${player.bet}</p>
+                <p className="player-name">
+                  {player.id === id ? "You" : player.id}
+                </p>
+                {!!player.bank && <p className="player-bank">${player.bank}</p>}
+
+                <p className={"bet " + (!!player.bet && "player-bet")}>
+                  {!!player.bet && player.bet}
+                </p>
               </div>
             </div>
           ))}
         </div>
         <div className="dashboard">
           {betsVisible ? (
-            <Bets setBetsVisible={setBetsVisible} id={id} timer={timer} />
+            <Bets
+              setBetsVisible={setBetsVisible}
+              id={id}
+              timer={timer}
+              bank={bank}
+            />
           ) : (
             <div className="row d-flex justify-content-center mt-5 text-center">
               <button

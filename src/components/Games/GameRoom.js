@@ -27,14 +27,12 @@ const GameRoom = ({ match, userData, updateStorage }) => {
   const { playersList, maxPlayers, status } = useRoomListener(
     match.params.roomId
   );
-  const { players, countdown, turn, timer, winners } =
+  const { players, countdown, turn, timer, results } =
     useSocketListener(connected);
   const id = userData && userData.username;
-
   const inProgress = status === "in-progress" && !connected;
 
   useEffect(() => {
-    //if the room is open and they aren't already connected:
     if (status === "waiting" && !connected) {
       connectSocket(match.params.roomId, id);
       setConnected(true);
@@ -44,7 +42,7 @@ const GameRoom = ({ match, userData, updateStorage }) => {
   return (
     <>
       <Prompt
-        when={connected && !winners}
+        when={connected && !results}
         message="This will exit you from the game. Are you sure?"
       />
 
@@ -57,6 +55,7 @@ const GameRoom = ({ match, userData, updateStorage }) => {
             players={players}
             turn={turn}
             timer={timer}
+            results={results}
             updateStorage={updateStorage}
             userData={userData}
           />
