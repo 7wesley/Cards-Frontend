@@ -28,6 +28,7 @@ const Results = ({ userData, results, updateStorage, bank, setBank }) => {
           </p>
         </div>
       ))}
+      {!results.winners.length && <p className="h4">Nobody wins!</p>}
     </>
   );
 };

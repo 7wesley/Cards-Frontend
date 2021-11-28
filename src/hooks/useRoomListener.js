@@ -19,7 +19,8 @@ import { db } from "../firebase";
 const useRoomListener = (room) => {
   const [playersList, setPlayersList] = useState({});
   const [maxPlayers, setMaxPlayers] = useState(0);
-  const [status, setStatus] = useState();
+  const [status, setStatus] = useState("");
+  const [gameType, setGameType] = useState("");
 
   useEffect(() => {
     const listener = async () => {
@@ -33,6 +34,7 @@ const useRoomListener = (room) => {
               setPlayersList(snap.data().players);
               setMaxPlayers(snap.data().maxPlayers);
               setStatus(snap.data().status);
+              setGameType(snap.data().game);
             } else setPlayersList(null);
           });
         return () => unsubscribe();
@@ -42,7 +44,7 @@ const useRoomListener = (room) => {
     listener();
   }, [room]);
 
-  return { playersList, maxPlayers, status };
+  return { playersList, maxPlayers, status, gameType };
 };
 
 export default useRoomListener;

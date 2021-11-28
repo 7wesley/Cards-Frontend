@@ -30,8 +30,8 @@ const HostModal = ({ closeModal, id }) => {
     await roomRef.set({
       game,
       players: {},
-      maxPlayers: Number(e.target[3].value),
-      bank: Number(e.target[4].value),
+      maxPlayers: Number(e.target[2].value),
+      bank: Number(e.target[3].value),
       gameId: roomRef.id,
       host: id,
       status: "waiting",
@@ -62,18 +62,6 @@ const HostModal = ({ closeModal, id }) => {
               />
               <label className="custom-control-label" htmlFor="customRadio1">
                 Blackjack
-              </label>
-            </div>
-            <div className="custom-control custom-radio custom-control-inline">
-              <input
-                type="radio"
-                id="customRadio2"
-                name="customRadio"
-                className="custom-control-input"
-                value="Poker"
-              />
-              <label className="custom-control-label" htmlFor="customRadio2">
-                Poker
               </label>
             </div>
             <div className="custom-control custom-radio custom-control-inline">

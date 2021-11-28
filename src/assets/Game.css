@@ -67,6 +67,13 @@
   transition: top ease 0.25s;
 }
 
+.war-card-img {
+  width: 4.5rem;
+  box-shadow: 0 0 0.8rem 0 rgb(0 0 0 / 38%);
+  position: absolute;
+  transition: top ease 0.25s;
+}
+
 .blackjack-card-img:hover {
   z-index: 2;
   top: -0.75rem;
