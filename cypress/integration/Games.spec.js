@@ -35,7 +35,7 @@ describe("Games page as guest", () => {
   it("Invalid players displays error", () => {
     cy.clickCY("hostButton");
     cy.clickCY("submitButton");
-    cy.inputCY("playersInput", 9);
+    cy.inputCY("playersInput", 10);
     cy.getCY("playersInput")
       .invoke("prop", "validationMessage")
       .should("equal", playersError);

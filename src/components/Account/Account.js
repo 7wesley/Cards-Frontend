@@ -8,7 +8,6 @@
 import React, { useState, useCallback } from "react";
 import { Form, Button, Alert } from "react-bootstrap";
 import { Link, useHistory } from "react-router-dom";
-import styles from "../../assets/Information.module.css";
 import { useAuth } from "../../contexts/AuthContext";
 import useQueryDocs from "../../hooks/useQueryDocs";
 import { Modal } from "react-bootstrap";
@@ -74,7 +73,7 @@ const Account = ({ id, updateStorage }) => {
   };
 
   return (
-    <div className={styles.redBlock}>
+    <div className="red-block">
       <div className="container h-100">
         <div className="row h-100 justify-content-center align-items-center">
           <h5 className="text-light">Account</h5>

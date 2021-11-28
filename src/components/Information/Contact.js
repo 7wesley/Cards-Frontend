@@ -7,7 +7,6 @@
  */
 
 import React, { useState } from "react";
-import styles from "../../assets/Information.module.css";
 import ReCAPTCHA from "react-google-recaptcha";
 import emailjs from "emailjs-com";
 import { Alert, Form, Button } from "react-bootstrap";
@@ -53,7 +52,7 @@ const Contact = () => {
 
   return (
     <>
-      <div className={styles.greenBlock}>
+      <div className="green-block">
         <div className="container h-100">
           <div className="row h-100 justify-content-center align-items-center">
             <h5 className="text-light">Contact</h5>

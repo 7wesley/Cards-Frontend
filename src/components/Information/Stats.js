@@ -5,7 +5,6 @@
  * @version 5/13/2021
  */
 
-import styles from "../../assets/Information.module.css";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faTrophy } from "@fortawesome/free-solid-svg-icons";
 import { Bar } from "react-chartjs-2";
@@ -66,7 +65,7 @@ const Stats = ({ userData }) => {
 
   return (
     <>
-      <div className={styles.darkBlock}>
+      <div className="dark-block">
         <div className="container h-100">
           <div className="row h-100 justify-content-center align-items-center">
             <h5 className="text-light">

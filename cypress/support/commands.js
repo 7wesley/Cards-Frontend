@@ -56,6 +56,7 @@ Cypress.Commands.add("createGame", () => {
   cy.clickCY("hostButton");
   cy.clickCY("blackjackRadio");
   cy.inputCY("playersInput", 2);
+  cy.inputCY("bankInput", 500);
   cy.clickCY("submitButton");
   cy.url().should("include", "/games/");
   cy.url().should("match", /[A-Za-z0-9]{16,}/);

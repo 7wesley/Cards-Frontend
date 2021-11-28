@@ -6,7 +6,6 @@
  * @version 5/13/2021
  */
 
-import styles from "../../assets/Transitions.module.css";
 import { Link } from "react-router-dom";
 
 /**
@@ -16,7 +15,7 @@ import { Link } from "react-router-dom";
  */
 const NotFound = () => {
   return (
-    <div className={styles.bgInProgress}>
+    <div className="styles-bg-inprogress">
       <div className="d-flex flex-column min-vh-100 justify-content-center align-items-center">
         <div className="text-center text-light">
           <p className="h3">Room not found</p>

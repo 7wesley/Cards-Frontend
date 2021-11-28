@@ -6,7 +6,6 @@
  * @version 5/13/2021
  */
 
-import styles from "../../assets/Transitions.module.css";
 import React, { useState, useRef } from "react";
 import { InputGroup, FormControl, Overlay, Tooltip } from "react-bootstrap";
 import { motion } from "framer-motion";
@@ -39,7 +38,7 @@ const Waiting = ({ id, playersList, maxPlayers, countdown }) => {
   };
 
   return (
-    <div className={styles.bgWaiting}>
+    <div className="bg-waiting">
       <div className="d-flex flex-column min-vh-100 justify-content-center align-items-center">
         <div className="text-center text-light">
           {/*The countdown that will display when enough users join*/}

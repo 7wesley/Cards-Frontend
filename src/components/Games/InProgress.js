@@ -6,7 +6,6 @@
  * @version 5/13/2021
  */
 
-import styles from "../../assets/Transitions.module.css";
 import { motion } from "framer-motion";
 
 /**
@@ -16,7 +15,7 @@ import { motion } from "framer-motion";
  */
 const InProgress = ({ playersList }) => {
   return (
-    <div className={styles.bgInProgress}>
+    <div className="bg-in-progress">
       <div className="d-flex flex-column min-vh-100 justify-content-center align-items-center">
         <div className="text-center text-light">
           <p className="h3">This game is in progress...</p>

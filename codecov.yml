@@ -1,7 +1,0 @@
-coverage:
-  range: 35..100
-  status:
-    project:
-      default:
-        threshold: 30%
-        target: 35%

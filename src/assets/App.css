@@ -4,17 +4,83 @@
  * @author Wesley Miller
  * @version 5/13/2021
  */
-#fixedbutton {
-  position: fixed;
-  bottom: 5px;
-  right: 10px;
+
+.blue-block {
+  height: 30vh;
+  width: 100%;
+  background-color: aqua;
 }
 
-#clickableAwesomeFont {
-  cursor: pointer;
+.green-block {
+  height: 30vh;
+  width: 100%;
+  background-color: #01ff70;
 }
 
-#copyText:hover {
-  color: #300000;
-  cursor: pointer;
+.vertical {
+  margin: auto;
+  width: 50%;
+  border: 3px solid green;
+  padding: 10px;
+}
+
+.dark-block {
+  height: 30vh;
+  width: 100%;
+  background-color: #3da4ab;
+}
+
+.black-block {
+  height: 20vh;
+  width: 150%;
+  background-color: gray;
+}
+
+.red-block {
+  height: 30vh;
+  width: 100%;
+  background-color: #dc143c;
+}
+
+.bg-waiting {
+  background: linear-gradient(120deg, #7bc6cc, #be93c5);
+  height: 100vh;
+}
+
+.bg-winner {
+  background: #50c9c3; /* fallback for old browsers */
+  background: linear-gradient(
+    to right,
+    #96deda,
+    #50c9c3
+  ); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
+  height: 100vh;
+}
+
+.bg-in-progress {
+  background: #1d976c; /* fallback for old browsers */
+  background: linear-gradient(
+    to right,
+    #93f9b9,
+    #1d976c
+  ); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
+}
+
+.welcome-content {
+  position: relative;
+  color: white;
+}
+
+.welcome-content::after {
+  content: "";
+  background: url("./cards.jpg") center;
+  background-size: cover;
+  opacity: 0.8;
+  top: 0;
+  left: 0;
+  bottom: 0;
+  right: 0;
+  position: absolute;
+  z-index: -1;
+  filter: brightness(0.8);
 }
