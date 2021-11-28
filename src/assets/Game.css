@@ -38,17 +38,16 @@
   top: 0%;
   opacity: 0.2;
   transition: opacity ease 0.75s;
-  -webkit-transition: opacity 0.5s;
-  -moz-transition: opacity 0.5s;
   transition: top ease 0.5s;
 }
 
 .custom-form {
   background-color: transparent !important;
-  border: 0px;
+  border: 0;
   border-bottom-width: 0.1rem;
   color: white;
   width: 80%;
+  font-weight: bold;
 }
 
 .custom-form:focus {
@@ -110,7 +109,7 @@
 
 .player-info {
   font-weight: bold;
-  box-shadow: 0 0rem 0.6em 0 rgb(0 0 0 / 25%);
+  box-shadow: 0 0 0.6em 0 rgb(0 0 0 / 25%);
   border-radius: 0.3rem;
   background: rgba(41, 40, 40, 0.8);
   width: 100%;
@@ -326,10 +325,6 @@
   border-radius: 0.3rem;
   text-transform: uppercase;
   position: relative;
-}
-
-.custom-form {
-  font-weight: bold;
 }
 
 .bet-button {
