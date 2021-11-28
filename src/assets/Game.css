@@ -385,3 +385,11 @@
 .stand::before {
   content: "s";
 }
+
+.play::before {
+  content: "p";
+}
+
+.forfeit::before {
+  content: "f";
+}

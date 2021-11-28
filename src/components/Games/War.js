@@ -98,7 +98,7 @@ const War = ({ userData, players, turn, timer, results, updateStorage }) => {
             <div className="row d-flex justify-content-center mt-5 text-center">
               <button
                 disabled={!myTurn}
-                className={`choice-button mx-2 button-symbol hit${
+                className={`choice-button mx-2 button-symbol play${
                   !myTurn ? " disabled" : ""
                 }`}
                 onClick={() => handlePlay("draw")}
@@ -107,7 +107,7 @@ const War = ({ userData, players, turn, timer, results, updateStorage }) => {
               </button>
               <button
                 disabled={!myTurn}
-                className={`choice-button mx-2 button-symbol stand${
+                className={`choice-button mx-2 button-symbol forfeit${
                   !myTurn ? " disabled" : ""
                 }`}
                 onClick={() => handlePlay("forfeit")}
