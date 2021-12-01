@@ -1,8 +1,10 @@
-import { useEffect, useState } from "react";
+import { useEffect, useState, useCallback } from "react";
 import "../../assets/Game.css";
 import { getSocket } from "../Socket";
 import Bets from "./Bets";
 import Results from "./Results";
+import ChatModal from "../Templates/ChatModal.js";
+import { Modal } from "react-bootstrap";
 
 const Blackjack = ({
   userData,
@@ -14,8 +16,54 @@ const Blackjack = ({
 }) => {
   const [bank, setBank] = useState(0);
   const [betsVisible, setBetsVisible] = useState(true);
+  const [chatVisible, setChatVisible] = useState(true);
+  const [modalOpen, setModalOpen] = useState(false);
+  const [chatMsgs, setChatMsgs] = useState([]);
+
+  const addChatMsg = async (msg) => {
+    chatMsgs.push(msg);
+    console.log("Got message " + msg);
+    console.log("chatMsgs = ");
+    console.log(chatMsgs);
+    getSocket().emit("send-message", msg);
+  };
+
+  let [socket, setSocket] = useState(null);
+  useEffect(() => setSocket(getSocket()));
+
+  /**
+   * Handles what happens when the server sends an update to the
+   *  chat messages
+   */
+  useEffect(() => {
+    if (!socket) return;
+    socket.on(
+      "updateChat",
+      (chat) => {
+        try {
+          // console.log("\n\n\n\n\n Got the chat from client!");
+          // console.log(chat);
+          // console.log("\n\n\n\n\n Got the chat from client!");
+
+          //Update this user's chat messages
+          setChatMsgs(chat);
+        } catch (err) {
+          console.log(err);
+        }
+      },
+      [socket]
+    );
+  });
+
   const id = userData && userData.username;
   const myTurn = turn === id;
+
+  /**
+   * Closes the ChatModal if the user backs out
+   */
+  const closeModal = useCallback(() => {
+    setModalOpen(false);
+  }, [setModalOpen]);
 
   useEffect(() => {
     if (!results && !turn) {
@@ -30,6 +78,10 @@ const Blackjack = ({
 
   const handlePlay = (choice) => {
     getSocket().emit("player-move", choice);
+  };
+
+  const handleChat = (msg) => {
+    setModalOpen(true);
   };
 
   const cardStyle = (index) => {
@@ -119,10 +171,27 @@ const Blackjack = ({
               >
                 Stand
               </button>
+
+              <button
+                className="choice-button mx-2 button-symbol"
+                onClick={() => handleChat()}
+              >
+                Chat
+              </button>
             </div>
           )}
         </div>
       </div>
+
+      {/*Finds if the user wants to open the HostModal class*/}
+      <Modal data-cy="ChatModal" show={modalOpen} onHide={closeModal}>
+        <ChatModal
+          closeModal={closeModal}
+          chatMsgs={chatMsgs}
+          addChatMsg={addChatMsg}
+          id={id}
+        />
+      </Modal>
     </>
   );
 };
