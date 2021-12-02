@@ -6,42 +6,36 @@ import Results from "./Results";
 import ChatModal from "../Templates/ChatModal.js";
 import { Modal } from "react-bootstrap";
 
-const Blackjack = ({
-  userData,
-  players,
-  turn,
-  timer,
-  results,
-  updateStorage,
-  chatMsg,
-}) => {
+const Blackjack = ({ server, userData, updateStorage }) => {
   const [bank, setBank] = useState(0);
   const [betsVisible, setBetsVisible] = useState(true);
   const [modalOpen, setModalOpen] = useState(false);
   const [messages, setMessages] = useState([]);
   const id = userData && userData.username;
-  const myTurn = turn === id;
+  const myTurn = server.turn === id;
 
   useEffect(() => {
-    if (!results && !turn) {
+    if (!server.results && !server.turn) {
       setBetsVisible(true);
     }
-  }, [results, turn]);
+  }, [server.results, server.turn]);
 
   useEffect(() => {
-    const myBank = players.find((p) => p.id === id).bank;
-    setBank(myBank);
-  }, [players, id]);
+    const player = server.players.find((p) => p.id === id);
+    if (player) {
+      setBank(player.bank);
+    }
+  }, [server.players, id]);
 
   useEffect(() => {
-    if (chatMsg) {
+    if (server.chatMsg) {
       setMessages((prev) => {
         const newMessages = [...prev];
-        newMessages.push(chatMsg);
+        newMessages.push(server.chatMsg);
         return newMessages;
       });
     }
-  }, [chatMsg]);
+  }, [server.chatMsg, id]);
 
   const handlePlay = (choice) => {
     getSocket().emit("player-move", choice);
@@ -60,7 +54,8 @@ const Blackjack = ({
 
   const timerStyle = (playerId) => {
     return {
-      width: playerId === turn ? `${100 - 5 * (20 - timer)}%` : "100%",
+      width:
+        playerId === server.turn ? `${100 - 5 * (20 - server.timer)}%` : "100%",
     };
   };
 
@@ -68,22 +63,22 @@ const Blackjack = ({
     <>
       <div className="board">
         <div className={"board-prompt"}>
-          {results ? (
+          {server.results ? (
             <Results
               userData={userData}
-              results={results}
+              results={server.results}
               updateStorage={updateStorage}
             />
           ) : (
-            !turn && <p className="h5">Awaiting player bets...</p>
+            !server.turn && <p className="h5">Awaiting player bets...</p>
           )}
         </div>
 
         <div className="players">
-          {players.map((player, index) => (
+          {server.players.map((player, index) => (
             <div
               className={`board-player board-player-${index} ${
-                player.id === turn ? " player-turn" : ""
+                player.id === server.turn ? " player-turn" : ""
               }`}
             >
               <div className={`player-cards ${player.status && player.status}`}>
@@ -97,7 +92,10 @@ const Blackjack = ({
               </div>
 
               <div className="player-info">
-                <div className="player-timer" style={timerStyle(player.id)} />
+                <div
+                  className="d-none d-md-block player-timer"
+                  style={timerStyle(player.id)}
+                />
                 <p className="player-name">
                   {player.id === id ? "You" : player.id}
                 </p>
@@ -115,7 +113,7 @@ const Blackjack = ({
             <Bets
               setBetsVisible={setBetsVisible}
               id={id}
-              timer={timer}
+              timer={server.timer}
               bank={bank}
             />
           ) : (
@@ -150,7 +148,7 @@ const Blackjack = ({
         </div>
       </div>
 
-      {/*The Modal that handles the Chat among the players in the game*/}
+      {/*The Modal that handles the Chat among the server.players in the game*/}
       <Modal data-cy="chatModal" show={modalOpen} onHide={closeModal}>
         <ChatModal
           closeModal={closeModal}

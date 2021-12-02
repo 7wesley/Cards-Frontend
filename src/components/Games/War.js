@@ -6,54 +6,34 @@ import Results from "./Results";
 import ChatModal from "../Templates/ChatModal.js";
 import { Modal } from "react-bootstrap";
 
-const War = ({ userData, players, turn, timer, results, updateStorage }) => {
+const War = ({ server, userData, updateStorage }) => {
   const [bank, setBank] = useState(0);
   const [betsVisible, setBetsVisible] = useState(true);
   const [modalOpen, setModalOpen] = useState(false);
-  const [chatMsgs, setChatMsgs] = useState([]);
-
+  const [messages, setMessages] = useState([]);
   const id = userData && userData.username;
-  const myTurn = turn === id;
-
-  const addChatMsg = async (msg) => {
-    chatMsgs.push(msg);
-    getSocket().emit("send-message", msg);
-  };
-
-  let [socket, setSocket] = useState(null);
-  useEffect(() => setSocket(getSocket()));
-
-  /**
-   * Handles what happens when the server sends an update to the
-   *  chat messages
-   */
-  useEffect(() => {
-    if (!socket) return;
-    socket.on(
-      "updateChat",
-      (chat) => {
-        try {
-          //Update this user's chat messages
-          setChatMsgs(chat);
-        } catch (err) {
-          console.log(err);
-        }
-      },
-      [socket]
-    );
-  });
+  const myTurn = server.turn === id;
 
   useEffect(() => {
-    if (!results && !turn) {
+    if (!server.results && !server.turn) {
       setBetsVisible(true);
     }
-  }, [results, turn]);
+  }, [server.results, server.turn]);
 
   useEffect(() => {
-    console.log(players);
-    const myBank = players.find((p) => p.id === id).bank;
+    const myBank = server.players.find((p) => p.id === id).bank;
     setBank(myBank);
-  }, [players, id]);
+  }, [server.players, id]);
+
+  useEffect(() => {
+    if (server.chatMsg) {
+      setMessages((prev) => {
+        const newMessages = [...prev];
+        newMessages.push(server.chatMsg);
+        return newMessages;
+      });
+    }
+  }, [server.chatMsg, id]);
 
   /**
    * Closes the ChatModal if the user backs out
@@ -61,13 +41,6 @@ const War = ({ userData, players, turn, timer, results, updateStorage }) => {
   const closeModal = useCallback(() => {
     setModalOpen(false);
   }, [setModalOpen]);
-
-  /**
-   * Handles opening the chat modal
-   */
-  const handleChat = () => {
-    setModalOpen(true);
-  };
 
   const handlePlay = (choice) => {
     getSocket().emit("player-move", choice);
@@ -82,7 +55,8 @@ const War = ({ userData, players, turn, timer, results, updateStorage }) => {
 
   const timerStyle = (playerId) => {
     return {
-      width: playerId === turn ? `${100 - 5 * (20 - timer)}%` : "100%",
+      width:
+        playerId === server.turn ? `${100 - 5 * (20 - server.timer)}%` : "100%",
     };
   };
 
@@ -90,26 +64,26 @@ const War = ({ userData, players, turn, timer, results, updateStorage }) => {
     <>
       <div className="board">
         <div className={"board-prompt"}>
-          {results ? (
+          {server.results ? (
             <Results
               userData={userData}
-              results={results}
+              results={server.results}
               updateStorage={updateStorage}
             />
           ) : (
-            !turn && <p className="h5">Awaiting player bets...</p>
+            !server.turn && <p className="h5">Awaiting player bets...</p>
           )}
         </div>
 
         <div className="players">
-          {players.map((player, index) => (
+          {server.players.map((player, index) => (
             <div
               className={`board-player board-player-${index} ${
-                player.id === turn ? " player-turn" : ""
+                player.id === server.turn ? " player-turn" : ""
               }`}
             >
               <div className={`player-cards ${player.status && player.status}`}>
-                <img className="war-card-img" src={`/Images/Cards/HH.png`} />
+                <img className="card-img" src={`/Images/Cards/HH.png`} />
                 {player.cards.map((card, index) => (
                   <img
                     className="card-img"
@@ -120,7 +94,10 @@ const War = ({ userData, players, turn, timer, results, updateStorage }) => {
               </div>
 
               <div className="player-info">
-                <div className="player-timer" style={timerStyle(player.id)} />
+                <div
+                  className="d-none d-md-block player-timer"
+                  style={timerStyle(player.id)}
+                />
                 <p className="player-name">
                   {player.id === id ? "You" : player.id}
                 </p>
@@ -138,9 +115,8 @@ const War = ({ userData, players, turn, timer, results, updateStorage }) => {
             <Bets
               setBetsVisible={setBetsVisible}
               id={id}
-              timer={timer}
+              timer={server.timer}
               bank={bank}
-              setModalOpen={setModalOpen}
             />
           ) : (
             <div className="row d-flex justify-content-center mt-5 text-center">
@@ -164,7 +140,7 @@ const War = ({ userData, players, turn, timer, results, updateStorage }) => {
               </button>
               <button
                 className="choice-button mx-2 button-symbol"
-                onClick={() => handleChat()}
+                onClick={() => setModalOpen(true)}
               >
                 Chat
               </button>
@@ -174,11 +150,11 @@ const War = ({ userData, players, turn, timer, results, updateStorage }) => {
       </div>
 
       {/*The Modal that handles the Chat among the players in the game*/}
-      <Modal data-cy="ChatModal" show={modalOpen} onHide={closeModal}>
+      <Modal data-cy="chatModal" show={modalOpen} onHide={closeModal}>
         <ChatModal
           closeModal={closeModal}
-          chatMsgs={chatMsgs}
-          addChatMsg={addChatMsg}
+          messages={messages}
+          setMessages={setMessages}
           id={id}
         />
       </Modal>

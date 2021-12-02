@@ -30,7 +30,7 @@ const useSocketListener = (connected) => {
       socket.on("curr-turn", (user) => setTurn(user));
       socket.on("timer", (secs) => setTimer(secs));
       socket.on("results", (results) => setResults(results));
-      socket.on("chat-message", (msg) => setChatMsg(msg))
+      socket.on("chat-message", (msg) => setChatMsg(msg));
       return () => {
         disconnectSocket();
       };

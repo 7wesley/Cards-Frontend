@@ -24,47 +24,34 @@ import War from "./War";
  */
 const GameRoom = ({ match, userData, updateStorage }) => {
   const [connected, setConnected] = useState(false);
-  const { playersList, maxPlayers, status, gameType } = useRoomListener(
-    match.params.roomId
-  );
-  const { players, countdown, turn, timer, results, chatMsg } =
-    useSocketListener(connected);
+  const db = useRoomListener(match.params.roomId);
+  const server = useSocketListener(connected);
   const id = userData && userData.username;
-  const inProgress = status === "in-progress" && !connected;
+  const inProgress = db.status === "in-progress" && !connected;
 
   useEffect(() => {
-    if (status === "waiting" && !connected) {
+    if (db.status === "waiting" && !connected) {
       connectSocket(match.params.roomId, id);
       setConnected(true);
     }
-  }, [status, connected, match.params.roomId, id]);
+  }, [db.status, connected, match.params.roomId, id]);
 
   const renderGame = () => {
-    switch (gameType) {
+    switch (db.gameType) {
       case "Blackjack":
         return (
           <Blackjack
-            userData={userData}
-            players={players}
-            turn={turn}
-            timer={timer}
-            results={results}
+            server={server}
             updateStorage={updateStorage}
             userData={userData}
-            chatMsg={chatMsg}
           />
         );
       case "War":
         return (
           <War
-            userData={userData}
-            players={players}
-            turn={turn}
-            timer={timer}
-            results={results}
+            server={server}
             updateStorage={updateStorage}
             userData={userData}
-            chatMsg={chatMsg}
           />
         );
     }
@@ -72,17 +59,17 @@ const GameRoom = ({ match, userData, updateStorage }) => {
 
   return (
     <>
-      {playersList ? (
+      {db.playersList ? (
         inProgress ? (
-          <InProgress playersList={playersList} />
-        ) : players.length ? (
+          <InProgress playersList={db.playersList} />
+        ) : server.players.length ? (
           renderGame()
         ) : (
           <Waiting
             id={id}
-            playersList={playersList}
-            maxPlayers={maxPlayers}
-            countdown={countdown}
+            playersList={db.playersList}
+            maxPlayers={db.maxPlayers}
+            countdown={server.countdown}
           />
         )
       ) : (
