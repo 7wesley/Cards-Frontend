@@ -1,14 +1,47 @@
-import { useEffect, useState } from "react";
+import { useEffect, useState, useCallback } from "react";
 import "../../assets/Game.css";
 import { getSocket } from "../Socket";
 import Bets from "./Bets";
 import Results from "./Results";
+import ChatModal from "../Templates/ChatModal.js";
+import { Modal } from "react-bootstrap";
 
 const War = ({ userData, players, turn, timer, results, updateStorage }) => {
   const [bank, setBank] = useState(0);
   const [betsVisible, setBetsVisible] = useState(true);
+  const [modalOpen, setModalOpen] = useState(false);
+  const [chatMsgs, setChatMsgs] = useState([]);
+
   const id = userData && userData.username;
   const myTurn = turn === id;
+
+  const addChatMsg = async (msg) => {
+    chatMsgs.push(msg);
+    getSocket().emit("send-message", msg);
+  };
+
+  let [socket, setSocket] = useState(null);
+  useEffect(() => setSocket(getSocket()));
+
+  /**
+   * Handles what happens when the server sends an update to the
+   *  chat messages
+   */
+  useEffect(() => {
+    if (!socket) return;
+    socket.on(
+      "updateChat",
+      (chat) => {
+        try {
+          //Update this user's chat messages
+          setChatMsgs(chat);
+        } catch (err) {
+          console.log(err);
+        }
+      },
+      [socket]
+    );
+  });
 
   useEffect(() => {
     if (!results && !turn) {
@@ -21,6 +54,20 @@ const War = ({ userData, players, turn, timer, results, updateStorage }) => {
     const myBank = players.find((p) => p.id === id).bank;
     setBank(myBank);
   }, [players, id]);
+
+  /**
+   * Closes the ChatModal if the user backs out
+   */
+  const closeModal = useCallback(() => {
+    setModalOpen(false);
+  }, [setModalOpen]);
+
+  /**
+   * Handles opening the chat modal
+   */
+  const handleChat = () => {
+    setModalOpen(true);
+  };
 
   const handlePlay = (choice) => {
     getSocket().emit("player-move", choice);
@@ -93,6 +140,7 @@ const War = ({ userData, players, turn, timer, results, updateStorage }) => {
               id={id}
               timer={timer}
               bank={bank}
+              setModalOpen={setModalOpen}
             />
           ) : (
             <div className="row d-flex justify-content-center mt-5 text-center">
@@ -114,10 +162,26 @@ const War = ({ userData, players, turn, timer, results, updateStorage }) => {
               >
                 Forfeit
               </button>
+              <button
+                className="choice-button mx-2 button-symbol"
+                onClick={() => handleChat()}
+              >
+                Chat
+              </button>
             </div>
           )}
         </div>
       </div>
+
+      {/*The Modal that handles the Chat among the players in the game*/}
+      <Modal data-cy="ChatModal" show={modalOpen} onHide={closeModal}>
+        <ChatModal
+          closeModal={closeModal}
+          chatMsgs={chatMsgs}
+          addChatMsg={addChatMsg}
+          id={id}
+        />
+      </Modal>
     </>
   );
 };

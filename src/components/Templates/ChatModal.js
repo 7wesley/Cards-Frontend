@@ -42,12 +42,15 @@ const HostModal = ({ closeModal, id, chatMsgs, addChatMsg }) => {
 
   /**
    * Sends the user's input as a message to the other players in the game and
-   *  resets the input to be empty and jumps the scroll bar to the bottom
+   *  resets the input to be empty and jumps the scroll bar to the bottom.
+   *  Only sends if the user has not entered an empty string
    */
   const sendMessage = async () => {
-    await addChatMsg({ name: id, msg: currMsg });
-    setCurrMsg("");
-    updateScroll();
+    if (currMsg) {
+      await addChatMsg({ name: id, msg: currMsg });
+      setCurrMsg("");
+      updateScroll();
+    }
   };
 
   /**
@@ -55,7 +58,9 @@ const HostModal = ({ closeModal, id, chatMsgs, addChatMsg }) => {
    */
   const updateScroll = async () => {
     var element = document.getElementById("ChatBox");
-    element.scrollTop = element.scrollHeight;
+    if (element != null) {
+      element.scrollTop = element.scrollHeight;
+    }
     setScrolled(false);
   };
 
@@ -134,6 +139,7 @@ const HostModal = ({ closeModal, id, chatMsgs, addChatMsg }) => {
               placeholder="Enter a Message..."
               value={currMsg}
               onChange={handleChange}
+              id="sendBox"
             ></input>
 
             <Button class="btn" onClick={sendMessage}>

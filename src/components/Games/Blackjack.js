@@ -22,9 +22,6 @@ const Blackjack = ({
 
   const addChatMsg = async (msg) => {
     chatMsgs.push(msg);
-    console.log("Got message " + msg);
-    console.log("chatMsgs = ");
-    console.log(chatMsgs);
     getSocket().emit("send-message", msg);
   };
 
@@ -41,10 +38,6 @@ const Blackjack = ({
       "updateChat",
       (chat) => {
         try {
-          // console.log("\n\n\n\n\n Got the chat from client!");
-          // console.log(chat);
-          // console.log("\n\n\n\n\n Got the chat from client!");
-
           //Update this user's chat messages
           setChatMsgs(chat);
         } catch (err) {
@@ -80,6 +73,9 @@ const Blackjack = ({
     getSocket().emit("player-move", choice);
   };
 
+  /**
+   * Handles when opening the Chat modal
+   */
   const handleChat = () => {
     setModalOpen(true);
   };
@@ -150,6 +146,7 @@ const Blackjack = ({
               id={id}
               timer={timer}
               bank={bank}
+              setModalOpen={setModalOpen}
             />
           ) : (
             <div className="row d-flex justify-content-center mt-5 text-center">
@@ -183,7 +180,7 @@ const Blackjack = ({
         </div>
       </div>
 
-      {/*Finds if the user wants to open the HostModal class*/}
+      {/*The Modal that handles the Chat among the players in the game*/}
       <Modal data-cy="ChatModal" show={modalOpen} onHide={closeModal}>
         <ChatModal
           closeModal={closeModal}

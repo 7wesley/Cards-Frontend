@@ -1,7 +1,7 @@
 import { useEffect, useRef, useState } from "react";
 import { getSocket } from "../Socket";
 
-const Bets = ({ setBetsVisible, timer, bank }) => {
+const Bets = ({ setBetsVisible, timer, bank, setModalOpen }) => {
   const [bet, setBet] = useState("");
   const DEFAULT_BET = 50;
   const timerStyle = {
@@ -32,6 +32,13 @@ const Bets = ({ setBetsVisible, timer, bank }) => {
       //Focusing on input and disabling button click
       input.focus();
     }
+  };
+
+  /**
+   * Opens the Chat modal whenever the user clicks the "chat" button
+   */
+  const handleBetChat = () => {
+    setModalOpen(true);
   };
 
   const handleBetSubmit = () => {
@@ -77,6 +84,12 @@ const Bets = ({ setBetsVisible, timer, bank }) => {
         </button>
         <button className="bet-submit-button mx-2" onClick={handleBetSubmit}>
           Bet
+        </button>
+        <button
+          className="choice-button mx-2 button-symbol"
+          onClick={() => handleBetChat()}
+        >
+          Chat
         </button>
       </div>
       <div class="mt-3 mx-auto bet-timer" style={timerStyle}></div>
