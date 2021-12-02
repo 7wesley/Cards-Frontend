@@ -102,50 +102,51 @@ const War = ({ server, userData, updateStorage }) => {
                   {player.id === id ? "You" : player.id}
                 </p>
                 {!!player.bank && <p className="player-bank">${player.bank}</p>}
-
-                <p className={"bet " + (!!player.bet && "player-bet")}>
-                  {!!player.bet && player.bet}
-                </p>
               </div>
+              <p className={"bet " + (!!player.bet && "player-bet")}>
+                {!!player.bet && player.bet}
+              </p>
             </div>
           ))}
         </div>
         <div className="dashboard">
-          {betsVisible ? (
-            <Bets
-              setBetsVisible={setBetsVisible}
-              id={id}
-              timer={server.timer}
-              bank={bank}
-            />
-          ) : (
-            <div className="row d-flex justify-content-center mt-5 text-center">
-              <button
-                disabled={!myTurn}
-                className={`choice-button mx-2 button-symbol play${
-                  !myTurn ? " disabled" : ""
-                }`}
-                onClick={() => handlePlay("draw")}
-              >
-                Play
-              </button>
-              <button
-                disabled={!myTurn}
-                className={`choice-button mx-2 button-symbol forfeit${
-                  !myTurn ? " disabled" : ""
-                }`}
-                onClick={() => handlePlay("forfeit")}
-              >
-                Forfeit
-              </button>
-              <button
-                className="choice-button mx-2 button-symbol"
-                onClick={() => setModalOpen(true)}
-              >
-                Chat
-              </button>
-            </div>
-          )}
+          <div className="row d-flex justify-content-center mt-5 text-center">
+            {betsVisible ? (
+              <Bets
+                setBetsVisible={setBetsVisible}
+                id={id}
+                timer={server.timer}
+                bank={bank}
+              />
+            ) : (
+              <>
+                <button
+                  className="choice-button mx-2 button-symbol"
+                  onClick={() => setModalOpen(true)}
+                >
+                  Chat
+                </button>
+                <button
+                  disabled={!myTurn}
+                  className={`choice-button mx-2 button-symbol play${
+                    !myTurn ? " disabled" : ""
+                  }`}
+                  onClick={() => handlePlay("draw")}
+                >
+                  Play
+                </button>
+                <button
+                  disabled={!myTurn}
+                  className={`choice-button mx-2 button-symbol forfeit${
+                    !myTurn ? " disabled" : ""
+                  }`}
+                  onClick={() => handlePlay("forfeit")}
+                >
+                  Forfeit
+                </button>
+              </>
+            )}
+          </div>
         </div>
       </div>
 

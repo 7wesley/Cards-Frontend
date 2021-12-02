@@ -1,10 +1,12 @@
+import { faComment } from "@fortawesome/free-regular-svg-icons";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { useEffect, useState } from "react";
 import { Container } from "react-bootstrap";
 import "../../assets/Game.css";
 import Bets from "../Games/Bets";
 
 const GameTemplatePlayers = () => {
-  const profilePictures = false;
+  const profilePictures = true;
   const [betsVisible, setBetsVisible] = useState(true);
   const getRandomRotation = (min, max) => {
     return Math.random() * (max - min) + min;
@@ -101,7 +103,7 @@ const GameTemplatePlayers = () => {
             </div>
           ))}
         </div>
-        <div className="dashboard">
+        <div className="dashboard mt-5 d-flex justify-content-center">
           {betsVisible && <Bets setBetsVisible={setBetsVisible} />}
         </div>
       </div>

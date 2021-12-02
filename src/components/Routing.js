@@ -30,7 +30,7 @@ import WarTemplate from "./Templates/WarTemplate";
  */
 const Routing = () => {
   const { userData, updateStorage } = useStorage({
-    username: `Guest-${Math.round(Math.random() * 100000)}`,
+    username: `Guest${Math.round(Math.random() * 10000)}`,
     stats: { Wins: 0, Losses: 0, Played: 0 },
   });
   const id = userData && userData.username;

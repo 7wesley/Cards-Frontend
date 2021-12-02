@@ -61,11 +61,12 @@
 
 .player-pic {
   position: absolute;
-  top: 1rem;
+  top: 0.85rem;
   left: 1.5rem;
-  width: 4.5rem;
-  border-radius: 2rem;
-  box-shadow: 0 0 0.8rem 0 rgb(0 0 0 / 38%);
+  width: 4rem;
+  border-radius: 50%;
+  border: 0.06rem black solid;
+  border-bottom-width: 0.2rem;
 }
 
 .card-img {
@@ -107,7 +108,7 @@
 .player-info {
   font-weight: bold;
   box-sizing: border-box;
-  overflow: hidden;
+  white-space: nowrap;
 }
 
 .player-turn {
@@ -138,9 +139,7 @@
 }
 
 .disabled {
-  top: -0.75rem;
-  opacity: 0.25;
-  transition: opacity ease 5s;
+  opacity: 0.2;
 }
 
 .player-bet {
@@ -383,20 +382,25 @@
   content: "f";
 }
 
-@media only screen and (max-width: 1024px) {
+.chat::before {
+  content: "c";
+}
+
+@media only screen and (max-width: 1200px) {
+  .player-cards {
+    left: -1.8rem;
+  }
   .player-pic {
-    width: 3.5rem;
-    top: 1.5rem;
-    left: 0.75rem;
+    left: 0.5rem;
   }
 
   .player-name {
-    font-size: 1.1rem;
-    top: 0.9rem;
+    font-size: 0.9rem;
+    top: 1.1rem;
   }
 
   .player-bank {
-    font-size: 0.9rem;
+    font-size: 0.9em;
     top: 2.6rem;
   }
 
@@ -406,33 +410,25 @@
 }
 
 @media only screen and (max-width: 767px) {
+  .player-cards {
+    left: 0rem;
+  }
   .board-player {
     background: none;
     box-shadow: none;
   }
 
-  .player-cards {
-    position: relative;
-    height: 6.6rem;
-  }
-
-  .player-info {
-    position: relative;
-    
-  }
-
   .player-name {
-    position: relative;
     color: white;
     left: 0;
-    top: 0;
+    top: 6.5rem;
     font-size: 1rem;
+    overflow: visible;
   }
 
   .player-bank {
     left: 0;
-    top: 0;
-    position: relative;
+    top: 7.8rem;
     font-size: 0.8rem;
   }
 }
