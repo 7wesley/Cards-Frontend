@@ -80,7 +80,7 @@ const Blackjack = ({
     getSocket().emit("player-move", choice);
   };
 
-  const handleChat = (msg) => {
+  const handleChat = () => {
     setModalOpen(true);
   };
 

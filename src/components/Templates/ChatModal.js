@@ -2,11 +2,11 @@
  * Creates a Modal for creating a new gameroom.
  * @author Nathan Jenkins
  * @author Wesley Miller
- * @version 5/13/2021
+ * @version 12/2/2021
  */
 
-import React, { useState, useRef, useEffect } from "react";
-import { Modal, Button, Form } from "react-bootstrap";
+import React, { useState, useEffect } from "react";
+import { Modal, Button } from "react-bootstrap";
 import "../../assets/Chat.css";
 
 /**
@@ -17,32 +17,72 @@ import "../../assets/Chat.css";
  */
 const HostModal = ({ closeModal, id, chatMsgs, addChatMsg }) => {
   const [currMsg, setCurrMsg] = useState("");
+  const [scrolled, setScrolled] = useState(false);
+
+  const MARGIN_OF_ERROR = 1;
+  const EMPTY = 0;
 
   /**
-   * Handles what happens when the user clicks the submit button of this modal
-   * @param {any} e the game that this is for
+   * Finds when the chatMsgs change and scrolls the chat to the newest msgs
+   *  only if the user is at the bottom of the chat
    */
-  const handleChat = async (field) => {
-    closeModal();
-  };
+  useEffect(() => {
+    if (scrolled === false) {
+      updateScroll();
+    }
+  }, [chatMsgs]);
 
   /**
    * Updates the message to send to whatever the user enters into the input box
    * @param {*} event when the user changes a value in the input box
    */
   const handleChange = async (event) => {
-    // console.log("targte.value = "+event.target.value)
     await setCurrMsg(event.target.value);
-    // console.log("Changed current messag to "+currMsg)
   };
 
   /**
    * Sends the user's input as a message to the other players in the game and
-   *  resets the input to be empty
+   *  resets the input to be empty and jumps the scroll bar to the bottom
    */
   const sendMessage = async () => {
     await addChatMsg({ name: id, msg: currMsg });
     setCurrMsg("");
+    updateScroll();
+  };
+
+  /**
+   * Jumps the Scroll bar of the chat directly to the bottom
+   */
+  const updateScroll = async () => {
+    var element = document.getElementById("ChatBox");
+    element.scrollTop = element.scrollHeight;
+    setScrolled(false);
+  };
+
+  /**
+   * Sets the value of if the user has scrolled to true if the current position of the
+   *  scroller is not at the bottom
+   * @param {*} event when the chatbox is scrolled
+   */
+  const handleScroll = (event) => {
+    //Debug code
+    // console.log("scrolled = "+scrolled)
+    // console.log("scrollheight = "+event.target.scrollHeight)
+    // console.log("scrollTop = "+event.target.scrollTop)
+    // console.log("clientHeight = "+event.target.clientHeight)
+    // console.log(event.target.scrollHeight - event.target.scrollTop ===
+    //     event.target.clientHeight + MARGIN_OF_ERROR)
+    // console.log(event.target.scrollHeight - event.target.scrollTop)
+
+    //If the scroll is already at the bottom, set the scrolled value to false
+    if (
+      event.target.scrollHeight - event.target.scrollTop <=
+      event.target.clientHeight + MARGIN_OF_ERROR
+    ) {
+      setScrolled(false);
+    } else {
+      setScrolled(true);
+    }
   };
 
   return (
@@ -52,33 +92,49 @@ const HostModal = ({ closeModal, id, chatMsgs, addChatMsg }) => {
       </Modal.Header>
       <Modal.Body>
         <div class="chat-popup" id="myForm">
-          {/* <textarea> */}
-          <div className="MessageList">
-            {chatMsgs.length > 0 ? (
-              chatMsgs.map((message, i) => (
-                <div>
-                  {message.name && (
-                    <span className="author">{message.name}:</span>
-                  )}
-                  {message.msg}
+          {chatMsgs.length > EMPTY ? (
+            <div
+              className="chatbox col-xl-12"
+              id="ChatBox"
+              onScroll={handleScroll}
+            >
+              {chatMsgs.map((chat) => (
+                <div className="message">
+                  <div
+                    className={`${chat.name === id ? "myname" : "othername"}`}
+                  >
+                    {chat.name === id ? "You:" : chat.name + ":"}
+                  </div>
+
+                  <div
+                    className={`${
+                      chat.name === id ? "mymsg" : "othermsg"
+                    } row p-3 m-1`}
+                  >
+                    {chat.msg}
+                  </div>
                 </div>
-              ))
+              ))}
+            </div>
+          ) : (
+            <></>
+          )}
+
+          <div class="form-container">
+            {scrolled ? (
+              <button type="button" class="btn jump" onClick={updateScroll}>
+                Jump to Most Recent
+              </button>
             ) : (
               <></>
             )}
-          </div>
-          {/* </textarea> */}
 
-          {chatMsgs.map((data) => {
-            <div>
-              {data.name}
-              <div>{data.msg}</div>
-            </div>;
-          })}
-
-          <form class="form-container">
-            {/* <label for="msg"><b>Message</b></label> */}
-            <input type="text" value={currMsg} onChange={handleChange}></input>
+            <input
+              type="text"
+              placeholder="Enter a Message..."
+              value={currMsg}
+              onChange={handleChange}
+            ></input>
 
             <Button class="btn" onClick={sendMessage}>
               Send
@@ -86,7 +142,7 @@ const HostModal = ({ closeModal, id, chatMsgs, addChatMsg }) => {
             <button type="button" class="btn cancel" onClick={closeModal}>
               Close
             </button>
-          </form>
+          </div>
         </div>
       </Modal.Body>
     </>
