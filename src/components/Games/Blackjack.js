@@ -118,7 +118,7 @@ const Blackjack = ({
               <div className={`player-cards ${player.status && player.status}`}>
                 {player.cards.map((card, index) => (
                   <img
-                    className="blackjack-card-img"
+                    className="card-img"
                     style={cardStyle(index)}
                     src={`/Images/Cards/${card.rank}${card.suit}.png`}
                   />

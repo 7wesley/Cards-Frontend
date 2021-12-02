@@ -59,21 +59,23 @@
   height: 3.7rem;
 }
 
-.blackjack-card-img {
+.player-pic {
+  position: absolute;
+  top: 1rem;
+  left: 1.5rem;
+  width: 4.5rem;
+  border-radius: 2rem;
+  box-shadow: 0 0 0.8rem 0 rgb(0 0 0 / 38%);
+}
+
+.card-img {
   width: 4.5rem;
   box-shadow: 0 0 0.8rem 0 rgb(0 0 0 / 38%);
   position: absolute;
   transition: top ease 0.25s;
 }
 
-.war-card-img {
-  width: 4.5rem;
-  box-shadow: 0 0 0.8rem 0 rgb(0 0 0 / 38%);
-  position: absolute;
-  transition: top ease 0.25s;
-}
-
-.blackjack-card-img:hover {
+.card-img:hover {
   z-index: 2;
   top: -0.75rem;
 }
@@ -168,13 +170,13 @@
   top: 2.5rem;
   position: absolute;
   margin: 0;
-  right: 0;
-  left: 9rem;
+  left: 50%;
   color: #fff;
 }
 
 .player-name {
-  left: 9rem;
+  left: 50%;
+
   font-size: 1.2rem;
   top: 0.8rem;
   position: absolute;
@@ -387,4 +389,26 @@
 
 .forfeit::before {
   content: "f";
+}
+
+@media only screen and (max-width: 768px) {
+  .player-pic {
+    width: 3.5rem;
+    top: 1.5rem;
+    left: 0.75rem;
+  }
+
+  .player-name {
+    left: 4rem;
+    font-size: 1rem;
+  }
+
+  .player-bank {
+    left: 4rem;
+    font-size: 0.9rem;
+  }
+
+  .player-cards {
+
+  }
 }

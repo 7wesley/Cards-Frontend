@@ -1,9 +1,10 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { Container } from "react-bootstrap";
 import "../../assets/Game.css";
 import Bets from "../Games/Bets";
 
 const GameTemplatePlayers = () => {
+  const profilePictures = false;
   const [betsVisible, setBetsVisible] = useState(true);
   const getRandomRotation = (min, max) => {
     return Math.random() * (max - min) + min;
@@ -78,14 +79,18 @@ const GameTemplatePlayers = () => {
               <div
                 className={`player-cards ${player.status ? player.status : ""}`}
               >
-                {player.cards.map((card, index) => (
-                  <img
-                    className="blackjack-card-img"
-                    style={cardStyle(index)}
-                    src={`/Images/Cards/${card.rank}${card.suit}.png`}
-                  />
-                ))}
+                {!profilePictures &&
+                  player.cards.map((card, index) => (
+                    <img
+                      className="card-img"
+                      style={cardStyle(index)}
+                      src={`/Images/Cards/${card.rank}${card.suit}.png`}
+                    />
+                  ))}
               </div>
+              {profilePictures && (
+                <img className="player-pic" src="/Images/blankProfile.png" />
+              )}
 
               <div className="player-info">
                 <div className="player-timer" />

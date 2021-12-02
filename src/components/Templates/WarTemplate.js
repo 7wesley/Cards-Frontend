@@ -57,7 +57,7 @@ const WarTemplate = () => {
                 <img className="war-card-img" src={`/Images/Cards/HH.png`} />
                 {player.active.map((card, index) => (
                   <img
-                    className="war-card-img"
+                    className="card-img"
                     style={cardStyle(index)}
                     src={`/Images/Cards/${card.rank}${card.suit}.png`}
                   />

@@ -112,7 +112,7 @@ const War = ({ userData, players, turn, timer, results, updateStorage }) => {
                 <img className="war-card-img" src={`/Images/Cards/HH.png`} />
                 {player.cards.map((card, index) => (
                   <img
-                    className="war-card-img"
+                    className="card-img"
                     style={cardStyle(index)}
                     src={`/Images/Cards/${card.rank}${card.suit}.png`}
                   />

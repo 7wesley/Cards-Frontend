@@ -15,7 +15,7 @@ import "../../assets/Chat.css";
  * @param {any} id the identification of the user that opened or closed the modal
  * @returns The modal that will be displayed for the user
  */
-const HostModal = ({ closeModal, id, chatMsgs, addChatMsg }) => {
+const ChatModal = ({ closeModal, id, chatMsgs, addChatMsg }) => {
   const [currMsg, setCurrMsg] = useState("");
   const [scrolled, setScrolled] = useState(false);
 
@@ -36,8 +36,10 @@ const HostModal = ({ closeModal, id, chatMsgs, addChatMsg }) => {
    * Updates the message to send to whatever the user enters into the input box
    * @param {*} event when the user changes a value in the input box
    */
-  const handleChange = async (event) => {
-    await setCurrMsg(event.target.value);
+  const handleChange = (event) => {
+    // console.log("targte.value = "+event.target.value)
+    setCurrMsg(event.target.value);
+    // console.log("Changed current messag to "+currMsg)
   };
 
   /**
@@ -155,4 +157,4 @@ const HostModal = ({ closeModal, id, chatMsgs, addChatMsg }) => {
   );
 };
 
-export default HostModal;
+export default ChatModal;
