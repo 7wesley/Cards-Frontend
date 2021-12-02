@@ -6,7 +6,6 @@
  */
 
 import React, { useState, useEffect } from "react";
-import { Prompt } from "react-router";
 import Waiting from "./Waiting";
 import InProgress from "./InProgress";
 import NotFound from "./NotFound";
@@ -28,10 +27,18 @@ const GameRoom = ({ match, userData, updateStorage }) => {
   const { playersList, maxPlayers, status, gameType } = useRoomListener(
     match.params.roomId
   );
-  const { players, countdown, turn, timer, results } =
+  const { players, countdown, turn, timer, results, chatMsg } =
     useSocketListener(connected);
   const id = userData && userData.username;
   const inProgress = status === "in-progress" && !connected;
+
+  useEffect(() => {
+    if (status === "waiting" && !connected) {
+      connectSocket(match.params.roomId, id);
+      setConnected(true);
+    }
+  }, [status, connected, match.params.roomId, id]);
+
   const renderGame = () => {
     switch (gameType) {
       case "Blackjack":
@@ -44,6 +51,7 @@ const GameRoom = ({ match, userData, updateStorage }) => {
             results={results}
             updateStorage={updateStorage}
             userData={userData}
+            chatMsg={chatMsg}
           />
         );
       case "War":
@@ -56,16 +64,11 @@ const GameRoom = ({ match, userData, updateStorage }) => {
             results={results}
             updateStorage={updateStorage}
             userData={userData}
+            chatMsg={chatMsg}
           />
         );
     }
   };
-  useEffect(() => {
-    if (status === "waiting" && !connected) {
-      connectSocket(match.params.roomId, id);
-      setConnected(true);
-    }
-  }, [status, connected, match.params.roomId, id]);
 
   return (
     <>

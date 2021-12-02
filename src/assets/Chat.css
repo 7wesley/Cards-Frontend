@@ -1,4 +1,3 @@
-
 /* The button that is used to open the chat modal */
 .open-button {
   background-color: #555;
@@ -25,7 +24,6 @@
 
 /* Add styles to the chat container */
 .form-container {
-  max-width: 300px;
   padding: 10px;
   background-color: white;
 }
@@ -49,14 +47,7 @@
 
 /* Set a style for the send/close button */
 .form-container .btn {
-  background-color: #04AA6D;
   color: white;
-  padding: 16px 20px;
-  border: none;
-  cursor: pointer;
-  width: 100%;
-  margin-bottom:10px;
-  opacity: 0.8;
 }
 
 /* Add a red background color to the close button */
@@ -65,9 +56,10 @@
 }
 
 /* Add some hover effects to buttons */
-.form-container .btn:hover, .open-button:hover {
+.form-container .btn:hover,
+.open-button:hover {
   opacity: 1;
-} 
+}
 
 /* The format for the "Jump to Most Recent" Button */
 .form-container .jump {
@@ -75,8 +67,6 @@
   width: 200px;
   height: 30px;
   font-size: 10px;
-  text-align: center;
-  margin-left: 50%;
   padding: 0px;
   border: none;
   cursor: pointer;
@@ -96,12 +86,13 @@
 
 /* A test format for the user's messages */
 .myMessage {
-  background: #3F51B5 none repeat scroll 0 0;
+  background: #3f51b5 none repeat scroll 0 0;
   border-radius: 3px;
   font-size: 14px;
-  margin: 0; color:#fff;
+  margin: 0;
+  color: #fff;
   padding: 5px 10px 5px 12px;
-  width:100%;
+  width: 100%;
   float: right;
   width: 70%;
   text-align: right;
@@ -125,7 +116,7 @@
   border-radius: 10px;
   height: 50%;
 }
-    
+
 /* The style for how another user's messages appear in the chat */
 .othermsg {
   float: left;
@@ -167,7 +158,6 @@
   height: 400px;
   scroll-snap-align: start;
 }
-
 
 /* 
 

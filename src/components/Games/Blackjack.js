@@ -13,50 +13,14 @@ const Blackjack = ({
   timer,
   results,
   updateStorage,
+  chatMsg,
 }) => {
   const [bank, setBank] = useState(0);
   const [betsVisible, setBetsVisible] = useState(true);
-  const [chatVisible, setChatVisible] = useState(true);
   const [modalOpen, setModalOpen] = useState(false);
-  const [chatMsgs, setChatMsgs] = useState([]);
-
-  const addChatMsg = async (msg) => {
-    chatMsgs.push(msg);
-    getSocket().emit("send-message", msg);
-  };
-
-  let [socket, setSocket] = useState(null);
-  useEffect(() => setSocket(getSocket()));
-
-  /**
-   * Handles what happens when the server sends an update to the
-   *  chat messages
-   */
-  useEffect(() => {
-    if (!socket) return;
-    socket.on(
-      "updateChat",
-      (chat) => {
-        try {
-          //Update this user's chat messages
-          setChatMsgs(chat);
-        } catch (err) {
-          console.log(err);
-        }
-      },
-      [socket]
-    );
-  });
-
+  const [messages, setMessages] = useState([]);
   const id = userData && userData.username;
   const myTurn = turn === id;
-
-  /**
-   * Closes the ChatModal if the user backs out
-   */
-  const closeModal = useCallback(() => {
-    setModalOpen(false);
-  }, [setModalOpen]);
 
   useEffect(() => {
     if (!results && !turn) {
@@ -69,16 +33,23 @@ const Blackjack = ({
     setBank(myBank);
   }, [players, id]);
 
+  useEffect(() => {
+    if (chatMsg) {
+      setMessages((prev) => {
+        const newMessages = [...prev];
+        newMessages.push(chatMsg);
+        return newMessages;
+      });
+    }
+  }, [chatMsg]);
+
   const handlePlay = (choice) => {
     getSocket().emit("player-move", choice);
   };
 
-  /**
-   * Handles when opening the Chat modal
-   */
-  const handleChat = () => {
-    setModalOpen(true);
-  };
+  const closeModal = useCallback(() => {
+    setModalOpen(false);
+  }, [setModalOpen]);
 
   const cardStyle = (index) => {
     return {
@@ -146,7 +117,6 @@ const Blackjack = ({
               id={id}
               timer={timer}
               bank={bank}
-              setModalOpen={setModalOpen}
             />
           ) : (
             <div className="row d-flex justify-content-center mt-5 text-center">
@@ -171,7 +141,7 @@ const Blackjack = ({
 
               <button
                 className="choice-button mx-2 button-symbol"
-                onClick={() => handleChat()}
+                onClick={() => setModalOpen(true)}
               >
                 Chat
               </button>
@@ -181,11 +151,11 @@ const Blackjack = ({
       </div>
 
       {/*The Modal that handles the Chat among the players in the game*/}
-      <Modal data-cy="ChatModal" show={modalOpen} onHide={closeModal}>
+      <Modal data-cy="chatModal" show={modalOpen} onHide={closeModal}>
         <ChatModal
           closeModal={closeModal}
-          chatMsgs={chatMsgs}
-          addChatMsg={addChatMsg}
+          messages={messages}
+          setMessages={setMessages}
           id={id}
         />
       </Modal>
