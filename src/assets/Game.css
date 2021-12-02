@@ -22,7 +22,7 @@
   z-index: 1;
   position: absolute;
   left: -0.9rem;
-  top: -0.1rem;
+  top: -0.15rem;
   opacity: 1;
   transition: opacity 5s ease;
   transition: top ease 0.75s;
@@ -80,11 +80,6 @@
   top: -0.75rem;
 }
 
-.card-img {
-  width: 4.5rem;
-  box-shadow: 0 0 0.8rem 0 rgb(0 0 0 / 38%);
-}
-
 .card-0 {
   transform: rotate(-7deg);
   left: 0.3rem;
@@ -111,11 +106,6 @@
 
 .player-info {
   font-weight: bold;
-  box-shadow: 0 0 0.6em 0 rgb(0 0 0 / 25%);
-  border-radius: 0.3rem;
-  background: rgba(41, 40, 40, 0.8);
-  width: 100%;
-  height: 100%;
   box-sizing: border-box;
   overflow: hidden;
 }
@@ -176,7 +166,6 @@
 
 .player-name {
   left: 50%;
-
   font-size: 1.2rem;
   top: 0.8rem;
   position: absolute;
@@ -203,6 +192,9 @@
   width: 18%;
   height: 13.5%;
   position: absolute;
+  background: rgba(41, 40, 40, 0.8);
+  box-shadow: 0 0 0.6em 0 rgb(0 0 0 / 25%);
+  border-radius: 0.3rem;
 }
 
 .board-player-empty {
@@ -391,7 +383,7 @@
   content: "f";
 }
 
-@media only screen and (max-width: 768px) {
+@media only screen and (max-width: 1024px) {
   .player-pic {
     width: 3.5rem;
     top: 1.5rem;
@@ -399,16 +391,47 @@
   }
 
   .player-name {
-    left: 4rem;
+    font-size: 1.1rem;
+    top: 0.9rem;
+  }
+
+  .player-bank {
+    font-size: 0.9rem;
+    top: 2.6rem;
+  }
+
+  .card-img {
+    width: 4.3rem;
+  }
+}
+
+@media only screen and (max-width: 767px) {
+  .board-player {
+    background: none;
+    box-shadow: none;
+  }
+
+  .player-cards {
+    position: relative;
+    height: 6.6rem;
+  }
+
+  .player-info {
+    position: relative;
+  }
+
+  .player-name {
+    position: relative;
+    color: white;
+    left: 0;
+    top: 0;
     font-size: 1rem;
   }
 
   .player-bank {
-    left: 4rem;
-    font-size: 0.9rem;
-  }
-
-  .player-cards {
-
+    left: 0;
+    top: 0;
+    position: relative;
+    font-size: 0.8rem;
   }
 }

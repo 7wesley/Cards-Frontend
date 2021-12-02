@@ -93,11 +93,11 @@ const GameTemplatePlayers = () => {
               )}
 
               <div className="player-info">
-                <div className="player-timer" />
+                <div className="d-none d-md-block player-timer" />
                 <p className="player-name">{player.id}</p>
                 <p class="player-bank">${player.bank}</p>
-                <p class="player-bet">{player.bet}</p>
               </div>
+              <p class="player-bet">{player.bet}</p>
             </div>
           ))}
         </div>
