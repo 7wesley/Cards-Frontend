@@ -53,30 +53,33 @@ const Bets = ({ setBetsVisible, timer, bank }) => {
 
   return (
     <>
-      <button
-        className={"bet-button mx-2" + (bet == "50" ? " bet-selected" : "")}
-        onClick={() => setBet(50)}
-      >
-        50
-      </button>
-      <button
-        className={"bet-button mx-2" + (bet == "100" ? " bet-selected" : "")}
-        onClick={() => setBet(100)}
-      >
-        100
-      </button>
-      <button
-        className={
-          "bet-button mx-2" + (bet === "custom" ? " bet-selected" : "")
-        }
-        id="customButton"
-        onClick={() => activateCustomInput()}
-      >
-        Custom
-      </button>
-      <button className="bet-submit-button mx-2" onClick={handleBetSubmit}>
-        Bet
-      </button>
+      <div className="row d-flex justify-content-center mt-5 text-center">
+        <button
+          className={"bet-button mx-2" + (bet == "50" ? " bet-selected" : "")}
+          onClick={() => setBet(50)}
+        >
+          50
+        </button>
+        <button
+          className={"bet-button mx-2" + (bet == "100" ? " bet-selected" : "")}
+          onClick={() => setBet(100)}
+        >
+          100
+        </button>
+        <button
+          className={
+            "bet-button mx-2" + (bet === "custom" ? " bet-selected" : "")
+          }
+          id="customButton"
+          onClick={() => activateCustomInput()}
+        >
+          Custom
+        </button>
+        <button className="bet-submit-button mx-2" onClick={handleBetSubmit}>
+          Bet
+        </button>
+      </div>
+      <div class="mt-3 mx-auto bet-timer" style={timerStyle}></div>
     </>
   );
 };

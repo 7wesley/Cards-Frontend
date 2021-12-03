@@ -113,43 +113,41 @@ const Blackjack = ({ server, userData, updateStorage }) => {
           ))}
         </div>
         <div className="dashboard">
-          <div className="row d-flex justify-content-center mt-5 text-center">
-            {betsVisible ? (
-              <Bets
-                setBetsVisible={setBetsVisible}
-                id={id}
-                timer={server.timer}
-                bank={bank}
-              />
-            ) : (
-              <>
-                <button
-                  className="choice-button mx-2 button-symbol chat"
-                  onClick={() => setModalOpen(true)}
-                >
-                  Chat
-                </button>
-                <button
-                  disabled={!myTurn}
-                  className={`choice-button mx-2 button-symbol hit${
-                    !myTurn ? " disabled" : ""
-                  }`}
-                  onClick={() => handlePlay("draw")}
-                >
-                  Hit
-                </button>
-                <button
-                  disabled={!myTurn}
-                  className={`choice-button mx-2 button-symbol stand${
-                    !myTurn ? " disabled" : ""
-                  }`}
-                  onClick={() => handlePlay("stand")}
-                >
-                  Stand
-                </button>
-              </>
-            )}
-          </div>
+          {betsVisible ? (
+            <Bets
+              setBetsVisible={setBetsVisible}
+              id={id}
+              timer={server.timer}
+              bank={bank}
+            />
+          ) : (
+            <div className="row d-flex justify-content-center mt-5 text-center">
+              <button
+                className="choice-button mx-2 button-symbol chat"
+                onClick={() => setModalOpen(true)}
+              >
+                Chat
+              </button>
+              <button
+                disabled={!myTurn}
+                className={`choice-button mx-2 button-symbol hit${
+                  !myTurn ? " disabled" : ""
+                }`}
+                onClick={() => handlePlay("draw")}
+              >
+                Hit
+              </button>
+              <button
+                disabled={!myTurn}
+                className={`choice-button mx-2 button-symbol stand${
+                  !myTurn ? " disabled" : ""
+                }`}
+                onClick={() => handlePlay("stand")}
+              >
+                Stand
+              </button>
+            </div>
+          )}
         </div>
       </div>
 

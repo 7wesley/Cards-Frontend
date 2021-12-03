@@ -110,43 +110,41 @@ const War = ({ server, userData, updateStorage }) => {
           ))}
         </div>
         <div className="dashboard">
-          <div className="row d-flex justify-content-center mt-5 text-center">
-            {betsVisible ? (
-              <Bets
-                setBetsVisible={setBetsVisible}
-                id={id}
-                timer={server.timer}
-                bank={bank}
-              />
-            ) : (
-              <>
-                <button
-                  className="choice-button mx-2 button-symbol"
-                  onClick={() => setModalOpen(true)}
-                >
-                  Chat
-                </button>
-                <button
-                  disabled={!myTurn}
-                  className={`choice-button mx-2 button-symbol play${
-                    !myTurn ? " disabled" : ""
-                  }`}
-                  onClick={() => handlePlay("draw")}
-                >
-                  Play
-                </button>
-                <button
-                  disabled={!myTurn}
-                  className={`choice-button mx-2 button-symbol forfeit${
-                    !myTurn ? " disabled" : ""
-                  }`}
-                  onClick={() => handlePlay("forfeit")}
-                >
-                  Forfeit
-                </button>
-              </>
-            )}
-          </div>
+          {betsVisible ? (
+            <Bets
+              setBetsVisible={setBetsVisible}
+              id={id}
+              timer={server.timer}
+              bank={bank}
+            />
+          ) : (
+            <div className="row d-flex justify-content-center mt-5 text-center">
+              <button
+                className="choice-button mx-2 button-symbol chat"
+                onClick={() => setModalOpen(true)}
+              >
+                Chat
+              </button>
+              <button
+                disabled={!myTurn}
+                className={`choice-button mx-2 button-symbol play${
+                  !myTurn ? " disabled" : ""
+                }`}
+                onClick={() => handlePlay("draw")}
+              >
+                Play
+              </button>
+              <button
+                disabled={!myTurn}
+                className={`choice-button mx-2 button-symbol forfeit${
+                  !myTurn ? " disabled" : ""
+                }`}
+                onClick={() => handlePlay("forfeit")}
+              >
+                Forfeit
+              </button>
+            </div>
+          )}
         </div>
       </div>
 
