@@ -10,7 +10,7 @@ import { Link, useHistory } from "react-router-dom";
 import { Navbar, NavDropdown } from "react-bootstrap";
 import { useAuth } from "../../contexts/AuthContext";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faCrown } from "@fortawesome/free-solid-svg-icons";
+import { faGamepad } from "@fortawesome/free-solid-svg-icons";
 
 /**
  * The Navbar that is displayed at the top of each screen and which users
@@ -54,12 +54,11 @@ const Header = ({ id }) => {
           onClick={() => handleLink("")}
           className="navbar-brand"
         >
-          <FontAwesomeIcon size="lg" icon={faCrown} />
+          <FontAwesomeIcon size="lg" icon={faGamepad} />
         </Link>
 
         <Navbar.Toggle onClick={() => setOpen(!open)} />
 
-        {/*A collapsable menu athat can be opened if the header is too big for the screen*/}
         <Navbar.Collapse in={open} className="justify-content-stretch">
           <ul className="navbar-nav ml-auto">
             <li

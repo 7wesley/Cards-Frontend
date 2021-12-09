@@ -1,10 +1,3 @@
-/**
- * General styling for the website
- * @author Nathan Jenkins
- * @author Wesley Miller
- * @version 5/13/2021
- */
-
 .blue-block {
   height: 30vh;
   width: 100%;
@@ -66,21 +59,8 @@
   ); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
 }
 
-.welcome-content {
-  position: relative;
+.welcome-container {
   color: white;
-}
-
-.welcome-content::after {
-  content: "";
-  background: url("./cards.jpg") center;
-  background-size: cover;
-  opacity: 0.8;
-  top: 0;
-  left: 0;
-  bottom: 0;
-  right: 0;
-  position: absolute;
-  z-index: -1;
-  filter: brightness(0.8);
+  background: url("./welcome.jpg") center;
+  height: 93.4vh;
 }

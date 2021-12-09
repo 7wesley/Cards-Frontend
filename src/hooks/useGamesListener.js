@@ -26,7 +26,7 @@ const useGames = (filter) => {
           data = data.filter(
             (doc) =>
               doc.gameId.slice(0, filter.length) === filter ||
-              doc.gameId.slice(0, filter.length) === filter
+              doc.host.slice(0, filter.length) === filter
           );
         setGames(data);
       });

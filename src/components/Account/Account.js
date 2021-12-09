@@ -58,8 +58,7 @@ const Account = ({ id, updateStorage }) => {
         if (currentUser) await updateProfile(e.target[0].value);
         else {
           updateStorage({
-            username:
-              e.target[0].value + "-" + Math.round(Math.random() * 100000),
+            username: e.target[0].value + Math.round(Math.random() * 10000),
           });
         }
       }

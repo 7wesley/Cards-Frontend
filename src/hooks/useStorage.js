@@ -9,8 +9,6 @@ import { useEffect, useState } from "react";
 import { db } from "../firebase";
 import { useAuth } from "../contexts/AuthContext";
 
-//Passes in data always assuming it will update the session storage,
-//however, if a user is logged in, data from the database will be returned
 const PREFIX = "cards-";
 
 /**
@@ -19,14 +17,10 @@ const PREFIX = "cards-";
  * @returns the user's data and the function to update the storage
  */
 const useStorage = (initialData) => {
-  //const prefixedKey = PREFIX + key;
   const { currentUser } = useAuth();
   const [userData, setUserData] = useState(null);
   const [newData, setNewData] = useState(initialData);
 
-  //Using this method instead of constantly listening
-  //for storage changes prevents users from setting
-  //their own usernames through browser settings
   /**
    * Updates the storage from the given data
    * @param {any} updatedData the data to update

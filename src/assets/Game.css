@@ -189,7 +189,7 @@
 
 .board-player {
   width: 18%;
-  height: 13.5%;
+  height: 95px;
   position: absolute;
   background: rgba(41, 40, 40, 0.8);
   box-shadow: 0 0 0.6em 0 rgb(0 0 0 / 25%);
