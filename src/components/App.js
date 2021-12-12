@@ -9,9 +9,6 @@ import "../assets/App.css";
 import Routing from "./Routing";
 import { AuthProvider } from "../contexts/AuthContext";
 
-/**
- * Where the app is being run
- */
 const App = () => {
   return (
     <div className="App">

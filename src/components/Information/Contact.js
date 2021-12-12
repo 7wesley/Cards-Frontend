@@ -53,10 +53,8 @@ const Contact = () => {
   return (
     <>
       <div className="green-block">
-        <div className="container h-100">
-          <div className="row h-100 justify-content-center align-items-center">
-            <h5 className="text-light">Contact</h5>
-          </div>
+        <div className="d-flex justify-content-center align-items-center h-100">
+          <h5 className="text-light">Contact</h5>
         </div>
       </div>
       <div className="container mt-5">
@@ -100,7 +98,7 @@ const Contact = () => {
             />
             <Button
               disabled={loading}
-              className="w-100 mt-3"
+              className="w-100 mt-3 mb-2"
               type="submit"
               data-cy="submitButton"
             >

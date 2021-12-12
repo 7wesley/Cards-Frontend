@@ -58,7 +58,6 @@ const Games = ({ id }) => {
             </p>
           )}
 
-          {/*Opens the hostModal class when this host button is clicked*/}
           <button
             onClick={() => setModalOpen(true)}
             className="btn btn-primary mt-2"
@@ -74,7 +73,7 @@ const Games = ({ id }) => {
           games.map(
             (game) =>
               game.status === "waiting" && (
-                <div className="col-6" key={game.gameId}>
+                <div className="game-container col-6" key={game.gameId}>
                   <motion.div
                     className="card border-dark mb-3"
                     layout
@@ -86,15 +85,13 @@ const Games = ({ id }) => {
                       <p className="text-dark h6">{game.gameId}</p>
                     </div>
 
-                    {/*Shows the host and the current number of players of 
-                            each gameroom*/}
                     <div className="card-body">
-                      <h4>Game: {game.game}</h4>
-                      <h4>Host: {game.host}</h4>
-                      <h4>
+                      <p className="h4">Game: {game.game}</p>
+                      <p className="h4">Host: {game.host}</p>
+                      <p className="h4">
                         Players: {Object.keys(game.players).length}/
                         {game.maxPlayers}
-                      </h4>
+                      </p>
                       <div className="text-center">
                         <Link
                           to={"/games/" + game.gameId}
@@ -114,7 +111,6 @@ const Games = ({ id }) => {
         )}
       </div>
 
-      {/*Finds if the user wants to open the HostModal class*/}
       <Modal data-cy="hostModal" show={modalOpen} onHide={closeModal}>
         <HostModal closeModal={closeModal} id={id} />
       </Modal>

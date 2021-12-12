@@ -149,7 +149,6 @@ const Blackjack = ({ server, userData, updateStorage }) => {
         </div>
       </div>
 
-      {/*The Modal that handles the Chat among the server.players in the game*/}
       <Modal data-cy="chatModal" show={modalOpen} onHide={closeModal}>
         <ChatModal
           closeModal={closeModal}

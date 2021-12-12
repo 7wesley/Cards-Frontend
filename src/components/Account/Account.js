@@ -73,10 +73,8 @@ const Account = ({ id, updateStorage }) => {
 
   return (
     <div className="red-block">
-      <div className="container h-100">
-        <div className="row h-100 justify-content-center align-items-center">
-          <h5 className="text-light">Account</h5>
-        </div>
+      <div className="d-flex justify-content-center align-items-center h-100">
+        <h5 className="text-light">Account</h5>
       </div>
       <div className="container mt-5">
         <div className="mx-auto col-md-8 col-sm-10 col-xs-12">

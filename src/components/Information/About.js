@@ -12,10 +12,8 @@
 const About = () => {
   return (
     <div className="blue-block">
-      <div className="container h-100">
-        <div className="row h-100 justify-content-center align-items-center">
-          <h5 className="text-light">About</h5>
-        </div>
+      <div className="d-flex justify-content-center align-items-center h-100">
+        <h5 className="text-light">About</h5>
       </div>
     </div>
   );

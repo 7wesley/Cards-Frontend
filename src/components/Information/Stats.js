@@ -66,12 +66,10 @@ const Stats = ({ userData }) => {
   return (
     <>
       <div className="dark-block">
-        <div className="container h-100">
-          <div className="row h-100 justify-content-center align-items-center">
-            <h5 className="text-light">
-              <FontAwesomeIcon icon={faTrophy} size="3x" />
-            </h5>
-          </div>
+        <div className="d-flex justify-content-center align-items-center h-100">
+          <h5 className="text-light">
+            <FontAwesomeIcon icon={faTrophy} size="3x" />
+          </h5>
         </div>
       </div>
       <div className="container mt-5">

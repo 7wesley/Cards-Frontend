@@ -35,7 +35,7 @@ describe("Login page as guest", () => {
     cy.url().should("include", "/account");
     cy.getCY("navDropdown").trigger("mouseover");
     cy.clickCY("logLink");
-    cy.wait(3000);
+    cy.wait(4500);
     cy.visit("/login");
     cy.inputCY("emailInput", testEmail);
     cy.inputCY("passwordInput", testPassword);
