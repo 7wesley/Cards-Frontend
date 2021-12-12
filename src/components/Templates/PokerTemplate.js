@@ -38,7 +38,7 @@ const Poker = ({ players, turn, timer, id }) => {
                   }}
                 />
                 <p className="player-name">{player.id}</p>
-                <p class="player-bet">${player.bet}</p>
+                <p className="player-bet">${player.bet}</p>
               </div>
             </div>
           ))}

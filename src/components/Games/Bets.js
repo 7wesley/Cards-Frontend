@@ -85,7 +85,7 @@ const Bets = ({ setBetsVisible, timer, bank }) => {
           Bet
         </button>
       </div>
-      <div class="mt-3 mx-auto bet-timer" style={timerStyle}></div>
+      <div className="mt-3 mx-auto bet-timer" style={timerStyle}></div>
     </>
   );
 };

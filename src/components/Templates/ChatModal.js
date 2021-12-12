@@ -90,7 +90,7 @@ const ChatModal = ({ closeModal, messages, setMessages, id }) => {
         <h1>Chat</h1>
       </Modal.Header>
       <Modal.Body>
-        <div class="chat-popup" id="myForm">
+        <div className="chat-popup" id="myForm">
           <div
             className="chatbox col-xl-12"
             id="ChatBox"
@@ -116,16 +116,16 @@ const ChatModal = ({ closeModal, messages, setMessages, id }) => {
               </div>
             ))}
           </div>
-          <div class="form-container text-center mt-2">
+          <div className="form-container text-center mt-2">
             {scrolled && (
-              <button class="btn jump mb-2" onClick={updateScroll}>
+              <button className="btn jump mb-2" onClick={updateScroll}>
                 Jump to Most Recent
               </button>
             )}
-            <div class="row justify-content-center">
+            <div className="row justify-content-center">
               <input
                 type="text"
-                class="w-75"
+                className="w-75"
                 placeholder="Enter a Message..."
                 value={currMsg}
                 onChange={handleChange}

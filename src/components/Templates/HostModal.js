@@ -93,7 +93,7 @@ const HostModal = ({ closeModal, id }) => {
           </label>
           $
           <input
-            class="w-25"
+            className="w-25"
             data-cy="bankInput"
             placeholder="500"
             id="bank"
