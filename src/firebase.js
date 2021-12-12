@@ -1,8 +1,8 @@
 /**
- * Initial firebase set up
+ * Firebase initialization
  * @author Nathan Jenkins
  * @author Wesley Miller
- * @version 5/13/2021
+ * @version 12/12/2021
  */
 
 import firebase from "firebase/app";
@@ -10,7 +10,6 @@ import "firebase/auth";
 import "firebase/storage";
 import "firebase/firestore";
 
-//development config
 const app = firebase.initializeApp({
   apiKey: process.env.REACT_APP_FIREBASE_API_KEY,
   authDomain: process.env.REACT_APP_FIREBASE_AUTH_DOMAIN,

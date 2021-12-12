@@ -1,10 +1,3 @@
-/**
- * Manages and creates the card match that players interact with
- * @author Nathan Jenkins
- * @author Wesley Miller
- * @version 5/13/2021
- */
-
 import React, { useState, useEffect } from "react";
 import Waiting from "./Waiting";
 import InProgress from "./InProgress";
@@ -18,11 +11,14 @@ import { useAuth } from "../../contexts/AuthContext";
 import useQueryDocs from "../../hooks/useQueryDocs";
 
 /**
- * The page that users play games
- * @param {any} match contains the match of this gameroom
- * @param {any} userData the user's information
- * @param {any} updateStorage for updating storing information
- * @returns The webpage this class creates
+ * Listens for data from the database and server and routes it
+ * to the appropriate game component.
+ * @author Nathan Jenkins
+ * @author Wesley Miller
+ * @version 12/12/2021
+ * @param {*} match contains the match of this gameroom
+ * @param {*} userData the user's information
+ * @param {*} updateStorage for updating storing information
  */
 const GameRoom = ({ match, userData, updateStorage }) => {
   const [connected, setConnected] = useState(false);

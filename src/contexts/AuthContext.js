@@ -1,9 +1,9 @@
 /**
- * Handles how the user information is used and created by using a reference to
- *  firebase
+ * Manages user's information and contains methods that modify
+ * a user's data in the database
  * @author Nathan Jenkins
  * @author Wesley Miller
- * @version 5/13/2021
+ * @version 12/12/2021
  */
 
 import React, { useContext, useState, useEffect } from "react";
@@ -21,7 +21,7 @@ export function useAuth() {
 
 /**
  * Finds the AuthContext Provider of the children
- * @param {any} children the children to find the provider for
+ * @param {*} children the children to find the provider for
  * @returns the AuthContext Provider
  */
 export function AuthProvider({ children }) {
@@ -30,7 +30,7 @@ export function AuthProvider({ children }) {
 
   /**
    * Checks the given username
-   * @param {any} username the name to check
+   * @param {*} username the name to check
    */
   const usernameCheck = async (username) => {
     if (/[^a-zA-Z0-9]/.test(username))
@@ -42,10 +42,10 @@ export function AuthProvider({ children }) {
   };
 
   /**
-   * If the user is wanting to create an account
-   * @param {any} username the name to create an account with
-   * @param {any} email the email to create an account with
-   * @param {any} password the password to create the account with
+   * Creates a user account
+   * @param {*} username the name to create an account with
+   * @param {*} email the email to create an account with
+   * @param {*} password the password to create the account with
    */
   const signup = async (username, email, password) => {
     await usernameCheck(username);
@@ -71,7 +71,7 @@ export function AuthProvider({ children }) {
 
   /**
    * For if the user wants to upload an image to their profile
-   * @param {any} file the image to upload
+   * @param {*} file the image to upload
    */
   const upload = async (file) => {
     if (file && (file.type === "image/png" || file.type === "image/jpeg")) {
@@ -86,7 +86,7 @@ export function AuthProvider({ children }) {
 
   /**
    * Sets a new value for the user's username
-   * @param {any} username the new name of the user to set
+   * @param {*} username the new name of the user to set
    */
   const updateProfile = async (username) => {
     await usernameCheck(username);
@@ -102,8 +102,8 @@ export function AuthProvider({ children }) {
 
   /**
    * Allows the user to login to their account
-   * @param {any} email the email of the account to login with
-   * @param {any} password the password of the account to login with
+   * @param {*} email the email of the account to login with
+   * @param {*} password the password of the account to login with
    */
   const login = async (email, password) => {
     await auth.signInWithEmailAndPassword(email, password);
@@ -119,7 +119,7 @@ export function AuthProvider({ children }) {
 
   /**
    * For if the user wants to reset their passowrd
-   * @param {any} email the email of the account to reset the password with
+   * @param {*} email the email of the account to reset the password with
    * @returns the account that the password is being reset for
    */
   const resetPassword = (email) => {
@@ -128,7 +128,7 @@ export function AuthProvider({ children }) {
 
   /**
    * Updates the email of an account
-   * @param {any} email the new email to update for the user
+   * @param {*} email the new email to update for the user
    * @returns the user that this email will update for
    */
   const updateEmail = (email) => {
@@ -137,7 +137,7 @@ export function AuthProvider({ children }) {
 
   /**
    * Updates the password of a user
-   * @param {any} password the new password to set with
+   * @param {*} password the new password to set with
    * @returns the user who wants to update their password
    */
   const updatePassword = (password) => {

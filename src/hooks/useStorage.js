@@ -1,10 +1,3 @@
-/**
- * Manages the user's account's information
- * @author Nathan Jenkins
- * @author Wesley Miller
- * @version 5/13/2021
- */
-
 import { useEffect, useState } from "react";
 import { db } from "../firebase";
 import { useAuth } from "../contexts/AuthContext";
@@ -12,8 +5,11 @@ import { useAuth } from "../contexts/AuthContext";
 const PREFIX = "cards-";
 
 /**
- * Manages the storage of the given data
- * @param {any} initialData the data to manage
+ * Manages the data of a guest user or a registered user
+ * @author Nathan Jenkins
+ * @author Wesley Miller
+ * @version 12/12/2021
+ * @param {*} initialData - the data to manage
  * @returns the user's data and the function to update the storage
  */
 const useStorage = (initialData) => {
@@ -23,7 +19,7 @@ const useStorage = (initialData) => {
 
   /**
    * Updates the storage from the given data
-   * @param {any} updatedData the data to update
+   * @param {*} updatedData the data to update
    */
   const updateStorage = async (updatedData) => {
     if (currentUser) {

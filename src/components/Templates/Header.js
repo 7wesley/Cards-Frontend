@@ -1,10 +1,3 @@
-/**
- * Creates a Header/Navbar that allows users to navigate through the website
- * @author Nathan Jenkins
- * @author Wesley Miller
- * @version 5/13/2021
- */
-
 import React, { useState } from "react";
 import { Link, useHistory } from "react-router-dom";
 import { Navbar, NavDropdown } from "react-bootstrap";
@@ -13,10 +6,11 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faGamepad } from "@fortawesome/free-solid-svg-icons";
 
 /**
- * The Navbar that is displayed at the top of each screen and which users
- *      can travers the site with
- * @param {any} id the identification of the user using the pages
- * @returns the header that can be displayed
+ * Navbar that allows users to traverse the website
+ * @author Nathan Jenkins
+ * @author Wesley Miller
+ * @version 12/12/2021
+ * @param {*} id - The id of the current user
  */
 const Header = ({ id }) => {
   const [open, setOpen] = useState(false);
@@ -38,7 +32,7 @@ const Header = ({ id }) => {
 
   /**
    * Creates the link that the user wants to navigate to when a button is clicked
-   * @param {any} link the link that the user wants to navigate to
+   * @param {*} link the link that the user wants to navigate to
    */
   const handleLink = (link) => {
     if (open === true) setOpen(false);

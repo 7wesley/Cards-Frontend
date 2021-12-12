@@ -1,10 +1,3 @@
-/**
- * For running the app in a strict mode to measure performance
- * @author Nathan Jenkins
- * @author Wesley Miller
- * @version 5/13/2021
- */
-
 import React from "react";
 import ReactDOM from "react-dom";
 import App from "./components/App";

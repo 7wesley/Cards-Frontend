@@ -1,5 +1,3 @@
-import { useEffect } from "react";
-import { Container } from "react-bootstrap";
 import "../../assets/Game.css";
 import { getSocket } from "../Socket";
 
@@ -26,6 +24,7 @@ const Poker = ({ players, turn, timer, id }) => {
                     <img
                       className="card-img"
                       src={`/Images/Cards/${card.rank}${card.suit}.png`}
+                      alt="Card"
                     />
                   </div>
                 ))}

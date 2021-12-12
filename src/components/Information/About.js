@@ -1,13 +1,8 @@
 /**
- * Creates an About page that will show information about this website
+ * General information about the website
  * @author Nathan Jenkins
  * @author Wesley Miller
- * @version 5/13/2021
- */
-
-/**
- * The webpage containing information about this website
- * @returns This about page
+ * @version 12/12/2021
  */
 const About = () => {
   return (

@@ -1,20 +1,15 @@
-/**
- * Creates a Modal for creating a new gameroom.
- * @author Nathan Jenkins
- * @author Wesley Miller
- * @version 5/13/2021
- */
-
 import React, { useState } from "react";
 import { db, timestamp } from "../../firebase";
 import { Modal, Button, Form } from "react-bootstrap";
 import { useHistory } from "react-router-dom";
 
 /**
- * Creates a modal that allows a user to create a gameroom and connects that user to that gameroom
- * @param {any} closeModal if the user wants to close the modal
- * @param {any} id the identification of the user that opened or closed the modal
- * @returns The modal that will be displayed for the user
+ * Modal that allows a user to host a room and connects that user to that room
+ * @author Nathan Jenkins
+ * @author Wesley Miller
+ * @version 12/12/2021
+ * @param {*} closeModal - Function that closes this modal
+ * @param {*} id - The id of the current user
  */
 const HostModal = ({ closeModal, id }) => {
   const [game, setGame] = useState("");
@@ -22,7 +17,7 @@ const HostModal = ({ closeModal, id }) => {
 
   /**
    * Handles what happens when the user clicks the submit button of this modal
-   * @param {any} e the game that this is for
+   * @param {*} e the game that this is for
    */
   const handleSubmit = async (e) => {
     e.preventDefault();

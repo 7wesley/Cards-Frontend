@@ -1,18 +1,13 @@
-/**
- * Creates a Login page that allows users to login with an account
- * @author Nathan Jenkins
- * @author Wesley Miller
- * @version 5/13/2021
- */
-
 import React, { useEffect, useState } from "react";
 import { Form, Button, Alert } from "react-bootstrap";
 import { Link, useHistory } from "react-router-dom";
 import { useAuth } from "../../contexts/AuthContext";
 
 /**
- * The page that will be displayed for logging in
- * @returns the webpage that is created
+ * A page where users can login
+ * @author Nathan Jenkins
+ * @author Wesley Miller
+ * @version 12/12/2021
  */
 const Login = () => {
   const [loading, setLoading] = useState(false);
@@ -21,8 +16,8 @@ const Login = () => {
   const history = useHistory();
 
   /**
-   * Takes care of a user logging in
-   * @param {*} e The user that will login
+   * Handles user logic
+   * @param {*} e - The event that called this function
    */
   const handleLogin = async (e) => {
     e.preventDefault();

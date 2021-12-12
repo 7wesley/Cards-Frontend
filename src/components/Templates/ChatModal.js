@@ -1,19 +1,17 @@
-/**
- * Creates a Modal for creating a new gameroom.
- * @author Nathan Jenkins
- * @author Wesley Miller
- * @version 12/2/2021
- */
-
 import React, { useState, useEffect } from "react";
 import { Modal, Button } from "react-bootstrap";
 import "../../assets/Chat.css";
 import { getSocket } from "../Socket";
 
 /**
- * Creates a modal that allows a user to create a gameroom and connects that user to that gameroom
- * @param {any} closeModal if the user wants to close the modal
- * @param {any} id the identification of the user that opened or closed the modal
+ * Modal where users can chat with others via the server
+ * @author Nathan Jenkins
+ * @author Wesley Miller
+ * @version 12/12/2021
+ * @param {*} closeModal - if the user wants to close the modal
+ * @param {*} messages - All the messages in the room
+ * @param {*} setMessages - Accepts new message and updates messages
+ * @param {*} id - Current user id
  * @returns The modal that will be displayed for the user
  */
 const ChatModal = ({ closeModal, messages, setMessages, id }) => {
@@ -102,7 +100,7 @@ const ChatModal = ({ closeModal, messages, setMessages, id }) => {
               <div className="message">
                 <div
                   className={`${
-                    message.sender === id ? "myname" : "othername"
+                    message.sender === id ? "my-name" : "other-name"
                   }`}
                 >
                   {message.sender === id ? "You:" : message.sender + ":"}
@@ -110,7 +108,7 @@ const ChatModal = ({ closeModal, messages, setMessages, id }) => {
 
                 <div
                   className={`${
-                    message.sender === id ? "mymsg" : "othermsg"
+                    message.sender === id ? "my-msg" : "other-msg"
                   } row p-3 m-1`}
                 >
                   {message.text}

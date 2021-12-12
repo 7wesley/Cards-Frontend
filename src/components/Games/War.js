@@ -6,6 +6,13 @@ import Results from "./Results";
 import ChatModal from "../Templates/ChatModal.js";
 import { Modal } from "react-bootstrap";
 
+/**
+ * Takes information from the server and displays it in a
+ * game of War
+ * @author Nathan Jenkins
+ * @author Wesley Miller
+ * @version 12/12/2021
+ */
 const War = ({ server, userData, updateStorage }) => {
   const [bank, setBank] = useState(0);
   const [betsVisible, setBetsVisible] = useState(true);
@@ -84,13 +91,18 @@ const War = ({ server, userData, updateStorage }) => {
             >
               <div className={`player-cards ${player.status && player.status}`}>
                 {!!player.deck.length && (
-                  <img className="card-img" src={`/Images/Cards/HH.png`} />
+                  <img
+                    className="card-img"
+                    src={`/Images/Cards/HH.png`}
+                    alt="Deck"
+                  />
                 )}
                 {player.cards.map((card, index) => (
                   <img
                     className="card-img"
                     style={cardStyle(index)}
                     src={`/Images/Cards/${card.rank}${card.suit}.png`}
+                    alt="Card"
                   />
                 ))}
               </div>

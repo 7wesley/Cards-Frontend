@@ -1,17 +1,14 @@
-/**
- * Finds a list of games through a given filter
- * @author Nathan Jenkins
- * @author Wesley Miller
- * @version 5/13/2021
- */
-
 import { useState, useEffect } from "react";
 import { db } from "../firebase";
 
 /**
- * Gets the games that are returned after a filter is applied
- * @param {any} filter the filter to find a game by
- * @returns the games that are filtered through
+ * Gets the available games from the database and filters it
+ * if necessary
+ * @author Nathan Jenkins
+ * @author Wesley Miller
+ * @version 12/12/2021
+ * @param {*} filter - The filter to find a game by
+ * @returns the filtered games
  */
 const useGames = (filter) => {
   const [games, setGames] = useState([]);

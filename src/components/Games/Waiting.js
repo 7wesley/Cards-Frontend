@@ -1,11 +1,3 @@
-/**
- * Creates a Waiting page that users are redirected to when they join or create
- *  a game that does not have enough players to start a game.
- * @author Nathan Jenkins
- * @author Wesley Miller
- * @version 5/13/2021
- */
-
 import React, { useState, useRef } from "react";
 import { InputGroup, FormControl, Overlay, Tooltip } from "react-bootstrap";
 import { motion } from "framer-motion";
@@ -13,15 +5,15 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faCopy } from "@fortawesome/free-regular-svg-icons";
 
 /**
- * The page that is displayed if the user is waiting for other players to join their game.
- * @param {any} id the identification of the player
- * @param {any} playersList the list of players currently in this room
- * @param {any} maxPlayers the max amount of players this player can hold
- * @param {any} countdown the number that is displayed and is count down to 0 when enough players
- *      join the gameroom.
- * @returns this webpage
+ * Waiting screen before a game's player quota is met
+ * @author Nathan Jenkins
+ * @author Wesley Miller
+ * @version 12/12/2021
+ * @param {*} id the identification of the player
+ * @param {*} playersList the list of players currently in this room
+ * @param {*} maxPlayers the max amount of players this player can hold
  */
-const Waiting = ({ id, playersList, maxPlayers, countdown }) => {
+const Waiting = ({ id, playersList, maxPlayers }) => {
   const [show, setShow] = useState(false);
   const target = useRef(null);
 

@@ -1,11 +1,3 @@
-/**
- * This is the "lobby" of the website. It displays the current games that are in session
- *  and allows the user to create a gameroom to play a match
- * @author Nathan Jenkins
- * @author Wesley Miller
- * @version 5/13/2021
- */
-
 import React, { useState, useCallback } from "react";
 import HostModal from "../Templates/HostModal.js";
 import { Modal, Form } from "react-bootstrap";
@@ -15,9 +7,12 @@ import { motion } from "framer-motion";
 import { useAuth } from "../../contexts/AuthContext";
 
 /**
- * The class that will allow the user to create and join games
- * @param {any} id the id of the player that accesses this page
- * @returns the Game page that shows the current games
+ * Displays joinable rooms to the user and allows a user to
+ * host a room
+ * @author Nathan Jenkins
+ * @author Wesley Miller
+ * @version 12/12/2021
+ * @param {*} id the id of the player that accesses this page
  */
 const Games = ({ id }) => {
   const [modalOpen, setModalOpen] = useState(false);

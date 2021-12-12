@@ -1,16 +1,10 @@
-/**
- * Creates a Tutorial page that will link to tutorials on how to play the listed games from our website
- * @author Nathan Jenkins
- * @author Wesley Miller
- * @version 5/29/2021
- */
-
 import styles from "../../assets/Tutorial.module.css";
 
 /**
- * The webpage that has information about this site and tutorials for each
- *     game that is playable on this site
- * @returns This Tutorial page
+ * Gives a tutorial for the different games available on the site
+ * @author Nathan Jenkins
+ * @author Wesley Miller
+ * @version 12/12/2021
  */
 const Tutorial = () => {
   return (

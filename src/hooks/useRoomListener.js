@@ -1,20 +1,15 @@
-/**
- * Finds if a room exists and how many players are in the gameroom
- * @author Nathan Jenkins
- * @author Wesley Miller
- * @version 5/13/2021
- */
-
 import { useState, useEffect } from "react";
 import { db } from "../firebase";
 
 /**
- * Finds a gameroom given the room as a parameter and returns the room's
- *  information if it exists
- * @param {any} room the room to check for
- * @returns the players in the room, the max players that the room can hold and
- *  the status of the room if it is found, otherwise returns the snapshot
- *  of the room that could not be found
+ * Listens for any changes to the room the player is a part of
+ * in the database and returns it
+ * @author Nathan Jenkins
+ * @author Wesley Miller
+ * @version 12/12/2021
+ * @param {*} room - The room to query
+ * @returns the playerList, maxPlayers, status, and gameType of the
+ * current room
  */
 const useRoomListener = (room) => {
   const [playersList, setPlayersList] = useState({});

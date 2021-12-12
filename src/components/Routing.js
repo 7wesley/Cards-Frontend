@@ -1,10 +1,3 @@
-/**
- * Handles how the user transitions between webpages
- * @author Nathan Jenkins
- * @author Wesley Miller
- * @version 5/13/2021
- */
-
 import React from "react";
 import Header from "./Templates/Header";
 import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
@@ -22,11 +15,12 @@ import Account from "./Account/Account";
 import useStorage from "../hooks/useStorage";
 import Template from "./Templates/GameTemplate";
 import GameTemplatePlayers from "./Templates/GameTemplatePlayers";
-import WarTemplate from "./Templates/WarTemplate";
 
 /**
- * Handles how the user is able to switch between pages
- * @returns this class's routing method
+ * Routes the user to their desired page
+ * @author Nathan Jenkins
+ * @author Wesley Miller
+ * @version 12/12/2021
  */
 const Routing = () => {
   const { userData, updateStorage } = useStorage({
@@ -54,7 +48,6 @@ const Routing = () => {
         />
         <Route path="/template" component={Template} />
         <Route path="/templatePlayers" component={GameTemplatePlayers} />
-        <Route path="/warTemplate" component={WarTemplate} />
         <Route path="/about" component={About} />
         <Route path="/contact" component={Contact} />
         <Route path="/waiting" component={Waiting} />

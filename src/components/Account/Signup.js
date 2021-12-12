@@ -1,10 +1,3 @@
-/**
- * Creates a Signup page that allows users to create an account
- * @author Nathan Jenkins
- * @author Wesley Miller
- * @version 5/13/2021
- */
-
 import React, { useState } from "react";
 import { Form, Button, Alert } from "react-bootstrap";
 import { Link, useHistory } from "react-router-dom";
@@ -12,8 +5,10 @@ import { useAuth } from "../../contexts/AuthContext";
 import { db } from "../../firebase";
 
 /**
- * Creates the SignUp page that the users can use to create an account
- * @returns The SignUp webpage
+ * Where users can create an account
+ * @author Nathan Jenkins
+ * @author Wesley Miller
+ * @version 12/12/2021
  */
 const Signup = () => {
   const [loading, setLoading] = useState(false);

@@ -1,7 +1,4 @@
-import { faComment } from "@fortawesome/free-regular-svg-icons";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { useEffect, useState } from "react";
-import { Container } from "react-bootstrap";
+import { useState } from "react";
 import "../../assets/Game.css";
 import Bets from "../Games/Bets";
 
@@ -87,11 +84,16 @@ const GameTemplatePlayers = () => {
                       className="card-img"
                       style={cardStyle(index)}
                       src={`/Images/Cards/${card.rank}${card.suit}.png`}
+                      alt="Card"
                     />
                   ))}
               </div>
               {profilePictures && (
-                <img className="player-pic" src="/Images/blankProfile.png" />
+                <img
+                  className="player-pic"
+                  src="/Images/blankProfile.png"
+                  alt="User profile"
+                />
               )}
 
               <div className="player-info">

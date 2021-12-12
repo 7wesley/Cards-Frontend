@@ -1,19 +1,13 @@
-/**
- * Creates a Contact page that allows users to communicate with the creators of
- *  this website
- * @author Nathan Jenkins
- * @author Wesley Miller
- * @version 5/13/2021
- */
-
 import React, { useState } from "react";
 import ReCAPTCHA from "react-google-recaptcha";
 import emailjs from "emailjs-com";
 import { Alert, Form, Button } from "react-bootstrap";
 
 /**
- * The page that contains information about contacting the creators of the site
- * @returns This contact page
+ * A page where users can send an email to the developers
+ * @author Nathan Jenkins
+ * @author Wesley Miller
+ * @version 12/12/2021
  */
 const Contact = () => {
   const [loading, setLoading] = useState(true);

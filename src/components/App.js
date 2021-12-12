@@ -2,7 +2,7 @@
  * Starts and runs the connection to the website
  * @author Nathan Jenkins
  * @author Wesley Miller
- * @version 5/13/2021
+ * @version 12/12/2021
  */
 
 import "../assets/App.css";

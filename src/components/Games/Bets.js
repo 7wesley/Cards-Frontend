@@ -1,6 +1,12 @@
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useState } from "react";
 import { getSocket } from "../Socket";
 
+/**
+ * Allows users to bet and sends the result to the server
+ * @author Nathan Jenkins
+ * @author Wesley Miller
+ * @version 12/12/2021
+ */
 const Bets = ({ setBetsVisible, timer, bank }) => {
   const [bet, setBet] = useState("");
   const DEFAULT_BET = 50;
@@ -9,7 +15,7 @@ const Bets = ({ setBetsVisible, timer, bank }) => {
   };
 
   useEffect(() => {
-    if (timer == 0) {
+    if (timer === 0) {
       setBet(DEFAULT_BET);
       handleBetSubmit();
     }

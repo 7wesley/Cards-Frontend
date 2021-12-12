@@ -1,3 +1,7 @@
+.App {
+  min-height: 100vh;
+}
+
 .blue-block {
   height: 30vh;
   width: 100%;
@@ -59,20 +63,37 @@
   ); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
 }
 
-.welcome-container {
-  color: white;
+.welcome-bg {
   background: url("./welcome.jpg") center;
   height: 100vh;
   position: absolute;
   top: 0;
   left: 0;
-  right: 0;
   bottom: 0;
+  right: 0;
   z-index: -1;
 }
 
+.welcome-container {
+  top: 40%;
+  position: absolute;
+  left: 0;
+  right: 0;
+  margin-left: auto;
+  margin-right: auto;
+  color: white;
+}
+
 @media only screen and (max-width: 767px) {
+  .game-container {
+    padding-left: 7px;
+    padding-right: 7px;
+  }
   .game-container p {
-    font-size: 15px;
+    font-size: 16px;
+  }
+
+  .card-body {
+    padding: 0.8rem;
   }
 }

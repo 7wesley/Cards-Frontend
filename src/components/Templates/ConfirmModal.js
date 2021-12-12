@@ -4,7 +4,14 @@ import { useHistory } from "react-router";
 import { useAuth } from "../../contexts/AuthContext";
 import { db } from "../../firebase";
 
-const ConfirmModal = ({ closeModal, id }) => {
+/**
+ * Modal for deleting a user's account
+ * @author Nathan Jenkins
+ * @author Wesley Miller
+ * @version 12/12/2021
+ * @param {*} closeModal - Closes this modal when called
+ */
+const ConfirmModal = ({ closeModal }) => {
   const history = useHistory();
   const [error, setError] = useState("");
   const { currentUser } = useAuth();

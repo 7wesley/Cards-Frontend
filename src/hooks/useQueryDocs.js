@@ -1,19 +1,16 @@
-/**
- * For adding a document to the query in firebase
- * @author Nathan Jenkins
- * @author Wesley Miller
- * @version 5/13/2021
- */
-
 import { useEffect, useState } from "react";
 import { db } from "../firebase.js";
 
 /**
- * Updates the query in firebase and sets the new data to it
- * @param {any} collection the collection to add to
- * @param {any} doc the document to set the data for
- * @param {any} updated if the data was set
- * @returns the documents that was updated
+ * Queries the database for the specificied collection and document
+ * and returns it with a state hook
+ * @author Nathan Jenkins
+ * @author Wesley Miller
+ * @version 12/12/2021
+ * @param {*} collection - The collection to query
+ * @param {*} doc - The document to query
+ * @param {*} updated - If the document needs to be requeried
+ * @returns the queried document
  */
 const useQueryDocs = (collection, doc, updated) => {
   const [docs, setDocs] = useState(null);

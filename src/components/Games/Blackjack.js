@@ -6,6 +6,13 @@ import Results from "./Results";
 import ChatModal from "../Templates/ChatModal.js";
 import { Modal } from "react-bootstrap";
 
+/**
+ * Takes information from the server and displays it in a
+ * game of Blackjack
+ * @author Nathan Jenkins
+ * @author Wesley Miller
+ * @version 12/12/2021
+ */
 const Blackjack = ({ server, userData, updateStorage }) => {
   const [bank, setBank] = useState(0);
   const [betsVisible, setBetsVisible] = useState(true);

@@ -1,10 +1,3 @@
-/**
- * Creates a Stats page that allows users to view their current game stats
- * @author Nathan Jenkins
- * @author Wesley Miller
- * @version 5/13/2021
- */
-
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faTrophy } from "@fortawesome/free-solid-svg-icons";
 import { Bar } from "react-chartjs-2";
@@ -13,9 +6,11 @@ import { useAuth } from "../../contexts/AuthContext";
 import React from "react";
 
 /**
- * The page that shows the user's stats
- * @param {any} userData the user's information
- * @returns The stats webpage
+ * Shows the user's stats in a chartjs graph
+ * @author Nathan Jenkins
+ * @author Wesley Miller
+ * @version 12/12/2021
+ * @param {*} userData - User's storage data
  */
 const Stats = ({ userData }) => {
   const { currentUser } = useAuth();

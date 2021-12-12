@@ -1,10 +1,3 @@
-/**
- * Creates the account page that allows users to manage their account
- * @author Nathan Jenkins
- * @author Wesley Miller
- * @version 5/13/2021
- */
-
 import React, { useState, useCallback } from "react";
 import { Form, Button, Alert } from "react-bootstrap";
 import { Link, useHistory } from "react-router-dom";
@@ -14,10 +7,12 @@ import { Modal } from "react-bootstrap";
 import ConfirmModal from "../Templates/ConfirmModal";
 
 /**
- * The Account Page that will be displayed
- * @param {any} id the id of the player that uses this account page
- * @param {any} updateStorage for updating the user's information
- * @returns the account page that will be displayed
+ * Allows users to manage their account info
+ * @author Nathan Jenkins
+ * @author Wesley Miller
+ * @version 12/12/2021
+ * @param {*} id the id of the player that uses this account page
+ * @param {*} updateStorage for updating the user's information
  */
 const Account = ({ id, updateStorage }) => {
   const [modalOpen, setModalOpen] = useState(false);
@@ -47,7 +42,7 @@ const Account = ({ id, updateStorage }) => {
 
   /**
    * Updates the information from the parameter that is passed (the player)
-   * @param {any} e the player that will have their information updated
+   * @param {*} e the player that will have their information updated
    */
   const handleUpdate = async (e) => {
     e.preventDefault(e);

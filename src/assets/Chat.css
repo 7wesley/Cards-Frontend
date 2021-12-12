@@ -28,23 +28,6 @@
   background-color: white;
 }
 
-/* Full-width textarea */
-.form-container textarea {
-  width: 100%;
-  padding: 15px;
-  margin: 5px 0 22px 0;
-  border: none;
-  background: #f1f1f1;
-  resize: none;
-  min-height: 200px;
-}
-
-/* When the textarea gets focus, do something */
-.form-container textarea:focus {
-  background-color: #ddd;
-  outline: none;
-}
-
 /* Set a style for the send/close button */
 .form-container .btn {
   color: white;
@@ -72,45 +55,8 @@
   cursor: pointer;
 }
 
-/* For the container holding chat the messages */
-.MessageList {
-  overflow-y: scroll;
-  height: 300px;
-  width: 475px;
-  background: #fff;
-  border-radius: 7.5px;
-  display: flex;
-  flex-direction: column;
-  box-shadow: 0 3px 28px 5px rgba(0, 0, 0, 0.145);
-}
-
-/* A test format for the user's messages */
-.myMessage {
-  background: #3f51b5 none repeat scroll 0 0;
-  border-radius: 3px;
-  font-size: 14px;
-  margin: 0;
-  color: #fff;
-  padding: 5px 10px 5px 12px;
-  width: 100%;
-  float: right;
-  width: 70%;
-  text-align: right;
-}
-
-/* A test format for the displaying other user messages */
-.otherMessage {
-  background: #e4e8fb none repeat scroll 0 0;
-  border-radius: 3px;
-  color: #646464;
-  font-size: 14px;
-  margin: 0;
-  padding: 5px 10px 5px 12px;
-  width: 100%;
-}
-
 /* The style for how the own user's messages appear in the chat */
-.mymsg {
+.my-msg {
   float: right;
   background: #35cce5;
   border-radius: 10px;
@@ -118,7 +64,7 @@
 }
 
 /* The style for how another user's messages appear in the chat */
-.othermsg {
+.other-msg {
   float: left;
   background: #f4f7f9;
   border-radius: 10px;
@@ -134,7 +80,7 @@
 }
 
 /* The format for how the user's message name will be displayed */
-.myname {
+.my-name {
   text-align: right;
   color: #747474;
   display: block;
@@ -143,7 +89,7 @@
 }
 
 /* The format for how the every other user's message name will be displayed */
-.othername {
+.other-name {
   text-align: left;
   color: #747474;
   display: block;
@@ -158,41 +104,3 @@
   height: 400px;
   scroll-snap-align: start;
 }
-
-/* 
-
-
-.container {
-  width: 80vw;
-  margin: 30px auto;
-}
-
-.list {
-  list-style: none;
-  background: orange;
-  padding: 10px 30px;
-}
-
-.item {
-  background: red;
-  color: white;;
-  box-shadow: 0 2px 4px #999;
-  padding: 10px 30px;
-  margin: 10px 0;
-}
-
-.button {
-  border: none;
-  outline: none;
-  background: purple;
-  color: white;
-  padding: 10px 30px;
-}
-
-.button:hover {
-  background: orange;
-}
-
-h3 {
-  margin: 15px 0;
-} */
