@@ -6,7 +6,7 @@ import "../../assets/Game.css";
 import Bets from "../Games/Bets";
 
 const GameTemplatePlayers = () => {
-  const profilePictures = true;
+  const profilePictures = false;
   const [betsVisible, setBetsVisible] = useState(true);
   const getRandomRotation = (min, max) => {
     return Math.random() * (max - min) + min;
@@ -71,8 +71,8 @@ const GameTemplatePlayers = () => {
   return (
     <>
       <div className="board">
-        <div className="board-prompt">
-          <p className="h5">Awaiting player bets...</p>
+        <div className="board-prompt d-flex flex-column justify-content-center h-100">
+          <p className="h5  align-self-center">Awaiting player bets...</p>
         </div>
 
         <div className="players">
@@ -99,11 +99,10 @@ const GameTemplatePlayers = () => {
                 <p className="player-name">{player.id}</p>
                 <p class="player-bank">${player.bank}</p>
               </div>
-              <p class="player-bet">{player.bet}</p>
             </div>
           ))}
         </div>
-        <div className="dashboard mt-5 d-flex justify-content-center">
+        <div className="dashboard">
           {betsVisible && <Bets setBetsVisible={setBetsVisible} />}
         </div>
       </div>

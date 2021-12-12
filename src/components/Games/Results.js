@@ -5,7 +5,7 @@ const Results = ({ userData, results, updateStorage, bank, setBank }) => {
 
   useEffect(() => {
     const updateStats = async () => {
-      if (id) {
+      if (id && results.update) {
         if (results.winners.some((winner) => winner.id === id)) {
           userData.stats.Wins++;
         } else {
@@ -20,12 +20,15 @@ const Results = ({ userData, results, updateStorage, bank, setBank }) => {
 
   return (
     <>
-      {results.prompt && <p className="h3">{results.prompt}</p>}
+      {results.prompt && (
+        <>
+          <p className="h3">{results.prompt}</p>
+          <p className="mt-0 pt-0">{"-".repeat(40)}</p>
+        </>
+      )}
       {results.winners.map((winner, index) => (
         <div key={index}>
-          <p className="h4">
-            {winner.id === id ? <b>You win!</b> : `${winner.id} wins!`}
-          </p>
+          <p className="h5">{winner.id === id ? "You" : `${winner.id}`}</p>
         </div>
       ))}
       {!results.winners.length && <p className="h4">Nobody wins!</p>}

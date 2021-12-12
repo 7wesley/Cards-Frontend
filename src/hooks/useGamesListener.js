@@ -22,12 +22,17 @@ const useGames = (filter) => {
       .orderBy("createdAt", "desc")
       .onSnapshot((snap) => {
         let data = snap.docs.map((doc) => doc.data());
-        if (filter)
-          data = data.filter(
-            (doc) =>
+        data = data.filter((doc) => {
+          if (doc.status === "in-progress") {
+            return false;
+          } else if (filter) {
+            return (
               doc.gameId.slice(0, filter.length) === filter ||
               doc.host.slice(0, filter.length) === filter
-          );
+            );
+          }
+          return true;
+        });
         setGames(data);
       });
     return () => {

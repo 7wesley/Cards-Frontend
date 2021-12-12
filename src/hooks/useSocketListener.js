@@ -16,7 +16,6 @@ import { useEffect, useState } from "react";
 const useSocketListener = (connected) => {
   const socket = getSocket();
   const [players, setPlayers] = useState([]);
-  const [countdown, setCountdown] = useState(null);
   const [timer, setTimer] = useState(null);
   const [turn, setTurn] = useState(null);
   const [results, setResults] = useState(null);
@@ -25,7 +24,6 @@ const useSocketListener = (connected) => {
   useEffect(() => {
     //prevents socket from connecting if room is full
     if (connected) {
-      socket.on("countdown", (secs) => setCountdown(secs));
       socket.on("update-hands", (plyrs) => setPlayers(plyrs));
       socket.on("curr-turn", (user) => setTurn(user));
       socket.on("timer", (secs) => setTimer(secs));
@@ -37,7 +35,7 @@ const useSocketListener = (connected) => {
     }
   }, [connected, socket]);
 
-  return { players, countdown, turn, timer, results, chatMsg };
+  return { players, turn, timer, results, chatMsg };
 };
 
 export default useSocketListener;

@@ -24,7 +24,7 @@ const InProgress = ({ playersList }) => {
           </p>
           <p className="h4 mt-4">Players currently in room:</p>
           <motion.div layout>
-            {Object.keys(playersList).map((player) => (
+            {Object.values(playersList).map((player) => (
               <p className="mb-0"> {player} </p>
             ))}
           </motion.div>

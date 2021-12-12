@@ -39,7 +39,7 @@ const useRoomListener = (room) => {
           });
         return () => unsubscribe();
       }
-      setPlayersList([]);
+      setPlayersList(null);
     };
     listener();
   }, [room]);

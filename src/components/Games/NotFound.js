@@ -15,7 +15,7 @@ import { Link } from "react-router-dom";
  */
 const NotFound = () => {
   return (
-    <div className="styles-bg-inprogress">
+    <div className="bg-in-progress">
       <div className="d-flex flex-column min-vh-100 justify-content-center align-items-center">
         <div className="text-center text-light">
           <p className="h3">Room not found</p>

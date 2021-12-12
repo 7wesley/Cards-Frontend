@@ -41,57 +41,33 @@ const Waiting = ({ id, playersList, maxPlayers, countdown }) => {
     <div className="bg-waiting">
       <div className="d-flex flex-column min-vh-100 justify-content-center align-items-center">
         <div className="text-center text-light">
-          {/*The countdown that will display when enough users join*/}
-          {countdown ? (
-            <>
-              <p className="h6"> Game starting in </p>
-              <motion.p
-                animate={{
-                  rotate: 360,
-                }}
-                className="h6"
-              >
-                {" "}
-                {countdown}
-              </motion.p>
-            </>
-          ) : (
-            <>
-              <p className="h3">Waiting for players... </p>
-              <p className="h3 mb-4" data-cy="playerCount">
-                ({Object.keys(playersList).length} out of {maxPlayers})
+          <p className="h3">Waiting for players... </p>
+          <p className="h3 mb-4" data-cy="playerCount">
+            ({Object.keys(playersList).length} out of {maxPlayers})
+          </p>
+          <p className="h4">Players in room:</p>
+          <motion.div layout data-cy="playersList">
+            {Object.values(playersList).map((player, index) => (
+              <p key={index} className="mb-0">
+                {player} {id === player && "(You)"}
               </p>
-
-              <p className="h4">Players in room:</p>
-              <motion.div layout data-cy="playersList">
-                {Object.values(playersList).map((player, index) => (
-                  <p key={index} className="mb-0">
-                    {player} {id === player && "(You)"}
-                  </p>
-                ))}
-              </motion.div>
-
-              <InputGroup className="mb-2 mt-4" id="copyIcon">
-                <InputGroup.Prepend>
-                  <InputGroup.Text ref={target} onClick={handleCopy}>
-                    <FontAwesomeIcon size="lg" icon={faCopy} />
-                  </InputGroup.Text>
-                </InputGroup.Prepend>
-                <FormControl
-                  id="copyText"
-                  defaultValue={window.location.href}
-                />
-              </InputGroup>
-
-              <Overlay target={target.current} show={show} placement="top">
-                {(props) => (
-                  <Tooltip id="overlay" {...props}>
-                    Copied!
-                  </Tooltip>
-                )}
-              </Overlay>
-            </>
-          )}
+            ))}
+          </motion.div>
+          <InputGroup className="mb-2 mt-4" id="copyIcon">
+            <InputGroup.Prepend>
+              <InputGroup.Text ref={target} onClick={handleCopy}>
+                <FontAwesomeIcon size="lg" icon={faCopy} />
+              </InputGroup.Text>
+            </InputGroup.Prepend>
+            <FormControl id="copyText" defaultValue={window.location.href} />
+          </InputGroup>
+          <Overlay target={target.current} show={show} placement="top">
+            {(props) => (
+              <Tooltip id="overlay" {...props}>
+                Copied!
+              </Tooltip>
+            )}
+          </Overlay>
         </div>
       </div>
     </div>

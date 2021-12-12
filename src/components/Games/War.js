@@ -63,7 +63,7 @@ const War = ({ server, userData, updateStorage }) => {
   return (
     <>
       <div className="board">
-        <div className={"board-prompt"}>
+        <div className="board-prompt justify-content-center align-items-center h-100">
           {server.results ? (
             <Results
               userData={userData}
@@ -79,11 +79,13 @@ const War = ({ server, userData, updateStorage }) => {
           {server.players.map((player, index) => (
             <div
               className={`board-player board-player-${index} ${
-                player.id === server.turn ? " player-turn" : ""
+                player.id === server.turn ? "player-turn" : ""
               }`}
             >
               <div className={`player-cards ${player.status && player.status}`}>
-                <img className="card-img" src={`/Images/Cards/HH.png`} />
+                {!!player.deck.length && (
+                  <img className="card-img" src={`/Images/Cards/HH.png`} />
+                )}
                 {player.cards.map((card, index) => (
                   <img
                     className="card-img"
@@ -92,12 +94,11 @@ const War = ({ server, userData, updateStorage }) => {
                   />
                 ))}
               </div>
-
+              {!player.deck.length && (
+                <img className="player-pic" src="/Images/blankProfile.png" />
+              )}
               <div className="player-info">
-                <div
-                  className="d-none d-md-block player-timer"
-                  style={timerStyle(player.id)}
-                />
+                <div className="player-timer" style={timerStyle(player.id)} />
                 <p className="player-name">
                   {player.id === id ? "You" : player.id}
                 </p>

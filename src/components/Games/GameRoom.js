@@ -11,7 +11,7 @@ import InProgress from "./InProgress";
 import NotFound from "./NotFound";
 import useRoomListener from "../../hooks/useRoomListener";
 import useSocketListener from "../../hooks/useSocketListener";
-import { getSocket, connectSocket } from "../Socket";
+import { connectSocket } from "../Socket";
 import Blackjack from "./Blackjack";
 import War from "./War";
 
@@ -69,7 +69,6 @@ const GameRoom = ({ match, userData, updateStorage }) => {
             id={id}
             playersList={db.playersList}
             maxPlayers={db.maxPlayers}
-            countdown={server.countdown}
           />
         )
       ) : (

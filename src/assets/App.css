@@ -62,5 +62,11 @@
 .welcome-container {
   color: white;
   background: url("./welcome.jpg") center;
-  height: 93.4vh;
+  height: 100vh;
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  z-index: -1;
 }
