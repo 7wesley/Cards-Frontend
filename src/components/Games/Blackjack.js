@@ -91,7 +91,11 @@ const Blackjack = ({ server, userData, updateStorage }) => {
                 ))}
               </div>
               {!player.cards.length && (
-                <img className="player-pic" src="/Images/blankProfile.png" />
+                <img
+                  className="player-pic"
+                  src={player.image}
+                  alt="User profile"
+                />
               )}
               <div className="player-info">
                 <div className="player-timer" style={timerStyle(player.id)} />

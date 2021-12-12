@@ -5,9 +5,6 @@ import { getSocket } from "../Socket";
 
 const Poker = ({ players, turn, timer, id }) => {
   const myTurn = turn === id;
-  useEffect(() => {
-    console.log(players);
-  });
 
   const handlePlay = (choice) => {
     getSocket().emit("player-move", choice);

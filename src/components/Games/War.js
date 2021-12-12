@@ -95,7 +95,11 @@ const War = ({ server, userData, updateStorage }) => {
                 ))}
               </div>
               {!player.deck.length && (
-                <img className="player-pic" src="/Images/blankProfile.png" />
+                <img
+                  className="player-pic"
+                  src={player.image}
+                  alt="User profile"
+                />
               )}
               <div className="player-info">
                 <div className="player-timer" style={timerStyle(player.id)} />
@@ -149,7 +153,6 @@ const War = ({ server, userData, updateStorage }) => {
         </div>
       </div>
 
-      {/*The Modal that handles the Chat among the players in the game*/}
       <Modal data-cy="chatModal" show={modalOpen} onHide={closeModal}>
         <ChatModal
           closeModal={closeModal}

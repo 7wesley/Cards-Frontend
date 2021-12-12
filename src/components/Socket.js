@@ -14,11 +14,11 @@ let socket;
  * @param {any} room the room to connect to
  * @param {any} id the identification of the user connecting to the room
  */
-export const connectSocket = (room, id) => {
+export const connectSocket = (room, id, image) => {
   socket = io(process.env.REACT_APP_BACKEND_URL, {
     transports: ["websocket", "polling", "flashsocket"],
   });
-  if (socket && room) socket.emit("join", room, id);
+  if (socket && room) socket.emit("join", room, id, image);
 };
 
 /**

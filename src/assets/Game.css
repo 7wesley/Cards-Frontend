@@ -67,6 +67,8 @@
   border-radius: 50%;
   border: 0.06rem black solid;
   border-bottom-width: 0.2rem;
+  object-fit: cover;
+  height: 4rem;
 }
 
 .card-img {

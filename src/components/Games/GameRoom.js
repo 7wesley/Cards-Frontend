@@ -14,6 +14,8 @@ import useSocketListener from "../../hooks/useSocketListener";
 import { connectSocket } from "../Socket";
 import Blackjack from "./Blackjack";
 import War from "./War";
+import { useAuth } from "../../contexts/AuthContext";
+import useQueryDocs from "../../hooks/useQueryDocs";
 
 /**
  * The page that users play games
@@ -24,6 +26,8 @@ import War from "./War";
  */
 const GameRoom = ({ match, userData, updateStorage }) => {
   const [connected, setConnected] = useState(false);
+  const { currentUser } = useAuth();
+  const { docs } = useQueryDocs("users", currentUser);
   const db = useRoomListener(match.params.roomId);
   const server = useSocketListener(connected);
   const id = userData && userData.username;
@@ -31,10 +35,14 @@ const GameRoom = ({ match, userData, updateStorage }) => {
 
   useEffect(() => {
     if (db.status === "waiting" && !connected) {
-      connectSocket(match.params.roomId, id);
+      let image = "/Images/blankProfile.png";
+      if (docs && docs.picture) {
+        image = docs.picture;
+      }
+      connectSocket(match.params.roomId, id, image);
       setConnected(true);
     }
-  }, [db.status, connected, match.params.roomId, id]);
+  }, [db.status, connected, match.params.roomId, id, docs]);
 
   const renderGame = () => {
     switch (db.gameType) {

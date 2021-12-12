@@ -26,7 +26,6 @@ const ChatModal = ({ closeModal, messages, setMessages, id }) => {
    *  only if the user is at the bottom of the chat
    */
   useEffect(() => {
-    console.log("msg updated!");
     if (scrolled === false) {
       updateScroll();
     }
@@ -37,9 +36,7 @@ const ChatModal = ({ closeModal, messages, setMessages, id }) => {
    * @param {*} event when the user changes a value in the input box
    */
   const handleChange = (event) => {
-    // console.log("targte.value = "+event.target.value)
     setCurrMsg(event.target.value);
-    // console.log("Changed current messag to "+currMsg)
   };
 
   /**
@@ -78,15 +75,6 @@ const ChatModal = ({ closeModal, messages, setMessages, id }) => {
    * @param {*} event when the chatbox is scrolled
    */
   const handleScroll = (event) => {
-    //Debug code
-    // console.log("scrolled = "+scrolled)
-    // console.log("scrollheight = "+event.target.scrollHeight)
-    // console.log("scrollTop = "+event.target.scrollTop)
-    // console.log("clientHeight = "+event.target.clientHeight)
-    // console.log(event.target.scrollHeight - event.target.scrollTop ===
-    //     event.target.clientHeight + MARGIN_OF_ERROR)
-    // console.log(event.target.scrollHeight - event.target.scrollTop)
-
     //If the scroll is already at the bottom, set the scrolled value to false
     if (
       event.target.scrollHeight - event.target.scrollTop <=
