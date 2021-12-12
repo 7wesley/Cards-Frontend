@@ -10,21 +10,18 @@ import { faGamepad } from "@fortawesome/free-solid-svg-icons";
  */
 const Welcome = () => {
   return (
-    <>
-      <div className="welcome-bg" />
-      <div className="welcome-container text-center">
-        <FontAwesomeIcon size="3x" icon={faGamepad} />
-        <p className="mt-1 h2 mb-3">Multiplayer card games</p>
-        <div className="mt-4">
-          <Link to="login" className="btn btn-primary btn-lg mr-2">
-            Login
-          </Link>
-          <Link to="games" className="btn btn-primary btn-lg ml-2">
-            Play
-          </Link>
-        </div>
+    <div className="welcome-container justify-content-center align-items-center">
+      <FontAwesomeIcon size="3x" icon={faGamepad} />
+      <p className="mt-1 h2 mb-3">Multiplayer card games</p>
+      <div className="mt-4">
+        <Link to="login" className="btn btn-primary btn-lg mr-2">
+          Login
+        </Link>
+        <Link to="games" className="btn btn-primary btn-lg ml-2">
+          Play
+        </Link>
       </div>
-    </>
+    </div>
   );
 };
 

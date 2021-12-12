@@ -1,11 +1,10 @@
 /* Rem is relative to room element <html> 16px */
 
 .board {
-  overflow: hidden;
-  position: absolute;
-  height: calc(100% - 56px);
+  height: calc(100vh - 56px);
   width: 100%;
   background-color: rgb(22, 129, 44);
+  overflow: hidden;
 }
 
 .players {
@@ -304,7 +303,6 @@
 
 .dashboard {
   width: 100%;
-  height: calc(20% - 56px);
 }
 
 .choice-button {
@@ -444,5 +442,13 @@
     top: 7.8rem;
     font-size: 0.8rem;
   }
+}
 
+@media only screen and (max-width: 767px) {
+  .choice-button {
+    width: 6rem;
+  }
+  .bet-button {
+    width: 5rem;
+  }
 }
