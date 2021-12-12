@@ -68,8 +68,8 @@ const GameTemplatePlayers = () => {
   return (
     <>
       <div className="board">
-        <div className="board-prompt d-flex flex-column justify-content-center h-100">
-          <p className="h5  align-self-center">Awaiting player bets...</p>
+        <div className="board-prompt justify-content-center align-items-center">
+          <p className="h5">Awaiting player bets...</p>
         </div>
 
         <div className="players">

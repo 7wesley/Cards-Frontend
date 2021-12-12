@@ -70,7 +70,7 @@ const War = ({ server, userData, updateStorage }) => {
   return (
     <>
       <div className="board">
-        <div className="board-prompt justify-content-center align-items-center h-100">
+        <div className="board-prompt justify-content-center align-items-center">
           {server.results ? (
             <Results
               userData={userData}

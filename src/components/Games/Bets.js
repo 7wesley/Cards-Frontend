@@ -24,7 +24,7 @@ const Bets = ({ setBetsVisible, timer, bank }) => {
     setBet("custom");
     //Check if input has already been created
     if (!document.getElementById("custom-input")) {
-      const button = document.getElementById("customButton");
+      const button = document.getElementById("custom-button");
       button.innerHTML = "";
 
       //Creating input elements
@@ -76,7 +76,7 @@ const Bets = ({ setBetsVisible, timer, bank }) => {
           className={
             "bet-button mx-2" + (bet === "custom" ? " bet-selected" : "")
           }
-          id="customButton"
+          id="custom-button"
           onClick={() => activateCustomInput()}
         >
           Custom

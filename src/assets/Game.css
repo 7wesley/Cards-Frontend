@@ -173,11 +173,12 @@
 
 .board-prompt {
   display: flex;
-  flex-direction: column;
-  position: absolute;
   left: 0;
   right: 0;
-  bottom: 10%;
+  position: absolute;
+
+  flex-direction: column;
+  height: 84%;
 }
 
 .hide-text {
@@ -449,6 +450,11 @@
     width: 6rem;
   }
   .bet-button {
-    width: 5rem;
+    width: 4.8rem;
+    font-size: 15px
+  }
+
+  #custom-button {
+    padding: 0px;
   }
 }
